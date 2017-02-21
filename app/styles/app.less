@@ -1,0 +1,35 @@
+@import "/node_modules/bootstrap/less/variables.less";
+@import "/node_modules/bootstrap/less/mixins.less";
+@import "/node_modules/font-awesome/less/font-awesome.less";
+
+html, body {
+  height: 100%;
+  background-color: #080;
+  background: -webkit-radial-gradient(center, #0a0, #050);
+  background: -o-radial-gradient(center, #0a0, #050);
+  background: -moz-radial-gradient(center, #0a0, #050);
+  background: radial-gradient(center, #0a0, #050);
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+th > .btn-group {
+  margin: -2px;
+
+  .btn {
+    min-width: 30px;
+  }
+}
+
+.modal {
+  .modal-body {
+    min-height: 200px;
+  }
+}

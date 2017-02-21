@@ -1,0 +1,91 @@
+@import "/app/styles/app.less";
+
+@card-width-medium: 65px;
+@card-height-medium: 90px;
+@card-margin-medium: 4px;
+
+@card-width-small: 40px;
+@card-height-small: 60px;
+@card-margin-small: 2px;
+
+@card-width-large: 100px;
+@card-height-large: 140px;
+@card-margin-large: 6px;
+
+#game {
+  .noselect();
+
+  #deck {
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    width: (@card-margin-medium + @card-width-medium + @card-margin-medium) * 13;
+    height: (@card-margin-medium + @card-height-medium + @card-margin-medium) * 4;
+
+    .card, .gap {
+      position: absolute;
+      overflow: hidden;
+      background-size: 100% 100%;
+      height: @card-height-medium;
+      width: @card-width-medium;
+      margin: @card-margin-medium;
+
+      &.highlight {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+      }
+    }
+    .card {
+      cursor: pointer;
+
+      &.dragged {
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+      }
+      &:after {
+        position: absolute;
+        content: '';
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 3px;
+      }
+      &.placed:after {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      &.hint:after {
+        background: rgba(255, 255, 0, 0.2);
+      }
+      &.error:after {
+        background: rgba(255, 0, 0, 0.2);
+      }
+    }
+  }
+
+  @media(min-width: 1500px) {
+    #deck {
+      width: (@card-margin-large + @card-width-large + @card-margin-large) * 13;
+      height: (@card-margin-large + @card-height-large + @card-margin-large) * 4;
+
+      .card, .gap {
+        height: @card-height-large;
+        width: @card-width-large;
+        margin: @card-margin-large;
+      }
+    }
+  }
+  @media(max-width: 1000px) {
+    #deck {
+      width: (@card-margin-small + @card-width-small + @card-margin-small) * 13;
+      height: (@card-margin-small + @card-height-small + @card-margin-small) * 4;
+
+
+      .card, .gap {
+        height: @card-height-small;
+        width: @card-width-small;
+        margin: @card-margin-small;
+      }
+    }
+  }
+}
