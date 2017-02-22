@@ -27,10 +27,10 @@ Game.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-   const {deckState} = state;
+   const {deck} = state;
 
    return {
-      deck: deckState
+      deck: deck
    };
 };
 

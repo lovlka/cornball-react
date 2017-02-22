@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { resetNetwork }  from '../actions';
-import { initialize }  from '../game';
+import { resetNetwork, newGame }  from '../actions';
 import Loading from './loading';
 import Error from './error';
 import Nav from './nav';
@@ -24,7 +23,7 @@ class Root extends Component {
    }
 
    componentDidMount() {
-      this.props.initialize();
+      this.props.newGame();
    }
 }
 
@@ -34,11 +33,11 @@ Root.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-   const {appState} = state;
+   const {app} = state;
 
    return {
-      networkProgress: appState.get('networkProgress'),
-      networkFailed: appState.get('networkFailed')
+      networkProgress: app.get('networkProgress'),
+      networkFailed: app.get('networkFailed')
    };
 };
 
@@ -47,8 +46,8 @@ const mapDispatchToProps = (dispatch) => {
       resetNetwork: () => {
          dispatch(resetNetwork());
       },
-      initialize: () => {
-         dispatch(initialize());
+      newGame: () => {
+         dispatch(newGame());
       }
    };
 };

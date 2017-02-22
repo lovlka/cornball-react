@@ -39,15 +39,15 @@ Nav.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-   const {appState, gameState} = state;
+   const {app, game} = state;
 
    return {
-      round: gameState.get('round'),
-      rounds: gameState.get('rounds'),
-      score: gameState.get('score'),
-      moves: gameState.get('moves'),
-      highScoreName: appState.get('highScoreName'),
-      highScore: appState.get('highScore')
+      round: game.get('round'),
+      rounds: game.get('rounds'),
+      score: game.get('score'),
+      moves: game.get('moves'),
+      highScoreName: app.get('highScoreName'),
+      highScore: app.get('highScore')
    };
 };
 
