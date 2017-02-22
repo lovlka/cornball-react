@@ -5,6 +5,7 @@ import Loading from './loading';
 import Error from './error';
 import Nav from './nav';
 import Game from './game';
+import About from './about';
 
 class Root extends Component {
    render() {
@@ -14,6 +15,7 @@ class Root extends Component {
          <div>
             {networkProgress ? <Loading /> : null }
             {networkFailed ? <Error onClose={this.props.resetNetwork} /> : null }
+            <About />
             <Nav />
             <Game />
          </div>
