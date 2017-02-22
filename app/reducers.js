@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import Immutable from 'immutable';
 
 import { NETWORK } from './actions';
+import { DECK } from './game';
 
 function appState(state = Immutable.Map({
    networkFailed: false,
@@ -29,9 +30,20 @@ function gameState(state = Immutable.Map({
    }
 }
 
+function deckState(state = Immutable.List(), action = null) {
+   switch (action.type) {
+      case DECK:
+         return Immutable.fromJS(action.deck);
+
+      default:
+         return state;
+   }
+}
+
 const rootReducer = combineReducers({
    appState,
-   gameState
+   gameState,
+   deckState
 });
 
 export default rootReducer;

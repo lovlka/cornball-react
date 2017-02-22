@@ -1,14 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class Game extends Component {
+export default class Card extends Component {
 
    render() {
+      const image = 'url("deck/' + this.props.suit + this.props.value + '.png")';
       return (
-         <div id="game"></div>
+         <div className="card" style={{backgroundImage: image}}></div>
       );
    }
 
 }
 
-Game.propTypes = {
+Card.propTypes = {
+   suit: PropTypes.string.isRequired,
+   value: PropTypes.number.isRequired
 };

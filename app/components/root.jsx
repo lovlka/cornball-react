@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { resetNetwork }  from '../actions';
 import { connect } from 'react-redux';
+import { resetNetwork }  from '../actions';
+import { initialize }  from '../game';
 import Loading from './loading';
 import Error from './error';
 import Nav from './nav';
@@ -20,6 +21,10 @@ class Root extends Component {
             <Game />
          </div>
       );
+   }
+
+   componentDidMount() {
+      this.props.initialize();
    }
 }
 
@@ -41,6 +46,9 @@ const mapDispatchToProps = (dispatch) => {
    return {
       resetNetwork: () => {
          dispatch(resetNetwork());
+      },
+      initialize: () => {
+         dispatch(initialize());
       }
    };
 };
