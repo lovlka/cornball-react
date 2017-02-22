@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 
-import { NETWORK } from '../actions';
+import { NETWORK } from '../actions/network';
 
 const initialState = {
    networkFailed: false,

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { resetNetwork, newGame }  from '../actions';
+import { resetNetwork }  from '../actions/network';
+import { newGame }  from '../actions/game';
 import Loading from './loading';
 import Error from './error';
 import Nav from './nav';

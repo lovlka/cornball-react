@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 
-import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE } from '../actions';
+import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE } from '../actions/game';
 
 const initialState = {
    round: 1,

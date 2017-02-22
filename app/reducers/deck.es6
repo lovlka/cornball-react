@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 
-import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE } from '../actions';
+import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE } from '../actions/game';
 
 export function deck(state = Immutable.List(), action = null) {
    switch (action.type) {
