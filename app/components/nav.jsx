@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import {getDate} from '../utils/date';
+import {newGame, undoMove} from '../actions/game';
 
 class Nav extends Component {
 
@@ -13,9 +15,9 @@ class Nav extends Component {
             <ul className="nav navbar-nav">
                <li><a href="#" onClick={this.props.newGame} title="Starta nytt spel"><i className="fa fa-2x fa-refresh" /></a></li>
                <li><a href="#" onClick={this.props.undoMove} title="Ångra senaste drag"><i className="fa fa-2x fa-reply" /></a></li>
-               <li><a href="#" onClick={this.props.showHighScore} title="Visa topplista"><i className="fa fa-2x fa-star" /></a></li>
-               <li><a href="#" onClick={this.props.showStatistics} title="Visa statistik"><i className="fa fa-2x fa-pie-chart" /></a></li>
-               <li><a href="#" onClick={this.props.showAbout} title="Om Lantisen"><i className="fa fa-2x fa-question" /></a></li>
+               <li><Link to="/highscore" title="Visa topplista"><i className="fa fa-2x fa-star" /></Link></li>
+               <li><Link to="/statistics" title="Visa statistik"><i className="fa fa-2x fa-pie-chart" /></Link></li>
+               <li><Link to="/about" title="Om Lantisen"><i className="fa fa-2x fa-question" /></Link></li>
             </ul>
             <p className="navbar-right navbar-text">
                <span>Runda: {round}/{rounds}</span>
@@ -55,18 +57,11 @@ const mapDispatchToProps = (dispatch) => {
    return {
       newGame: (ev) => {
          ev.preventDefault();
+         dispatch(newGame());
       },
       undoMove: (ev) => {
          ev.preventDefault();
-      },
-      showHighScore: (ev) => {
-         ev.preventDefault();
-      },
-      showStatistics: (ev) => {
-         ev.preventDefault();
-      },
-      showAbout: (ev) => {
-         ev.preventDefault();
+         dispatch(undoMove());
       }
    };
 };
