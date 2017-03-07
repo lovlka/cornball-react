@@ -1,33 +1,32 @@
 @import "/app/styles/app.less";
 
-.navbar {
-  background: transparent;
-  border: none;
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  color: #fff;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
 
-  p {
-    color: #fff;
-    margin: 18px;
-    text-shadow: 0 0 5px #000;
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      float: left;
+      margin: 10px 15px;
+      a {
+        display: block;
+        padding: 0;
+        color: #fff;
+      }
+    }
+  }
+
+  section {
+    margin: 12px 20px;
     span {
       margin-left: 20px;
     }
-  }
-  li {
-    float: left;
-    > a {
-      color: #fff;
-      text-shadow: 0 0 5px #000;
-    }
-  }
-  .navbar-nav {
-    margin: 0;
-    float: left;
-    li > a {
-      padding-top: 15px;
-      padding-bottom: 15px;
-    }
-  }
-  .navbar-right {
-    float: right;
   }
 }

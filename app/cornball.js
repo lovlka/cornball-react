@@ -29,6 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </Router>
          </IntlProvider>
       </Provider>,
-      document.body
+      document.getElementById('cornball')
    );
 });

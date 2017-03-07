@@ -14,25 +14,38 @@ class Nav extends Component {
       return (
          <nav>
             <ul className="left">
-               <li><Link to="/newgame" onClick={this.props.newGame} title="Starta nytt spel"><i className="fa fa-2x fa-refresh" /></Link></li>
-               <li><Link to="/undomove" onClick={this.props.undoMove} title="Ångra senaste drag"><i className="fa fa-2x fa-reply" /></Link></li>
-               <li><Link to="/highscore" title="Visa topplista"><i className="fa fa-2x fa-star" /></Link></li>
-               <li><Link to="/statistics" title="Visa statistik"><i className="fa fa-2x fa-pie-chart" /></Link></li>
-               <li><Link to="/about" title="Om Lantisen"><i className="fa fa-2x fa-question" /></Link></li>
+               <li>{this.getLink('newgame', 'refresh', 'Start new game', this.props.newGame)}</li>
+               <li>{this.getLink('undomove', 'reply', 'Undo last move', this.props.undoMove)}</li>
+               <li>{this.getLink('highscore', 'star', 'High score')}</li>
+               <li>{this.getLink('statistics', 'pie-chart', 'Statistics')}</li>
+               <li>{this.getLink('about', 'question', 'About')}</li>
             </ul>
-            <div className="right">
+            <section className="right">
                <FormattedMessage id="nav.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} />
                <FormattedMessage id="nav.score" defaultMessage="Score: {score, number}" values={{ score }} />
                <FormattedMessage id="nav.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
-            </div>
-            <div className="center">
-               Högst poäng i {month}: {highScoreName} ({highScore})
-            </div>
+            </section>
+            <section className="center">
+               <FormattedMessage
+                  id="nav.highscore"
+                  defaultMessage="High score in {month}: {highScoreName} ({highScore})"
+                  values={{ month, highScoreName, highScore }} />
+            </section>
          </nav>
       );
    }
 
+   getLink(id, icon, defaultMessage, action) {
+      const iconClass = 'fa fa-2x fa-' + icon;
+      const title = this.context.intl.formatMessage({id: 'nav.' + id, defaultMessage: defaultMessage});
+      
+      return <Link to={'/' + id} title={title} onClick={action}><i className={iconClass} /></Link>;
+   }
 }
+
+Nav.contextTypes = {
+   intl: PropTypes.object.isRequired
+};
 
 Nav.propTypes = {
    round: PropTypes.number.isRequired,

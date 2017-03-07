@@ -7,7 +7,7 @@ class Game extends Component {
 
    render() {
       return (
-         <div id="deck">
+         <section id="deck">
             {this.props.deck.map(card => {
                const {suit, value} = card.toJS();
                const key = suit + value.toString();
@@ -16,7 +16,7 @@ class Game extends Component {
                   <Card key={key} suit={suit} value={value} /> :
                   <Gap key={key} />
             })}
-         </div>
+         </section>
       );
    }
 
