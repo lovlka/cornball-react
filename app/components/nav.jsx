@@ -2,44 +2,69 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
-import {getDate} from '../utils/date';
 import {newGame, undoMove} from '../actions/game';
 
 class Nav extends Component {
 
    render() {
-      const {round, rounds, score, moves, highScoreName, highScore} = this.props;
-      const month = getDate().month();
-
       return (
          <nav>
-            <ul className="left">
-               <li>{this.getLink('newgame', 'refresh', 'Start new game', this.props.newGame)}</li>
-               <li>{this.getLink('undomove', 'reply', 'Undo last move', this.props.undoMove)}</li>
-               <li>{this.getLink('highscore', 'star', 'High score')}</li>
-               <li>{this.getLink('statistics', 'pie-chart', 'Statistics')}</li>
-               <li>{this.getLink('about', 'question', 'About')}</li>
-            </ul>
-            <section className="right">
-               <FormattedMessage id="nav.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} />
-               <FormattedMessage id="nav.score" defaultMessage="Score: {score, number}" values={{ score }} />
-               <FormattedMessage id="nav.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
-            </section>
-            <section className="center">
-               <FormattedMessage
-                  id="nav.highscore"
-                  defaultMessage="High score in {month}: {highScoreName} ({highScore})"
-                  values={{ month, highScoreName, highScore }} />
-            </section>
+            {this.renderMenu()}
+            {this.renderScore()}
+            {this.renderHighScore()}
          </nav>
       );
    }
 
-   getLink(id, icon, defaultMessage, action) {
+   renderMenu() {
+      const {newGame, undoMove} = this.props;
+
+      return (
+         <ul className="left">
+            <li>{this.renderLink('newgame', 'refresh', 'Start new game', newGame)}</li>
+            <li>{this.renderLink('undomove', 'reply', 'Undo last move', undoMove)}</li>
+            <li>{this.renderLink('highscore', 'star', 'High score')}</li>
+            <li>{this.renderLink('statistics', 'pie-chart', 'Statistics')}</li>
+            <li>{this.renderLink('about', 'question', 'About')}</li>
+         </ul>
+      );
+   }
+
+   renderLink(id, icon, defaultMessage, action) {
       const iconClass = 'fa fa-2x fa-' + icon;
       const title = this.context.intl.formatMessage({id: 'nav.' + id, defaultMessage: defaultMessage});
-      
+
       return <Link to={'/' + id} title={title} onClick={action}><i className={iconClass} /></Link>;
+   }
+
+   renderScore() {
+      const {round, rounds, score, moves} = this.props;
+
+      return (
+         <section className="right">
+            <FormattedMessage id="nav.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} />
+            <FormattedMessage id="nav.score" defaultMessage="Score: {score, number}" values={{ score }} />
+            <FormattedMessage id="nav.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
+         </section>
+      );
+   }
+
+   renderHighScore() {
+      if(!this.props.highScore) {
+         return null;
+      }
+
+      const {name, value, date} = this.props.highScore.toJS();
+      const month = this.context.intl.formatDate(new Date(date), { month: 'long' });
+
+      return (
+         <section className="center">
+            <FormattedMessage
+               id="nav.highscore"
+               defaultMessage="High score in {month}: {name} ({value, number})"
+               values={{ month, name, value }} />
+         </section>
+      );
    }
 }
 
@@ -52,8 +77,7 @@ Nav.propTypes = {
    rounds: PropTypes.number.isRequired,
    score: PropTypes.number.isRequired,
    moves: PropTypes.number.isRequired,
-   highScoreName: PropTypes.string.isRequired,
-   highScore: PropTypes.number.isRequired
+   highScore: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
@@ -64,7 +88,6 @@ const mapStateToProps = (state) => {
       rounds: game.get('rounds'),
       score: game.get('score'),
       moves: game.get('moves'),
-      highScoreName: app.get('highScoreName'),
       highScore: app.get('highScore')
    };
 };

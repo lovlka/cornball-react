@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { resetNetwork }  from '../actions/network';
-import { newGame }  from '../actions/game';
+import { newGame } from '../actions/game';
+import { getHighScore } from '../actions/highscore';
 import Nav from './nav';
 import Game from './game';
 
@@ -17,6 +18,7 @@ class Root extends Component {
    }
 
    componentDidMount() {
+      this.props.getHighScore();
       this.props.newGame();
    }
 }
@@ -39,6 +41,9 @@ const mapDispatchToProps = (dispatch) => {
    return {
       resetNetwork: () => {
          dispatch(resetNetwork());
+      },
+      getHighScore: () => {
+         dispatch(getHighScore());
       },
       newGame: () => {
          dispatch(newGame());

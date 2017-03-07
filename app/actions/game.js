@@ -8,7 +8,7 @@ export const UNDO_MOVE = 'UNDO_MOVE';
 export function newGame() {
    return dispatch => {
       dispatch(gameStarted());
-      dispatch({ 
+      dispatch({
          type: NEW_GAME
       });
    }
