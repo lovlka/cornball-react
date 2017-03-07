@@ -1,0 +1,27 @@
+table {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  border-collapse: collapse;
+
+  tr {
+    &:first-child {
+      font-weight: 500;
+    }
+    &:not(:first-child) {
+      border-top: 1px solid #eee;
+    }
+
+    td {
+      margin: 0;
+      padding: 5px;
+
+      &:first-child {
+        text-align: left;
+      }
+      &:not(:first-child) {
+        text-align: right;
+      }
+    }
+  }
+}

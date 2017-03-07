@@ -12,7 +12,12 @@ import HighScore from './highscore';
 import Statistics from './statistics';
 import About from './about';
 
-class Root extends Component {
+class Main extends Component {
+   componentDidMount() {
+      this.props.getHighScore();
+      this.props.newGame();
+   }
+
    render() {
       return (
          <Router>
@@ -26,14 +31,9 @@ class Root extends Component {
          </Router>
       );
    }
-
-   componentDidMount() {
-      this.props.getHighScore();
-      this.props.newGame();
-   }
 }
 
-Root.propTypes = {
+Main.propTypes = {
    networkProgress: PropTypes.bool.isRequired,
    networkFailed: PropTypes.bool.isRequired
 };
@@ -61,4 +61,4 @@ const mapDispatchToProps = (dispatch) => {
    };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Root);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
