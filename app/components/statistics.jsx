@@ -29,7 +29,7 @@ class Statistics extends Component {
          <tr key={title}>
             <td><FormattedMessage id={'statistics.' + title} defaultMessage={title} /></td>
             <td><FormattedNumber value={value} /></td>
-            <td>{percent ? <FormattedNumber value={percent} format="decimal" /> : null}</td>
+            <td>{percent ? <FormattedNumber value={percent} /> : null}</td>
          </tr>
       );
    }

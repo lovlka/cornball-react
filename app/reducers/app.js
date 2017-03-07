@@ -8,6 +8,8 @@ const initialState = {
    networkFailed: false,
    networkProgress: false,
    highScore: null,
+   highScores: [],
+   allTimeHigh: [],
    statistics: []
 };
 
