@@ -1,19 +1,29 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import { resetNetwork }  from '../actions/network';
 import { newGame } from '../actions/game';
 import { getHighScore } from '../actions/highscore';
+
 import Nav from './nav';
 import Game from './game';
+import HighScore from './highscore';
+import Statistics from './statistics';
+import About from './about';
 
 class Root extends Component {
    render() {
       return (
-         <main>
-            <Nav />
-            <Game />
-            {this.props.children}
-         </main>
+         <Router>
+            <main>
+               <Nav />
+               <Game />
+               <Route path="/highscore" component={HighScore} />
+               <Route path="/statistics" component={Statistics} />
+               <Route path="/about" component={About} />
+            </main>
+         </Router>
       );
    }
 

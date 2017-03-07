@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router-dom';
 
-export default class Modal extends Component {
+class Modal extends Component {
 
    componentDidMount() {
       const close = this.close;
@@ -19,7 +19,7 @@ export default class Modal extends Component {
 
    close = ev => {
       ev.preventDefault();
-      this.context.router.push('/');
+      this.props.history.push('/');
    };
 
    render() {
@@ -38,12 +38,9 @@ export default class Modal extends Component {
 
 }
 
-Modal.contextTypes = {
-   router: PropTypes.object.isRequired,
-   intl: PropTypes.object.isRequired
-};
-
 Modal.propTypes = {
    title: PropTypes.string.isRequired,
    children: PropTypes.element.isRequired
 };
+
+export default withRouter(Modal);

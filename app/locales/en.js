@@ -1,0 +1,64 @@
+export default function() {
+   return {
+      "main": {
+         "title": "The Cornball",
+         "author": "Victor Stodell",
+         "description": "The Cornball is an addictive card game where you by moving the cards should place them in order from 2 to King."
+      },
+      "nav": {
+         "newgame": "Start new game",
+         "undo": "Undo last move",
+         "highscore": "Show high score",
+         "statistics": "Show statistics",
+         "about": "Rules and information",
+         "round": "Round",
+         "score": "Score",
+         "moves": "Moves"
+      },
+      "about": {
+         "title": "About The Cornball",
+         "dismiss": "Close",
+         "info": "The goal of The Cornball is to put all the cards in order from 2 to king with one color on each line. What color is put on each line does not matter.Twos can only be put in a gap on the far left on the board. Other cards can only be put in a gap to the right of the card in the same color that is right before in order. No card can be put in a gap after the king.",
+         "help": "Drag a card to the right gap or double-click the card to automatically find the right place. Click on a gap and the right card for that gap will flash.",
+         "contact": "Become a fan of The Cornball on Facebook! There you have the opportunity to make comments or get in touch with me. Thank you for playing The Cornball!"
+      },
+      "highscore": {
+         "title": "High score",
+         "dismiss": "Close",
+         "header": "High score in %s: %s (%s)",
+         "alltime": "All time high",
+         "month": "Best in %s"
+      },
+      "statistics": {
+         "title": "Statistics",
+         "dismiss": "Close",
+         "gamesPlayed": "Played games",
+         "gamesLost": "Lost games",
+         "gamesWonRound1": "Completed in round 1",
+         "gamesWonRound2": "Completed in round 2",
+         "gamesWonRound3": "Completed in round 3",
+         "gamesWonRound4": "Completed in round 4",
+         "gamesWonRound5": "Completed in round 5"
+      },
+      "roundover": {
+         "title": "End of round %s",
+         "dismiss": "Close",
+         "description": "No more moves can be done, the cards are being reshuffled..."
+      },
+      "gameover": {
+         "title": "Game over!",
+         "dismiss": "Close",
+         "description": "You failed to complete The Cornball!"
+      },
+      "gamewin": {
+         "title": "Congratulations!",
+         "dismiss": "Close",
+         "description": "You put all cards on the right place and finished The Cornball!",
+         "highscore": "You made it to the high score list! Enter your name to send your score.",
+         "nohighscore": "Unfortunately you did not set a high score this time.",
+         "name": "Enter your name",
+         "post": "Send",
+         "posting": "Sending..."
+      }
+   }
+};
