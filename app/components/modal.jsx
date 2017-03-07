@@ -3,6 +3,20 @@ import { Link } from 'react-router';
 
 export default class Modal extends Component {
 
+   componentDidMount() {
+      const router = this.context.router;
+      document.onkeydown = function(ev) {
+         ev = ev || window.event;
+         if (ev.keyCode == 27) {
+            router.push('/');
+         }
+      };
+   }
+
+   componentWillUnmount() {
+      document.onkeydown = null;
+   }
+
    render() {
       return (
          <div className="dialog-container">
@@ -18,6 +32,10 @@ export default class Modal extends Component {
    }
 
 }
+
+Modal.contextTypes = {
+   router: PropTypes.func.isRequired
+};
 
 Modal.propTypes = {
    title: PropTypes.string.isRequired,

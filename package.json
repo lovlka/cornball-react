@@ -3,7 +3,7 @@
   "name": "cornball-react",
   "description": "Cornball",
   "version": "1.0.0",
-  "license": "N/A",
+  "private": true,
   "homepage": "http://cornball-react.github.io",
   "repository": {
     "type": "git",
@@ -28,15 +28,15 @@
   },
   "devDependencies": {
     "auto-reload-brunch": "~2.0.0",
-    "babel-brunch": "~6.0.0",
+    "babel-brunch": "^6.1.1",
     "babel-preset-es2015": "~6.3.13",
     "babel-preset-react": "~6.3.13",
     "babel-preset-stage-1": "~6.3.13",
-    "brunch": "~2.5.3",
+    "brunch": "~2.10.8",
     "clean-css-brunch": "~2.0.0",
     "css-brunch": "~2.0.0",
-    "less-brunch": "~2.0.0",
     "javascript-brunch": "~2.0.0",
+    "less-brunch": "~2.0.0",
     "uglify-js-brunch": "~2.0.0"
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 import {getDate} from '../utils/date';
 import {newGame, undoMove} from '../actions/game';
 
@@ -11,20 +12,22 @@ class Nav extends Component {
       const month = getDate().month();
 
       return (
-         <nav className="navbar navbar-inverse navbar-static-top">
-            <ul className="nav navbar-nav">
-               <li><a href="#" onClick={this.props.newGame} title="Starta nytt spel"><i className="fa fa-2x fa-refresh" /></a></li>
-               <li><a href="#" onClick={this.props.undoMove} title="Ångra senaste drag"><i className="fa fa-2x fa-reply" /></a></li>
+         <nav>
+            <ul className="left">
+               <li><Link to="/newgame" onClick={this.props.newGame} title="Starta nytt spel"><i className="fa fa-2x fa-refresh" /></Link></li>
+               <li><Link to="/undomove" onClick={this.props.undoMove} title="Ångra senaste drag"><i className="fa fa-2x fa-reply" /></Link></li>
                <li><Link to="/highscore" title="Visa topplista"><i className="fa fa-2x fa-star" /></Link></li>
                <li><Link to="/statistics" title="Visa statistik"><i className="fa fa-2x fa-pie-chart" /></Link></li>
                <li><Link to="/about" title="Om Lantisen"><i className="fa fa-2x fa-question" /></Link></li>
             </ul>
-            <p className="navbar-right navbar-text">
-               <span>Runda: {round}/{rounds}</span>
-               <span>Poäng: {score}</span>
-               <span>Drag: {moves}</span>
-            </p>
-            <p className="text-center hidden-xs hidden-sm">Högst poäng i {month}: {highScoreName} ({highScore})</p>
+            <div className="right">
+               <FormattedMessage id="nav.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} />
+               <FormattedMessage id="nav.score" defaultMessage="Score: {score, number}" values={{ score }} />
+               <FormattedMessage id="nav.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
+            </div>
+            <div className="center">
+               Högst poäng i {month}: {highScoreName} ({highScore})
+            </div>
          </nav>
       );
    }

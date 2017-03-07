@@ -2,23 +2,17 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { resetNetwork }  from '../actions/network';
 import { newGame }  from '../actions/game';
-import Loading from './loading';
-import Error from './error';
 import Nav from './nav';
 import Game from './game';
 
 class Root extends Component {
    render() {
-      const { networkProgress, networkFailed } = this.props;
-
       return (
-         <div>
-            {networkProgress ? <Loading /> : null }
-            {networkFailed ? <Error onClose={this.props.resetNetwork} /> : null }
+         <main>
             <Nav />
             <Game />
             {this.props.children}
-         </div>
+         </main>
       );
    }
 
