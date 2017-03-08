@@ -5,42 +5,36 @@ import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE } from '../actions/game';
 export function deck(state = Immutable.List(), action = null) {
    switch (action.type) {
       case NEW_GAME:
-         return Immutable.fromJS(initialize());
+         return Immutable.fromJS(shuffle(getDeck()));
 
       default:
          return state;
    }
 }
 
-export function initialize() {
-   var deck = [];
-   for (var suit = 1; suit <= 4; suit++) {
-      for (var value = 1; value <= 13; value++) {
+function getDeck() {
+   let deck = [];
+   for (let suit = 1; suit <= 4; suit++) {
+      for (let value = 1; value <= 13; value++) {
          deck.push({
             suit: getSuit(suit),
             value: value
          });
       }
    }
-   for (var index = deck - 1; index >= 0; index--) {
-      var random = Math.floor((Math.random() * index));
-      var temp = deck[random];
-      deck[random] = deck[index];
-      deck[index] = temp;
-   }
    return deck;
 }
 
 function shuffle(deck) {
-   for (var index = deck - 1; index >= 0; index--) {
-      var random = Math.floor((Math.random() * index));
+   for (let index = deck.length - 1; index >= 0; index--) {
+      let random = Math.floor((Math.random() * index));
       swapCards(deck, random, index);
    }
    return deck;
 }
 
 function swapCards(deck, fromIndex, toIndex) {
-   var temp = deck[fromIndex];
+   let temp = deck[fromIndex];
    deck[fromIndex] = deck[toIndex];
    deck[toIndex] = temp;
 }
