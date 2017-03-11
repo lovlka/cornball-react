@@ -1,19 +1,20 @@
-
+import Immutable from 'immutable';
 import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE } from '../actions/game';
 
-export function deck(state = [], action = null) {
+export function deck(state = Immutable.List(), action = null) {
    switch (action.type) {
       case NEW_GAME:
-         return shuffle(getDeck());
+         return Immutable.fromJS(shuffle(getDeck()));
 
       case NEW_ROUND:
-         return reShuffle(state);
+         let foo = state.toArray();
+         return Immutable.fromJS(reShuffle(foo));
 
       case MOVE_CARD:
-         return swapCards(state, action.move.from, action.move.to);
-
       case UNDO_MOVE:
-         return swapCards(state, action.move.from, action.move.to);
+         let bar = state.toArray();
+         swapCards(bar, action.move.from, action.move.to);
+         return Immutable.fromJS(bar);
 
       default:
          return state;

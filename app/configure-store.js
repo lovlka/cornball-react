@@ -3,6 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import { combineReducers } from 'redux';
 import { game } from './reducers/game';
 import { deck } from './reducers/deck';
+import { undo } from './reducers/undo';
 import { app } from './reducers/app';
 
 const createStoreWithMiddleware = compose(
@@ -12,7 +13,8 @@ const createStoreWithMiddleware = compose(
 const rootReducer = combineReducers({
    app,
    game,
-   deck
+   deck,
+   undo
 });
 
 export default function configureStore() {

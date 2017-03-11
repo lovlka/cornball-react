@@ -8,9 +8,14 @@ export default class Card extends Component {
       const style = {backgroundImage: image, ...position};
 
       return (
-         <div className="card" style={style}></div>
+         <div className="card" onClick={this.move} style={style}></div>
       );
    }
+
+   move = ev => {
+      ev.preventDefault();
+      this.props.onMove(this.props.index, 0);
+   };
 
    getPosition() {
       const index = this.props.index;
@@ -27,5 +32,6 @@ export default class Card extends Component {
 
 Card.propTypes = {
    suit: PropTypes.string.isRequired,
-   value: PropTypes.number.isRequired
+   value: PropTypes.number.isRequired,
+   onMove: PropTypes.func.isRequired
 };
