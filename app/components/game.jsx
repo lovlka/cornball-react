@@ -14,11 +14,15 @@ class Game extends Component {
 
                return value > 1 ?
                   <Card key={index} index={index} suit={suit} value={value} onMove={this.onMove} /> :
-                  <Gap key={index} index={index} />
+                  <Gap key={index} index={index} onClick={this.onGapClick} />
             })}
          </section>
       );
    }
+
+   onGapClick = (index) => {
+      console.log('hint card', index);
+   };
 
    onMove = (from, to) => {
       console.log('move card', from, to);
