@@ -28,7 +28,12 @@ export function moveCard(from, to) {
 }
 
 export function undoMove() {
-   return {
-      type: UNDO_MOVE
-   };
+   return (dispatch, getState) => {
+      const move = getState().undo.get('move');
+
+      dispatch({
+         type: UNDO_MOVE,
+         move: move ? move.toJS() : null
+      });
+   }
 }

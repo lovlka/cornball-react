@@ -11,10 +11,10 @@ export function undo(state = Immutable.Map(initialState), action = null) {
       case NEW_GAME:
       case NEW_ROUND:
       case UNDO_MOVE:
-         return state.merge(initialState);
+         return state.merge({ move: null });
 
       case MOVE_CARD:
-         return state.merge(action.move);
+         return state.merge({ move: action.move });
 
       default:
          return state;
