@@ -4,6 +4,7 @@ export const NEW_GAME = 'NEW_GAME';
 export const NEW_ROUND = 'NEW_ROUND';
 export const MOVE_CARD = 'MOVE_CARD';
 export const UNDO_MOVE = 'UNDO_MOVE';
+export const SHOW_HINT = 'SHOW_HINT';
 export const SET_SCORE = 'SET_SCORE';
 export const SET_ROUND_PLACED = 'SET_ROUND_PLACED';
 
@@ -30,7 +31,7 @@ export function moveCard(from, to) {
    return dispatch => {
       dispatch({
          type: MOVE_CARD,
-         move: {from: from, to: to}
+         move: { from: from, to: to }
       });
       dispatch(checkAllCards());
    }
@@ -47,8 +48,49 @@ export function undoMove() {
    }
 }
 
+export function showHint(gap) {
+   return (dispatch, getState) => {
+      const {deck} = getState();
+      const index = findCard(deck, gap);
+
+      if(index != -1) {
+         dispatch({
+            type: SHOW_HINT,
+            index: index,
+            showHint: true
+         });
+         setTimeout(function () {
+            dispatch({
+               type: SHOW_HINT,
+               index: index,
+               showHint: false
+            });
+         }, 2000);
+      }
+   }
+}
+
+function findCard(deck, gap) {
+   let index = -1;
+   deck.map((card, cardIndex) => {
+      if (isCorrectGap(deck, gap, card)) {
+         index = cardIndex;
+      }
+   });
+   return index;
+}
+
+function isCorrectGap(deck, gap, card) {
+   const isGapFirstInRow = gap % 13 === 0;
+   const isCardValueTwo = card.get('value') === 2;
+   const previous = gap > 0 ? deck.get(gap - 1) : null;
+   const isSuitMatch = previous !== null && card.get('suit') == previous.get('suit');
+   const isValueMatch = previous !== null && card.get('value') == previous.get('value') + 1;
+
+   return (isGapFirstInRow && isCardValueTwo) || (!isGapFirstInRow && !isCardValueTwo && isSuitMatch && isValueMatch);
+}
+
 function checkAllCards() {
-   console.log('checkAllCards()');
    return (dispatch, getState) => {
       const {game, deck} = getState();
       const {round, rounds, moves} = game.toJS();
@@ -91,10 +133,10 @@ function checkAllCards() {
 
 function isCardPlaced(suit, card, index) {
    const isFirstInRow = index % 13 === 0;
-   const isTwo = card.get('value') === 2;
+   const isValueTwo = card.get('value') === 2;
    const isPlaced = card.get('suit') == suit && card.get('value') === ((index % 13) + 2);
 
-   if ((isFirstInRow && isTwo) || (!isFirstInRow && !isTwo && isPlaced)) {
+   if ((isFirstInRow && isValueTwo) || (!isFirstInRow && !isValueTwo && isPlaced)) {
       return card.get('suit');
    }
    return null;

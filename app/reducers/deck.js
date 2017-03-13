@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 
-import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE, SET_ROUND_PLACED } from '../actions/game';
+import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE, SET_ROUND_PLACED, SHOW_HINT } from '../actions/game';
 
 export function deck(state = Immutable.List(), action = null) {
    switch (action.type) {
@@ -12,15 +12,13 @@ export function deck(state = Immutable.List(), action = null) {
 
       case MOVE_CARD:
       case UNDO_MOVE:
-         const fromCard = state.get(action.move.from);
-         const toGap = state.get(action.move.to);
-         return state.set(action.move.to, fromCard).set(action.move.from, toGap);
+         return swapImmutable(state, action.move.from, action.move.to);
 
       case SET_ROUND_PLACED:
-         const card = state.get(action.index);
-         const newCard = card.merge({ roundPlaced: action.roundPlaced });
-         console.log('set round placed', action.index, card, newCard);
-         return state.set(action.index, newCard);
+         return updateCard(state, action.index, { roundPlaced: action.roundPlaced });
+
+      case SHOW_HINT:
+         return updateCard(state, action.index, { showHint: action.showHint });
 
       default:
          return state;
@@ -68,6 +66,16 @@ function swapCards(deck, fromIndex, toIndex) {
    deck[fromIndex] = deck[toIndex];
    deck[toIndex] = temp;
    return deck;
+}
+
+function swapImmutable(deck, from, to) {
+   const fromCard = deck.get(from);
+   const toGap = deck.get(to);
+   return deck.set(to, fromCard).set(from, toGap);
+}
+
+function updateCard(deck, index, state) {
+   return deck.set(index, deck.get(index).merge(state));
 }
 
 function getSuit(suit) {

@@ -4,11 +4,11 @@ import {getPosition} from '../utils/card';
 export default class Card extends Component {
 
    render() {
-      const {suit, value, roundPlaced} = this.props.card.toJS();
+      const {suit, value, roundPlaced, showHint} = this.props.card.toJS();
       const image = 'url("deck/' + suit + value + '.png")';
       const position = getPosition(this.props.index);
       const style = {backgroundImage: image, ...position};
-      const className = roundPlaced ? 'card placed' : 'card';
+      const className = (roundPlaced ? 'card placed' : (showHint ? 'card hint' : 'card'));
 
       return (
          <div className={className} onClick={this.onClick} style={style}></div>

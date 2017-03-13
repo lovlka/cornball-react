@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import {moveCard} from "../actions/game";
+import {moveCard, showHint} from "../actions/game";
 import Card from './card';
 import Gap from './gap';
 
@@ -19,11 +19,10 @@ class Game extends Component {
    }
 
    onGapClick = (index) => {
-      console.log('hint card', index);
+      this.props.showHint(index);
    };
 
    onCardMove = (from, to) => {
-      console.log('move card', from, to);
       this.props.onMove(from, to);
    };
 
@@ -37,6 +36,9 @@ const mapDispatchToProps = (dispatch) => {
    return {
       onMove: function(from, to) {
          dispatch(moveCard(from, to));
+      },
+      showHint: function(index) {
+         dispatch(showHint(index));
       }
    };
 };
