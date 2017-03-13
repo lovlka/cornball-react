@@ -77,7 +77,7 @@ export function showHint(gapIndex) {
                index: index,
                showHint: false
             });
-         }, 2000);
+         }, 1000);
       }
    }
 }

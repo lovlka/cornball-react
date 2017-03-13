@@ -8,7 +8,7 @@ export default class Card extends Component {
       const image = 'url("deck/' + suit + value + '.png")';
       const position = getPosition(this.props.index);
       const style = {backgroundImage: image, ...position};
-      const className = (roundPlaced ? 'card placed' : (showHint ? 'card hint' : 'card'));
+      const className = (roundPlaced ? 'card placed' : (showHint ? 'card animated tada' : 'card'));
 
       return (
          <div className={className} onClick={this.onClick} style={style}></div>
