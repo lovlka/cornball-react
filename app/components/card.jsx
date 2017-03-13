@@ -4,16 +4,18 @@ import {getPosition} from '../utils/card';
 export default class Card extends Component {
 
    render() {
-      const image = 'url("deck/' + this.props.suit + this.props.value + '.png")';
+      const {suit, value, roundPlaced} = this.props.card.toJS();
+      const image = 'url("deck/' + suit + value + '.png")';
       const position = getPosition(this.props.index);
       const style = {backgroundImage: image, ...position};
+      const className = roundPlaced ? 'card placed' : 'card';
 
       return (
-         <div className="card" onClick={this.move} style={style}></div>
+         <div className={className} onClick={this.onClick} style={style}></div>
       );
    }
 
-   move = ev => {
+   onClick = ev => {
       ev.preventDefault();
       this.props.onMove(this.props.index, 0);
    };
@@ -21,8 +23,7 @@ export default class Card extends Component {
 }
 
 Card.propTypes = {
-   suit: PropTypes.string.isRequired,
-   value: PropTypes.number.isRequired,
+   card: PropTypes.object.isRequired,
    index: PropTypes.number.isRequired,
    onMove: PropTypes.func.isRequired
 };

@@ -10,10 +10,8 @@ class Game extends Component {
       return (
          <section id="deck">
             {this.props.deck.map((card, index) => {
-               const {suit, value} = card.toJS();
-
-               return value > 1 ?
-                  <Card key={index} index={index} suit={suit} value={value} onMove={this.onMove} /> :
+               return card.get('value') > 1 ?
+                  <Card key={index} index={index} card={card} onMove={this.onCardMove} /> :
                   <Gap key={index} index={index} onClick={this.onGapClick} />
             })}
          </section>
@@ -24,7 +22,7 @@ class Game extends Component {
       console.log('hint card', index);
    };
 
-   onMove = (from, to) => {
+   onCardMove = (from, to) => {
       console.log('move card', from, to);
       this.props.onMove(from, to);
    };

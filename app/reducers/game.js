@@ -1,12 +1,14 @@
 import Immutable from 'immutable';
 
-import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE } from '../actions/game';
+import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE, SET_SCORE } from '../actions/game';
 
 const initialState = {
    round: 1,
    rounds: 5,
    score: 0,
-   moves: 0
+   moves: 0,
+   placed: 0,
+   locked: 0
 };
 
 export function game(state = Immutable.Map(initialState), action = null) {
@@ -20,6 +22,9 @@ export function game(state = Immutable.Map(initialState), action = null) {
       case MOVE_CARD:
       case UNDO_MOVE:
          return state.merge({ moves: state.get('moves') + 1});
+
+      case SET_SCORE:
+         return state.merge(action.state);
 
       default:
          return state;

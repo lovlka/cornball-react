@@ -1,5 +1,6 @@
 import Immutable from 'immutable';
-import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE } from '../actions/game';
+
+import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE, SET_ROUND_PLACED } from '../actions/game';
 
 export function deck(state = Immutable.List(), action = null) {
    switch (action.type) {
@@ -7,14 +8,19 @@ export function deck(state = Immutable.List(), action = null) {
          return Immutable.fromJS(shuffle(getDeck()));
 
       case NEW_ROUND:
-         let foo = state.toArray();
-         return Immutable.fromJS(reShuffle(foo));
+         return Immutable.fromJS(reShuffle(state.toArray()));
 
       case MOVE_CARD:
       case UNDO_MOVE:
-         let bar = state.toArray();
-         swapCards(bar, action.move.from, action.move.to);
-         return Immutable.fromJS(bar);
+         const fromCard = state.get(action.move.from);
+         const toGap = state.get(action.move.to);
+         return state.set(action.move.to, fromCard).set(action.move.from, toGap);
+
+      case SET_ROUND_PLACED:
+         const card = state.get(action.index);
+         const newCard = card.merge({ roundPlaced: action.roundPlaced });
+         console.log('set round placed', action.index, card, newCard);
+         return state.set(action.index, newCard);
 
       default:
          return state;
