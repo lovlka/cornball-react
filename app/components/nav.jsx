@@ -17,12 +17,12 @@ class Nav extends Component {
    }
 
    renderMenu() {
-      const {newGame, undoMove} = this.props;
+      const {newGame, undoMove, canUndo} = this.props;
 
       return (
          <ul className="left">
             <li>{this.renderLink('newgame', 'refresh', 'Start new game', newGame)}</li>
-            <li>{this.renderLink('undomove', 'reply', 'Undo last move', undoMove)}</li>
+            <li>{this.renderLink('undomove', 'reply', 'Undo last move', undoMove, !canUndo)}</li>
             <li>{this.renderLink('highscore', 'star', 'High score')}</li>
             <li>{this.renderLink('statistics', 'pie-chart', 'Statistics')}</li>
             <li>{this.renderLink('about', 'question', 'About')}</li>
@@ -30,11 +30,12 @@ class Nav extends Component {
       );
    }
 
-   renderLink(id, icon, defaultMessage, action) {
+   renderLink(id, icon, defaultMessage, action, disabled) {
       const iconClass = 'fa fa-2x fa-' + icon;
       const title = this.context.intl.formatMessage({id: 'nav.' + id, defaultMessage: defaultMessage});
+      const className = disabled ? 'disabled' : '';
 
-      return <Link to={'/' + id} title={title} onClick={action}><i className={iconClass} /></Link>;
+      return <Link to={'/' + id} className={className} title={title} onClick={action}><i className={iconClass} /></Link>;
    }
 
    renderScore() {
@@ -77,18 +78,20 @@ Nav.propTypes = {
    rounds: PropTypes.number.isRequired,
    score: PropTypes.number.isRequired,
    moves: PropTypes.number.isRequired,
-   highScore: PropTypes.object
+   highScore: PropTypes.object,
+   canUndo: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => {
-   const {app, game} = state;
+   const {app, game, undo} = state;
 
    return {
       round: game.get('round'),
       rounds: game.get('rounds'),
       score: game.get('score'),
       moves: game.get('moves'),
-      highScore: app.get('highScore')
+      highScore: app.get('highScore'),
+      canUndo: undo.get('move') != null
    };
 };
 
