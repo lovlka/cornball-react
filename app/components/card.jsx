@@ -17,7 +17,7 @@ export default class Card extends Component {
 
    onClick = ev => {
       ev.preventDefault();
-      this.props.onMove(this.props.index, 0);
+      this.props.onClick(this.props.index);
    };
 
 }
@@ -25,5 +25,5 @@ export default class Card extends Component {
 Card.propTypes = {
    card: PropTypes.object.isRequired,
    index: PropTypes.number.isRequired,
-   onMove: PropTypes.func.isRequired
+   onClick: PropTypes.func.isRequired
 };

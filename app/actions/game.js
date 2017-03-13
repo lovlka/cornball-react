@@ -48,10 +48,22 @@ export function undoMove() {
    }
 }
 
-export function showHint(gap) {
+export function autoMoveCard(cardIndex) {
    return (dispatch, getState) => {
       const {deck} = getState();
-      const index = findCard(deck, gap);
+      const card = deck.get(cardIndex);
+      let index = findGap(deck, card);
+
+      if (index != -1) {
+         dispatch(moveCard(cardIndex, index));
+      }
+   }
+}
+
+export function showHint(gapIndex) {
+   return (dispatch, getState) => {
+      const {deck} = getState();
+      const index = findCard(deck, gapIndex);
 
       if(index != -1) {
          dispatch({
@@ -70,11 +82,21 @@ export function showHint(gap) {
    }
 }
 
-function findCard(deck, gap) {
+function findCard(deck, gapIndex) {
    let index = -1;
    deck.map((card, cardIndex) => {
-      if (isCorrectGap(deck, gap, card)) {
+      if (isCorrectGap(deck, gapIndex, card)) {
          index = cardIndex;
+      }
+   });
+   return index;
+}
+
+function findGap(deck, card) {
+   let index = -1;
+   deck.map((gap, gapIndex) => {
+      if (gap.get('value') == 1 && isCorrectGap(deck, gapIndex, card)) {
+         index = gapIndex;
       }
    });
    return index;
