@@ -8,7 +8,7 @@ export function deck(state = Immutable.List(), action = null) {
          return Immutable.fromJS(shuffle(getDeck()));
 
       case NEW_ROUND:
-         return Immutable.fromJS(reShuffle(state.toArray()));
+         return Immutable.fromJS(reShuffle(state.toJS()));
 
       case MOVE_CARD:
       case UNDO_MOVE:
@@ -56,7 +56,7 @@ function reShuffle(deck) {
    }
    for (index = shuffle.length - 1; index >= 0; index--) {
       let random = Math.floor((Math.random() * index));
-      swapCards(shuffle[random], shuffle[index]);
+      swapCards(deck, shuffle[random], shuffle[index]);
    }
    return deck;
 }

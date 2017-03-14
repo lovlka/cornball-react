@@ -24,8 +24,26 @@ export function getStatistics() {
 
 export function gameStarted() {
    return dispatch => {
+      dispatch(increaseStatistics('gamesStarted'));
+   }
+}
+
+export function gameWon(round) {
+   return dispatch => {
+      dispatch(increaseStatistics('gamesWonRound' + round));
+   }
+}
+
+export function gameLost() {
+   return dispatch => {
+      dispatch(increaseStatistics('gamesLost'));
+   }
+}
+
+function increaseStatistics(property) {
+   return dispatch => {
       dispatch(networkProgress());
-      return postJson('/statistics', {name: 'gamesStarted'})
+      return postJson('/statistics', {name: property})
          .then(result => dispatch(resetNetwork()))
          .catch(error => dispatch(networkFailed(error)));
    }

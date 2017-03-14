@@ -19,14 +19,20 @@ class Modal extends Component {
 
    close = ev => {
       ev.preventDefault();
-      this.props.history.push('/');
+
+      if(this.props.onClose) {
+         this.props.onClose();
+      }
+      else {
+         this.props.history.push('/');
+      }
    };
 
    render() {
       return (
          <section className="modal-container" onClick={this.close}>
             <aside className="modal-content" onClick={ev => ev.stopPropagation()}>
-               <Link to="/" className="close">&times;</Link>
+               <Link to="/" className="close" onClick={this.close}>&times;</Link>
                <h1>{this.props.title}</h1>
                <hr />
                {this.props.children}
@@ -39,7 +45,8 @@ class Modal extends Component {
 
 Modal.propTypes = {
    title: PropTypes.string.isRequired,
-   children: PropTypes.element.isRequired
+   children: PropTypes.element.isRequired,
+   onClose: PropTypes.func
 };
 
 export default withRouter(Modal);

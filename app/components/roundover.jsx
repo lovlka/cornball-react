@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { newRound } from '../actions/game';
 import Modal from './modal';
 
 class RoundOver extends Component {
@@ -9,11 +10,12 @@ class RoundOver extends Component {
       const {moves, round, score} = this.props;
 
       return (
-         <Modal title="Round over" dismiss="Close">
+         <Modal title="Round over" dismiss="Close" onClose={this.props.newRound}>
             <article>
                <p>No more moves can be done, the cards are being reshuffled...</p>
                <p>
                   <FormattedMessage id="nav.score" defaultMessage="Score: {score, number}" values={{ score }} /><br />
+                  <FormattedMessage id="nav.round" defaultMessage="Round: {round, number}" values={{ round }} /><br />
                   <FormattedMessage id="nav.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
                </p>
             </article>
@@ -30,13 +32,21 @@ RoundOver.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-   const {app} = state;
+   const {game} = state;
 
    return {
-      moves: app.get('moves'),
-      round: app.get('round'),
-      score: app.get('score')
+      moves: game.get('moves'),
+      round: game.get('round'),
+      score: game.get('score')
    };
 };
 
-export default connect(mapStateToProps)(RoundOver);
+const mapDispatchToProps = (dispatch) => {
+   return {
+      newRound: () => {
+         dispatch(newRound());
+      }
+   };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoundOver);

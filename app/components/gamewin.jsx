@@ -1,15 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { newGame } from '../actions/game';
+import { gameWon } from '../actions/statistics';
 import Modal from './modal';
 
 class GameWin extends Component {
+
+   componentDidMount() {
+      this.props.gameWon(this.props.round);
+   }
 
    render() {
       const {moves, round, score} = this.props;
 
       return (
-         <Modal title="Congratulations!" dismiss="Close">
+         <Modal title="Congratulations!" dismiss="Close" onClose={this.props.newGame}>
             <article>
                <p><FormattedMessage id="gamewin.description" defaultMessage="You put all cards on the right place and finished The Cornball!" /></p>
                <p>
@@ -31,13 +37,24 @@ GameWin.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-   const {app} = state;
+   const {game} = state;
 
    return {
-      moves: app.get('moves'),
-      round: app.get('round'),
-      score: app.get('score')
+      moves: game.get('moves'),
+      round: game.get('round'),
+      score: game.get('score')
    };
 };
 
-export default connect(mapStateToProps)(GameWin);
+const mapDispatchToProps = (dispatch) => {
+   return {
+      gameWon: (round) => {
+         dispatch(gameWon(round));
+      },
+      newGame: () => {
+         dispatch(newGame());
+      }
+   };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameWin);

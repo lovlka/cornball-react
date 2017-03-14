@@ -1,15 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { newGame } from '../actions/game';
+import { gameLost } from '../actions/statistics';
 import Modal from './modal';
 
 class GameOver extends Component {
+
+   componentDidMount() {
+      this.props.gameLost();
+   }
 
    render() {
       const {moves, score} = this.props;
 
       return (
-         <Modal title="Game over" dismiss="Close">
+         <Modal title="Game over" dismiss="Close" onClose={this.props.newGame}>
             <article>
                <p>You failed to complete The Cornball!</p>
                <p>
@@ -29,12 +35,24 @@ GameOver.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-   const {app} = state;
+   const {game} = state;
 
    return {
-      moves: app.get('moves'),
-      score: app.get('score')
+      moves: game.get('moves'),
+      round: game.get('round'),
+      score: game.get('score')
    };
 };
 
-export default connect(mapStateToProps)(GameOver);
+const mapDispatchToProps = (dispatch) => {
+   return {
+      gameLost: () => {
+         dispatch(gameLost());
+      },
+      newGame: () => {
+         dispatch(newGame());
+      }
+   };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameOver);

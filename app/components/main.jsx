@@ -8,6 +8,9 @@ import { getHighScore } from '../actions/highscore';
 
 import Nav from './nav';
 import Game from './game';
+import GameWin from './gamewin';
+import GameOver from './gameover';
+import RoundOver from './roundover';
 import HighScore from './highscore';
 import Statistics from './statistics';
 import About from './about';
@@ -19,11 +22,21 @@ class Main extends Component {
    }
 
    render() {
+      const {round, rounds, locked, placed} = this.props;
+
+      const isLocked = locked == 4;
+      const isGameWin = isLocked && placed == 48;
+      const isGameOver = isLocked && !isGameWin && round == rounds;
+      const isRoundOver = isLocked && !isGameWin && round < rounds;
+
       return (
          <Router>
             <main>
                <Nav />
                <Game />
+               {isGameWin ? <GameWin /> : null}
+               {isGameOver ? <GameOver /> : null}
+               {isRoundOver ? <RoundOver /> : null}
                <Route path="/highscore" component={HighScore} />
                <Route path="/statistics" component={Statistics} />
                <Route path="/about" component={About} />
@@ -39,9 +52,13 @@ Main.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-   const {app} = state;
+   const {app, game} = state;
 
    return {
+      round: game.get('round'),
+      rounds: game.get('rounds'),
+      locked: game.get('locked'),
+      placed: game.get('placed'),
       networkProgress: app.get('networkProgress'),
       networkFailed: app.get('networkFailed')
    };
