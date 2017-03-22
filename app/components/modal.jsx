@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class Modal extends Component {
    componentDidMount() {
@@ -28,14 +29,18 @@ class Modal extends Component {
 
    render() {
       return (
-         <section className="modal-container" onClick={this.close}>
-            <aside className="modal-content" onClick={ev => ev.stopPropagation()}>
-               <Link to="/" replace={true} className="close" onClick={this.close}>&times;</Link>
-               <h1>{this.props.title}</h1>
-               <hr />
-               {this.props.children}
-            </aside>
-         </section>
+         <ReactCSSTransitionGroup component="div" transitionName="modal"
+                                  transitionAppear={true} transitionAppearTimeout={500}
+                                  transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+            <section className="modal-container" onClick={this.close}>
+               <aside className="modal-content" onClick={ev => ev.stopPropagation()}>
+                  <Link to="/" replace={true} className="close" onClick={this.close}>&times;</Link>
+                  <h1>{this.props.title}</h1>
+                  <hr />
+                  {this.props.children}
+               </aside>
+            </section>
+         </ReactCSSTransitionGroup>
       );
    }
 }

@@ -9,6 +9,7 @@
    justify-content: center;
    align-items: flex-start;
    background-color: rgba(0, 0, 0, 0.3);
+   transition: all 0.5s;
 
    .modal-content {
       z-index: 1002;
@@ -17,6 +18,7 @@
       margin: 100px 20px 20px 20px;
       min-height: 200px;
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+      transition: all 0.5s;
 
       .row {
          width: 100%;
@@ -70,6 +72,25 @@
          border-radius: 5px;
          font-weight: 600;
          text-decoration: none;
+      }
+   }
+
+   &.modal-appear,
+   &.modal-enter,
+   &.modal-leave.fade-leave-active {
+      opacity: 0;
+
+      .modal-content {
+         transform: scale(0.7);
+      }
+   }
+   &.modal-appear.modal-appear-active,
+   &.modal-enter.modal-enter-active,
+   &.modal-leave {
+      opacity: 1;
+
+      .modal-content {
+         transform: scale(1);
       }
    }
 }
