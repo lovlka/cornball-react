@@ -1,5 +1,3 @@
-@import "/app/styles/app.less";
-
 #deck {
   top: 10%;
   left: 10%;
@@ -15,11 +13,16 @@
     position: relative;
 
     .card, .gap {
-      margin: 0 3px;
       flex: 1;
+      margin: 0 3px;
+      border-radius: 3px;
 
       img {
         width: 100%;
+      }
+
+      &.placed > img {
+        filter: brightness(0.7);
       }
     }
   }
