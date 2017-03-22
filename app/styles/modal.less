@@ -18,6 +18,26 @@
       min-height: 200px;
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 
+      .row {
+         width: 100%;
+         display: flex;
+         justify-content: center;
+         align-items: flex-start;
+         align-content: flex-start;
+
+         .column {
+            flex: 1;
+            margin: 0 10px;
+
+            &:first-child {
+               margin-left: 0;
+            }
+            &:last-child {
+               margin-right: 0;
+            }
+         }
+      }
+
       @media (min-width: 640px) {
          width: 600px;
       }

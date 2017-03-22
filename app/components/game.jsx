@@ -8,13 +8,28 @@ class Game extends Component {
    render() {
       return (
          <section id="deck">
-            {this.props.deck.map((card, index) => {
-               return card.get('value') > 1 ?
-                  <Card key={index} index={index} card={card} onClick={this.onCardClick} /> :
-                  <Gap key={index} index={index} onClick={this.onGapClick} />
+            {this.renderRow(0, this.props.deck.take(13))}
+            {this.renderRow(1, this.props.deck.skip(13).take(13))}
+            {this.renderRow(2, this.props.deck.skip(26).take(13))}
+            {this.renderRow(3, this.props.deck.skip(39).take(13))}
+         </section>
+      );
+   }
+
+   renderRow(row, cards) {
+      return (
+         <section className="row">
+            {cards.map((card, index) => {
+               return this.renderItem(card, (row * 13) + index);
             })}
          </section>
       );
+   }
+
+   renderItem(card, index) {
+      return card.get('value') > 1 ?
+         <Card key={index} index={index} card={card} onClick={this.onCardClick} /> :
+         <Gap key={index} index={index} onClick={this.onGapClick} />
    }
 
    onGapClick = (index) => {
