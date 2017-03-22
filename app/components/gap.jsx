@@ -1,24 +1,25 @@
 import React, { Component, PropTypes } from 'react';
+import classSet from 'react-classset';
 import ReactDOM from 'react-dom';
 import interact from 'interactjs';
 
 export default class Gap extends Component {
    constructor(props) {
       super(props);
-
-      this.state = this.makeInitialState(props);
+      this.state = this.makeInitialState();
    }
 
-   makeInitialState(props) {
+   makeInitialState() {
       return {
          highlight: false
       };
    }
 
    render() {
-      let className = 'gap';
-      if(this.state.highlight) { className += ' highlight'; }
-
+      let className = classSet({
+         'gap': true,
+         'highlight': this.state.highlight
+      });
       return (
          <div className={className} />
       );
@@ -26,12 +27,15 @@ export default class Gap extends Component {
 
    componentDidMount() {
       const element = ReactDOM.findDOMNode(this);
-      this.interact = interact(element).dropzone({
-         overlap: 0.1,
-         ondragenter: this.highlightGap,
-         ondragleave: this.unhighlightGap,
-         ondrop: this.cardDrop
-      }).on('tap', this.tap);
+      this.interact = interact(element)
+         .dropzone({
+            overlap: 0.1,
+            ondragenter: this.highlightGap,
+            ondragleave: this.unHighlightGap,
+            ondrop: this.cardDrop
+         })
+         .on('tap', this.tap)
+         .styleCursor(false);
    }
 
    componentWillUnmount() {
@@ -44,13 +48,13 @@ export default class Gap extends Component {
       this.setState({ highlight: true });
    };
 
-   unhighlightGap = ev => {
+   unHighlightGap = ev => {
       this.setState({ highlight: false });
    };
 
    cardDrop = ev => {
       //this.publishEvent('card:dropped', this.model);
-      this.unhighlightGap(ev);
+      this.unHighlightGap(ev);
    };
 
    tap = ev => {

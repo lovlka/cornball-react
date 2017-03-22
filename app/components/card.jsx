@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
+import classSet from 'react-classset';
 import ReactDOM from 'react-dom';
 import interact from 'interactjs';
 
 export default class Card extends Component {
    constructor(props) {
       super(props);
-
       this.state = this.makeInitialState();
    }
 
@@ -21,13 +21,14 @@ export default class Card extends Component {
       const {dragging, dragX, dragY} = this.state;
       const {suit, value, roundPlaced, showHint} = this.props.card.toJS();
 
-      let className = 'card';
-      if(dragging) { className += ' dragging'; }
-      if(roundPlaced) { className += ' placed'; }
-      if(showHint) {  className += ' animated tada'; }
-
       const image = 'deck/' + suit + value + '.png';
       const style = {transform: 'translate(' + dragX + 'px, ' + dragY + 'px)'};
+      const className = classSet({
+         'card': true,
+         'dragging': dragging,
+         'placed': roundPlaced,
+         'animated tada': showHint
+      });
 
       return (
          <div className={className} style={style}>
@@ -38,11 +39,14 @@ export default class Card extends Component {
 
    componentDidMount() {
       const element = ReactDOM.findDOMNode(this);
-      this.interact = interact(element).draggable({
-         onstart: this.dragStart,
-         onmove: this.dragMove,
-         onend: this.dragEnd
-      }).on('doubletap', this.doubleTap);
+      this.interact = interact(element)
+         .draggable({
+            onstart: this.dragStart,
+            onmove: this.dragMove,
+            onend: this.dragEnd
+         })
+         .on('doubletap', this.doubleTap)
+         .styleCursor(false);
    }
 
    componentWillUnmount() {
