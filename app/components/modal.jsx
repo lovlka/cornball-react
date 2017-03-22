@@ -2,13 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
 class Modal extends Component {
-
    componentDidMount() {
-      const close = this.close;
-      document.onkeydown = function(ev) {
+      document.onkeydown = (ev) => {
          ev = ev || window.event;
-         if (ev.keyCode == 27) {
-            close(ev);
+         if (ev.keyCode === 27) {
+            this.close(ev);
          }
       };
    }
@@ -23,8 +21,8 @@ class Modal extends Component {
       if(this.props.onClose) {
          this.props.onClose();
       }
-      else {
-         this.props.history.push('/');
+      else if(this.props.history) {
+         this.props.history.replace('/');
       }
    };
 
@@ -32,7 +30,7 @@ class Modal extends Component {
       return (
          <section className="modal-container" onClick={this.close}>
             <aside className="modal-content" onClick={ev => ev.stopPropagation()}>
-               <Link to="/" className="close" onClick={this.close}>&times;</Link>
+               <Link to="/" replace={true} className="close" onClick={this.close}>&times;</Link>
                <h1>{this.props.title}</h1>
                <hr />
                {this.props.children}
@@ -40,7 +38,6 @@ class Modal extends Component {
          </section>
       );
    }
-
 }
 
 Modal.propTypes = {

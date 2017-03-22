@@ -5,14 +5,15 @@ import { getStatistics } from '../actions/statistics';
 import Modal from './modal';
 
 class Statistics extends Component {
-
    componentDidMount() {
       this.props.getStatistics();
    }
 
    render() {
+      const title = this.context.intl.formatMessage({id: 'statistics.title', defaultMessage: 'Statistics'});
+
       return (
-         <Modal title="Statistics" dismiss="Stäng">
+         <Modal title={title}>
             <table>
                <tbody>
                {this.props.statistics.map(item => {
@@ -24,17 +25,20 @@ class Statistics extends Component {
       );
    }
 
-   renderRow(title, value, percent) {
+   renderRow(name, value, percent) {
       return (
-         <tr key={title}>
-            <td><FormattedMessage id={'statistics.' + title} defaultMessage={title} /></td>
+         <tr key={name}>
+            <td><FormattedMessage id={'statistics.' + name} defaultMessage={name} /></td>
             <td><FormattedNumber value={value} /></td>
             <td>{percent ? <FormattedNumber value={percent} /> : null}</td>
          </tr>
       );
    }
-
 }
+
+Statistics.contextTypes = {
+   intl: PropTypes.object.isRequired
+};
 
 const mapStateToProps = (state) => {
    const {app} = state;

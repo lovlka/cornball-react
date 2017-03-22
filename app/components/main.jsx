@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import { resetNetwork }  from '../actions/network';
 import { newGame } from '../actions/game';
@@ -24,24 +24,22 @@ class Main extends Component {
    render() {
       const {round, rounds, locked, placed} = this.props;
 
-      const isLocked = locked == 4;
-      const isGameWin = isLocked && placed == 48;
-      const isGameOver = isLocked && !isGameWin && round == rounds;
+      const isLocked = locked === 4;
+      const isGameWin = isLocked && placed === 48;
+      const isGameOver = isLocked && !isGameWin && round === rounds;
       const isRoundOver = isLocked && !isGameWin && round < rounds;
 
       return (
-         <Router>
-            <main>
-               <Nav />
-               <Game />
-               {isGameWin ? <GameWin /> : null}
-               {isGameOver ? <GameOver /> : null}
-               {isRoundOver ? <RoundOver /> : null}
-               <Route path="/highscore" component={HighScore} />
-               <Route path="/statistics" component={Statistics} />
-               <Route path="/about" component={About} />
-            </main>
-         </Router>
+         <main>
+            <Nav />
+            <Game />
+            {isGameWin ? <GameWin /> : null}
+            {isGameOver ? <GameOver /> : null}
+            {isRoundOver ? <RoundOver /> : null}
+            <Route path="/highscore" component={HighScore} />
+            <Route path="/statistics" component={Statistics} />
+            <Route path="/about" component={About} />
+         </main>
       );
    }
 }

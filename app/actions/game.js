@@ -54,7 +54,7 @@ export function autoMoveCard(cardIndex) {
       const card = deck.get(cardIndex);
       let index = findGap(deck, card);
 
-      if (index != -1) {
+      if (index !== -1) {
          dispatch(moveCard(cardIndex, index));
       }
    }
@@ -65,7 +65,7 @@ export function showHint(gapIndex) {
       const {deck} = getState();
       const index = findCard(deck, gapIndex);
 
-      if(index != -1) {
+      if(index !== -1) {
          dispatch({
             type: SHOW_HINT,
             index: index,
@@ -95,7 +95,7 @@ function findCard(deck, gapIndex) {
 function findGap(deck, card) {
    let index = -1;
    deck.map((gap, gapIndex) => {
-      if (gap.get('value') == 1 && isCorrectGap(deck, gapIndex, card)) {
+      if (gap.get('value') === 1 && isCorrectGap(deck, gapIndex, card)) {
          index = gapIndex;
       }
    });
@@ -106,8 +106,8 @@ function isCorrectGap(deck, gap, card) {
    const isGapFirstInRow = gap % 13 === 0;
    const isCardValueTwo = card.get('value') === 2;
    const previous = gap > 0 ? deck.get(gap - 1) : null;
-   const isSuitMatch = previous !== null && card.get('suit') == previous.get('suit');
-   const isValueMatch = previous !== null && card.get('value') == previous.get('value') + 1;
+   const isSuitMatch = previous !== null && card.get('suit') === previous.get('suit');
+   const isValueMatch = previous !== null && card.get('value') === previous.get('value') + 1;
 
    return (isGapFirstInRow && isCardValueTwo) || (!isGapFirstInRow && !isCardValueTwo && isSuitMatch && isValueMatch);
 }
@@ -156,7 +156,7 @@ function checkAllCards() {
 function isCardPlaced(suit, card, index) {
    const isFirstInRow = index % 13 === 0;
    const isValueTwo = card.get('value') === 2;
-   const isPlaced = card.get('suit') == suit && card.get('value') === ((index % 13) + 2);
+   const isPlaced = card.get('suit') === suit && card.get('value') === ((index % 13) + 2);
 
    if ((isFirstInRow && isValueTwo) || (!isFirstInRow && !isValueTwo && isPlaced)) {
       return card.get('suit');

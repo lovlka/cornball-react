@@ -8,17 +8,19 @@ html, body {
   background: -o-radial-gradient(center, #095, #052);
   background: -moz-radial-gradient(center, #095, #052);
   background: radial-gradient(center, #095, #052);
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  line-height: 20px;
+  font-weight: 300;
+  font-size: 14px;
+  color: #555;
+}
+.game {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  line-height: 20px;
-  font-weight: 300;
-  font-size: 14px;
 }
 
 .center {
@@ -39,6 +41,14 @@ html, body {
   align-content: flex-start;
 
   .column {
-     width: 48%;
+    flex: 1;
+    margin: 0 10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }

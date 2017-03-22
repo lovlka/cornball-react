@@ -5,7 +5,6 @@ import Card from './card';
 import Gap from './gap';
 
 class Game extends Component {
-
    render() {
       return (
          <section id="deck">
@@ -25,7 +24,6 @@ class Game extends Component {
    onCardClick = (index) => {
       this.props.autoMoveCard(index);
    };
-
 }
 
 Game.propTypes = {

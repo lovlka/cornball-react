@@ -35,7 +35,7 @@ class Nav extends Component {
       const title = this.context.intl.formatMessage({id: 'nav.' + id, defaultMessage: defaultMessage});
       const className = disabled ? 'disabled' : '';
 
-      return <Link to={'/' + id} className={className} title={title} onClick={action}><i className={iconClass} /></Link>;
+      return <Link to={'/' + id} className={className} title={title} replace={true} onClick={action}><i className={iconClass} /></Link>;
    }
 
    renderScore() {
@@ -43,9 +43,9 @@ class Nav extends Component {
 
       return (
          <section className="right">
-            <FormattedMessage id="nav.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} />
-            <FormattedMessage id="nav.score" defaultMessage="Score: {score, number}" values={{ score }} />
-            <FormattedMessage id="nav.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
+            <FormattedMessage id="game.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} />
+            <FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} />
+            <FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
          </section>
       );
    }
@@ -91,7 +91,7 @@ const mapStateToProps = (state) => {
       score: game.get('score'),
       moves: game.get('moves'),
       highScore: app.get('highScore'),
-      canUndo: undo.get('move') != null
+      canUndo: undo.get('move') !== null
    };
 };
 
