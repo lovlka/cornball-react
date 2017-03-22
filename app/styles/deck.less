@@ -24,6 +24,18 @@
       &.placed > img {
         filter: brightness(0.7);
       }
+
+      &.highlight {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+      }
+
+      &.dragging {
+        z-index: 100;
+        > img {
+          box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+        }
+      }
     }
   }
 }
