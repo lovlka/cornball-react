@@ -27,12 +27,13 @@ export default class Gap extends Component {
 
    componentDidMount() {
       const element = ReactDOM.findDOMNode(this);
-      this.interact = interact(element)
-         .dropzone({
+      this.interact = interact(element);
+      this.interact.index = this.props.index;
+      this.interact.dropzone({
             overlap: 0.1,
             ondragenter: this.highlightGap,
             ondragleave: this.unHighlightGap,
-            ondrop: this.cardDrop
+            ondrop: this.unHighlightGap
          })
          .on('tap', this.tap)
          .styleCursor(false);
@@ -52,15 +53,9 @@ export default class Gap extends Component {
       this.setState({ highlight: false });
    };
 
-   cardDrop = ev => {
-      //this.publishEvent('card:dropped', this.model);
-      this.unHighlightGap(ev);
-   };
-
    tap = ev => {
-      ev.preventDefault();
       this.props.onClick(this.props.index);
-   }
+   };
 }
 
 Gap.propTypes = {

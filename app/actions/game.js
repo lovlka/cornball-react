@@ -60,6 +60,17 @@ export function autoMoveCard(cardIndex) {
    }
 }
 
+export function tryMoveCard(cardIndex, gapIndex) {
+   return (dispatch, getState) => {
+      const {deck} = getState();
+      const card = deck.get(cardIndex);
+
+      if(isCorrectGap(deck, gapIndex, card)) {
+         dispatch(moveCard(cardIndex, gapIndex));
+      }
+   }
+}
+
 export function showHint(gapIndex) {
    return (dispatch, getState) => {
       const {deck} = getState();
@@ -102,10 +113,10 @@ function findGap(deck, card) {
    return index;
 }
 
-function isCorrectGap(deck, gap, card) {
-   const isGapFirstInRow = gap % 13 === 0;
+function isCorrectGap(deck, gapIndex, card) {
+   const isGapFirstInRow = gapIndex % 13 === 0;
    const isCardValueTwo = card.get('value') === 2;
-   const previous = gap > 0 ? deck.get(gap - 1) : null;
+   const previous = gapIndex > 0 ? deck.get(gapIndex - 1) : null;
    const isSuitMatch = previous !== null && card.get('suit') === previous.get('suit');
    const isValueMatch = previous !== null && card.get('value') === previous.get('value') + 1;
 

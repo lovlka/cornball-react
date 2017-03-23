@@ -39,8 +39,8 @@ export default class Card extends Component {
 
    componentDidMount() {
       const element = ReactDOM.findDOMNode(this);
-      this.interact = interact(element)
-         .draggable({
+      this.interact = interact(element);
+      this.interact.draggable({
             onstart: this.dragStart,
             onmove: this.dragMove,
             onend: this.dragEnd
@@ -67,10 +67,10 @@ export default class Card extends Component {
    };
 
    dragEnd = ev => {
-      if(ev.dropzone === undefined) {
-         this.setState({ dragging: false });
-      }
       this.setState(this.makeInitialState());
+      if(ev.dropzone) {
+         this.props.onDrop(this.props.index, ev.dropzone.index);
+      }
    };
 
    doubleTap = ev => {
@@ -82,5 +82,6 @@ export default class Card extends Component {
 Card.propTypes = {
    card: PropTypes.object.isRequired,
    index: PropTypes.number.isRequired,
-   onClick: PropTypes.func.isRequired
+   onClick: PropTypes.func.isRequired,
+   onDrop: PropTypes.func.isRequired
 };
