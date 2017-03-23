@@ -13,9 +13,7 @@
     "start": "brunch watch --server"
   },
   "dependencies": {
-    "animate.css": "^3.5.2",
     "axios": "^0.15.3",
-    "font-awesome": "^4.7.0",
     "immutable": "^3.8.1",
     "interactjs": "^1.2.8",
     "react": "^15.4.2",
