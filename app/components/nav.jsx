@@ -20,7 +20,7 @@ class Nav extends Component {
       const {newGame, undoMove, canUndo} = this.props;
 
       return (
-         <ul className="left">
+         <ul>
             <li>{this.renderLink('newgame', 'refresh', 'Start new game', newGame)}</li>
             <li>{this.renderLink('undomove', 'reply', 'Undo last move', undoMove, !canUndo)}</li>
             <li>{this.renderLink('highscore', 'star', 'High score')}</li>
@@ -31,7 +31,7 @@ class Nav extends Component {
    }
 
    renderLink(id, icon, defaultMessage, action, disabled) {
-      const iconClass = 'fa fa-2x fa-' + icon;
+      const iconClass = 'fa fa-' + icon;
       const title = this.context.intl.formatMessage({id: 'nav.' + id, defaultMessage: defaultMessage});
       const className = disabled ? 'disabled' : '';
 
@@ -42,7 +42,7 @@ class Nav extends Component {
       const {round, rounds, score, moves} = this.props;
 
       return (
-         <section className="right">
+         <section className="score">
             <FormattedMessage id="game.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} />
             <FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} />
             <FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
@@ -59,7 +59,7 @@ class Nav extends Component {
       const month = this.context.intl.formatDate(new Date(date), { month: 'long' });
 
       return (
-         <section className="center">
+         <section className="highscore">
             <FormattedMessage
                id="nav.highscore"
                defaultMessage="High score in {month}: {name} ({value, number})"

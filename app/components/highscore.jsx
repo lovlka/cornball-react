@@ -66,10 +66,10 @@ class HighScore extends Component {
                      <tbody>
                         <tr>
                            <td colSpan="3">
-                              <div className="right">
-                                 <a href="#" onClick={this.previousMonth} className="navigate">&laquo;</a>
-                                 <a href="#" onClick={this.nextMonth} className="navigate">&raquo;</a>
-                              </div>
+                              <nav>
+                                 <a href="#" onClick={this.previousMonth}>&laquo;</a>
+                                 <a href="#" onClick={this.nextMonth}>&raquo;</a>
+                              </nav>
                               <FormattedMessage id="highscore.month" defaultMessage="Best in {month}" values={{ month }} />
                            </td>
                         </tr>
