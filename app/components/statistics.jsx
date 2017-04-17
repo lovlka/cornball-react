@@ -18,7 +18,7 @@ class Statistics extends Component {
             <table>
                <tbody>
                {this.props.statistics.map(item => {
-                  return this.renderRow(item.get('name'), item.get('value'));
+                  return this.renderRow(item.get('name'), item.get('value'), item.get('percent'));
                })}
                </tbody>
             </table>
