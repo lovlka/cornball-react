@@ -62,7 +62,7 @@ class Nav extends Component {
       return (
          <section className="highscore">
             <FormattedMessage
-               id="nav.highscore"
+               id="game.highscore"
                defaultMessage="High score in {month}: {name} ({value, number})"
                values={{ month, name, value }} />
          </section>

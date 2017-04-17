@@ -11,9 +11,8 @@ import en from 'react-intl/locale-data/en';
 import sv from 'react-intl/locale-data/sv';
 addLocaleData([...en, ...sv]);
 
-import enMessages from './locales/en';
 import svMessages from './locales/sv';
-const messages = { en: enMessages(), sv: svMessages() };
+const messages = { sv: svMessages() };
 
 document.addEventListener('DOMContentLoaded', () => {
    ReactDOM.render(

@@ -1,20 +1,17 @@
 export default function() {
    return {
-      "main": {
-         "title": "Lantisen",
-         "author": "Victor Stodell",
-         "description": "Lantisen är en farligt beroendeframkallande patiens, där du genom att flytta om korten ska placera dem i ordning från 2 till kung."
-      },
-      "nav": {
-         "newgame": "Starta nytt spel",
-         "undo": "Ångra senaste drag",
-         "highscore": "Visa topplista",
-         "statistics": "Visa statistik",
-         "about": "Om Lantisen",
-         "round": "Omgång",
-         "score": "Poäng",
-         "moves": "Drag"
-      },
+      "main.title": "Lantisen",
+      "main.author": "Victor Stodell",
+      "main.description": "Lantisen är en farligt beroendeframkallande patiens, där du genom att flytta om korten ska placera dem i ordning från 2 till kung.",
+      "nav.newgame": "Starta nytt spel",
+      "nav.undomove": "Ångra senaste drag",
+      "nav.highscore": "Visa topplista",
+      "nav.statistics": "Visa statistik",
+      "nav.about": "Om Lantisen",
+      "game.highscore": "Högst poäng i {month}: {name} ({value, number})",
+      "game.round": "Omgång: {round, number}/{rounds, number}",
+      "game.score": "Poäng: {score, number}",
+      "game.moves": "Drag: {moves, number}",
       "about": {
          "title": "Om Lantisen",
          "dismiss": "Stäng",
