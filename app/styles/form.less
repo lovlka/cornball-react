@@ -1,0 +1,30 @@
+form {
+  margin-top: 10px;
+
+  input, textarea, select, button {
+    color: inherit;
+    background: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    outline: none;
+  }
+  input[type=text] {
+    width: 250px;
+
+    &::placeholder {
+      color: #ddd;
+    }
+  }
+  button {
+    width: 70px;
+    margin: 0 0 0 10px;
+
+    &:active {
+      background: #eee;
+    }
+  }
+}

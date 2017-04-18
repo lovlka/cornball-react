@@ -8,7 +8,7 @@ import Modal from './modal';
 class RoundOver extends Component {
    render() {
       const {moves, round, rounds, score} = this.props;
-      const title = this.context.intl.formatMessage({id: 'roundover.title', defaultMessage: 'Round over'});
+      const title = this.context.intl.formatMessage({id: 'roundover.title', defaultMessage: 'End of round {round}' }, { round });
 
       return (
          <Modal title={title} onClose={this.props.newRound}>

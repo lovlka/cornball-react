@@ -43,8 +43,7 @@ export default function() {
       "gamewin.description": "Du har lagt samtliga kort på rätt plats och slutfört Lantisen!",
       "gamewin.highscore": "Du kom in på topplistan! Skriv in ditt namn för att spara din poäng.",
       "gamewin.nohighscore": "Tyvärr kom du inte in på topplistan den här gången.",
-      "gamewin.name": "Ange ditt namn",
-      "gamewin.post": "Skicka",
-      "gamewin.posting": "Skickar..."
+      "gamewin.placeholder": "Ange ditt namn",
+      "gamewin.submit": "Skicka"
    }
 };

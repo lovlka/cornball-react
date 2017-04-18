@@ -1,4 +1,4 @@
-import { getJson } from '../utils/network';
+import { getJson, postJson } from '../utils/network';
 import { networkProgress, resetNetwork, networkFailed } from './network';
 
 export const HIGH_SCORE = 'HIGH_SCORE';
@@ -56,6 +56,16 @@ export function getAllTimeHigh() {
       return getJson('/highscores')
          .then(response => dispatch(updateAllTimeHigh(response.data)))
          .then(response => dispatch(resetNetwork()))
+         .catch(error => dispatch(networkFailed(error)));
+   }
+}
+
+export function saveHighScore(name, value) {
+   return dispatch => {
+      dispatch(networkProgress());
+      return postJson('/highscore', { name, value })
+         .then(response => dispatch(resetNetwork()))
+         .then(response => dispatch(getHighScore()))
          .catch(error => dispatch(networkFailed(error)));
    }
 }
