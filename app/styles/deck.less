@@ -17,6 +17,7 @@
       margin: 0 3px;
       cursor: pointer;
       border-radius: 4px;
+      transition: all 0.2s ease-out;
 
       img {
         width: 100%;
@@ -25,6 +26,8 @@
         filter: brightness(0.7);
       }
       &.dragging {
+        transition: none;
+
         z-index: 100;
         > img {
           box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
