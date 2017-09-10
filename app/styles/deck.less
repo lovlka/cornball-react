@@ -17,7 +17,8 @@
       margin: 0 3px;
       cursor: pointer;
       border-radius: 4px;
-      transition: all 0.2s ease-out;
+      transition: transform 0.3s, z-index 0s 0.3s;
+      z-index: 1;
 
       img {
         width: 100%;
@@ -27,10 +28,10 @@
       }
       &.dragging {
         transition: none;
-
         z-index: 100;
+
         > img {
-          box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
         }
       }
       &.highlight {
