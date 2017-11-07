@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classSet from 'react-classset';
+import classNames from 'classnames';
 import ReactDOM from 'react-dom';
 import interact from 'interactjs';
 
@@ -17,7 +17,7 @@ export default class Gap extends Component {
    }
 
    render() {
-      let className = classSet({
+      let className = classNames({
          'gap': true,
          'highlight': this.state.highlight
       });

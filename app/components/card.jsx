@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classSet from 'react-classset';
+import classNames from 'classnames';
 import ReactDOM from 'react-dom';
 import interact from 'interactjs';
 
@@ -24,7 +24,7 @@ export default class Card extends Component {
 
       const image = 'deck/' + suit + value + '.png';
       const style = {transform: 'translate(' + dragX + 'px, ' + dragY + 'px)'};
-      const className = classSet({
+      const className = classNames({
          'card': true,
          'dragging': dragging,
          'placed': roundPlaced,
