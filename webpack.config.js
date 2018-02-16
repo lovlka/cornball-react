@@ -15,23 +15,33 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         include: /app/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        loader: 'babel-loader'
       },
       {
         test: /\.html$/,
         include: /app/,
         exclude: /node_modules/,
-        use: ['html-loader']
+        loader: 'html-loader'
       },
       {
         test: /\.s?css$/,
+        include: /app/,
         use: extractTextPlugin.extract({
           use: ['css-loader', 'sass-loader'],
           fallback: 'style-loader'
         })
+      },
+      {
+        test: /\.(png|jpe?g|svg|woff2?|ttf|otf|eot)$/,
+        include: /app/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: './assets/'
+        }
       }
     ]
   },

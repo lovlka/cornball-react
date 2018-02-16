@@ -11,6 +11,7 @@ import en from 'react-intl/locale-data/en';
 import sv from 'react-intl/locale-data/sv';
 addLocaleData([...en, ...sv]);
 
+import './styles/index.scss';
 import svMessages from './locales/sv';
 const messages = { sv: svMessages() };
 
