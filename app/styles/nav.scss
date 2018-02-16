@@ -1,5 +1,5 @@
-@screen-sm: 420px;
-@screen-md: 768px;
+$screen-sm: 420px;
+$screen-md: 768px;
 
 main > nav {
   position: fixed;
@@ -18,7 +18,7 @@ main > nav {
       float: left;
       font-size: 2em;
       margin: 10px 15px;
-      @media(max-width: @screen-md) {
+      @media(max-width: $screen-md) {
         font-size: 1.5em;
         margin: 10px 10px 0;
       }
@@ -38,7 +38,7 @@ main > nav {
   section {
     &.highscore {
       text-align: center;
-      @media(max-width: @screen-sm) {
+      @media(max-width: $screen-sm) {
         display: none;
       }
     }
@@ -50,7 +50,7 @@ main > nav {
     span {
       margin-left: 20px;
     }
-    @media(max-width: @screen-md) {
+    @media(max-width: $screen-md) {
       font-size: 0.8em;
       margin: 10px;
       span {
