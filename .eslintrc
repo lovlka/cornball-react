@@ -1,0 +1,22 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.base.js"
+      }
+    }
+  },
+  "rules": {
+    "semi": [2, "always"],
+    "comma-dangle": [2, "never"],
+    "arrow-body-style": 0,
+    "object-curly-newline": 0,
+    "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": 0,
+    "react/jsx-filename-extension": [2, {"extensions": [".js", ".jsx"]}]
+  }
+}
