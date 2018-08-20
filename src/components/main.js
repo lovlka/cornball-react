@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
-import { resetNetwork }  from '../actions/network';
+import { resetNetwork } from '../actions/network';
 import { newGame } from '../actions/game';
 import { getHighScore } from '../actions/highscore';
 
@@ -17,64 +17,64 @@ import Statistics from './statistics';
 import About from './about';
 
 class Main extends Component {
-   componentDidMount() {
-      this.props.getHighScore();
-      this.props.newGame();
-   }
+  componentDidMount() {
+    this.props.getHighScore();
+    this.props.newGame();
+  }
 
-   render() {
-      const {round, rounds, locked, placed} = this.props;
+  render() {
+    const { round, rounds, locked, placed } = this.props;
 
-      const isLocked = locked === 4;
-      const isGameWin = isLocked && placed === 48;
-      const isGameOver = isLocked && !isGameWin && round === rounds;
-      const isRoundOver = isLocked && !isGameWin && round < rounds;
+    const isLocked = locked === 4;
+    const isGameWin = isLocked && placed === 48;
+    const isGameOver = isLocked && !isGameWin && round === rounds;
+    const isRoundOver = isLocked && !isGameWin && round < rounds;
 
-      return (
-         <main>
-            <Nav />
-            <Game />
-            {isGameWin ? <GameWin /> : null}
-            {isGameOver ? <GameOver /> : null}
-            {isRoundOver ? <RoundOver /> : null}
-            <Route path="/highscore" component={HighScore} />
-            <Route path="/statistics" component={Statistics} />
-            <Route path="/about" component={About} />
-         </main>
-      );
-   }
+    return (
+      <main>
+        <Nav />
+        <Game />
+        {isGameWin ? <GameWin /> : null}
+        {isGameOver ? <GameOver /> : null}
+        {isRoundOver ? <RoundOver /> : null}
+        <Route path="/highscore" component={HighScore} />
+        <Route path="/statistics" component={Statistics} />
+        <Route path="/about" component={About} />
+      </main>
+    );
+  }
 }
 
 Main.propTypes = {
-   networkProgress: PropTypes.bool.isRequired,
-   networkFailed: PropTypes.bool.isRequired
+  networkProgress: PropTypes.bool.isRequired,
+  networkFailed: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => {
-   const {app, game} = state;
+  const { app, game } = state;
 
-   return {
-      round: game.get('round'),
-      rounds: game.get('rounds'),
-      locked: game.get('locked'),
-      placed: game.get('placed'),
-      networkProgress: app.get('networkProgress'),
-      networkFailed: app.get('networkFailed')
-   };
+  return {
+    round: game.get('round'),
+    rounds: game.get('rounds'),
+    locked: game.get('locked'),
+    placed: game.get('placed'),
+    networkProgress: app.get('networkProgress'),
+    networkFailed: app.get('networkFailed')
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-   return {
-      resetNetwork: () => {
-         dispatch(resetNetwork());
-      },
-      getHighScore: () => {
-         dispatch(getHighScore());
-      },
-      newGame: () => {
-         dispatch(newGame());
-      }
-   };
+  return {
+    resetNetwork: () => {
+      dispatch(resetNetwork());
+    },
+    getHighScore: () => {
+      dispatch(getHighScore());
+    },
+    newGame: () => {
+      dispatch(newGame());
+    }
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
