@@ -10,7 +10,7 @@ export function networkProgress() {
   };
 }
 
-export function networkFailed(error) {
+export function networkFailed() {
   return {
     type: NETWORK,
     state: {

@@ -27,8 +27,8 @@ export function deck(state = Immutable.List(), action = null) {
 
 function getDeck() {
   const deck = [];
-  for (let suit = 1; suit <= 4; suit++) {
-    for (let value = 1; value <= 13; value++) {
+  for (let suit = 1; suit <= 4; suit += 1) {
+    for (let value = 1; value <= 13; value += 1) {
       deck.push({
         suit: getSuit(suit),
         value
@@ -39,7 +39,7 @@ function getDeck() {
 }
 
 function shuffle(deck) {
-  for (let index = deck.length - 1; index >= 0; index--) {
+  for (let index = deck.length - 1; index >= 0; index -= 1) {
     const random = Math.floor((Math.random() * index));
     swapCards(deck, random, index);
   }
@@ -49,12 +49,12 @@ function shuffle(deck) {
 function reShuffle(deck) {
   let index;
   const shuffle = [];
-  for (index = 0; index < deck.length; index++) {
+  for (index = 0; index < deck.length; index += 1) {
     if (!deck[index].roundPlaced) {
       shuffle.push(index);
     }
   }
-  for (index = shuffle.length - 1; index >= 0; index--) {
+  for (index = shuffle.length - 1; index >= 0; index -= 1) {
     const random = Math.floor((Math.random() * index));
     swapCards(deck, shuffle[random], shuffle[index]);
   }

@@ -1,17 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider, addLocaleData } from 'react-intl';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Main from './components/main';
-
-import configureStore from './configure-store';
-import { addLocaleData } from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import sv from 'react-intl/locale-data/sv';
 
 import './styles/index.scss';
+import Main from './components/main';
 import svMessages from './locales/sv';
+import configureStore from './configure-store';
 
 addLocaleData([...en, ...sv]);
 const messages = { sv: svMessages() };

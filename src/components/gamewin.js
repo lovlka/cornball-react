@@ -15,8 +15,8 @@ class GameWin extends Component {
    }
 
    getDateState(date) {
-      const year = date.getFullYear(),
-         month = date.getMonth();
+      const year = date.getFullYear();
+      const month = date.getMonth();
 
       return {
          name: '',

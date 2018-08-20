@@ -35,7 +35,7 @@ export function getHighScore() {
     dispatch(networkProgress());
     return getJson('/highscore')
       .then(response => dispatch(updateHighScore(response.data)))
-      .then(response => dispatch(resetNetwork()))
+      .then(() => dispatch(resetNetwork()))
       .catch(error => dispatch(networkFailed(error)));
   };
 }
@@ -45,7 +45,7 @@ export function getHighScores(start, end) {
     dispatch(networkProgress());
     return getJson(`/highscores/${start}/${end}`)
       .then(response => dispatch(updateHighScores(response.data)))
-      .then(response => dispatch(resetNetwork()))
+      .then(() => dispatch(resetNetwork()))
       .catch(error => dispatch(networkFailed(error)));
   };
 }
@@ -55,7 +55,7 @@ export function getAllTimeHigh() {
     dispatch(networkProgress());
     return getJson('/highscores')
       .then(response => dispatch(updateAllTimeHigh(response.data)))
-      .then(response => dispatch(resetNetwork()))
+      .then(() => dispatch(resetNetwork()))
       .catch(error => dispatch(networkFailed(error)));
   };
 }
@@ -64,8 +64,8 @@ export function saveHighScore(name, value) {
   return (dispatch) => {
     dispatch(networkProgress());
     return postJson('/highscore', { name, value })
-      .then(response => dispatch(resetNetwork()))
-      .then(response => dispatch(getHighScore()))
+      .then(() => dispatch(resetNetwork()))
+      .then(() => dispatch(getHighScore()))
       .catch(error => dispatch(networkFailed(error)));
   };
 }

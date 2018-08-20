@@ -23,7 +23,8 @@ export default class Card extends Component {
       const {suit, value, roundPlaced, showHint} = this.props.card.toJS();
 
       const deckPath = require.context('../assets/deck');
-      const image = deckPath(suit + value + '.png');
+      const image = deckPath('./' + suit + value + '.png');
+
       const style = {transform: 'translate(' + dragX + 'px, ' + dragY + 'px)'};
       const className = classNames({
          'card': true,

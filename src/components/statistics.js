@@ -18,15 +18,15 @@ class Statistics extends Component {
         <table>
           <tbody>
             {this.props.statistics.map((item) => {
-                  return this.renderRow(item.get('name'), item.get('value'), item.get('percent'));
-               })}
+              return this.renderRow(item.get('name'), item.get('value'), item.get('percent'));
+            })}
           </tbody>
         </table>
       </Modal>
     );
   }
 
-  renderRow(name, value, percent) {
+  renderRow = (name, value, percent) => {
     return (
       <tr key={name}>
         <td><FormattedMessage id={`statistics.${name}`} defaultMessage={name} /></td>
@@ -34,7 +34,7 @@ class Statistics extends Component {
         <td>{percent ? <FormattedNumber value={percent} /> : null}</td>
       </tr>
     );
-  }
+  };
 }
 
 Statistics.contextTypes = {

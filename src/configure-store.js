@@ -1,6 +1,5 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { combineReducers } from 'redux';
 import { game } from './reducers/game';
 import { deck } from './reducers/deck';
 import { undo } from './reducers/undo';
