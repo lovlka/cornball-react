@@ -25,9 +25,7 @@ class Game extends Component {
   renderRow(row, cards) {
     return (
       <section className="row">
-        {cards.map((card, index) => {
-          return this.renderItem(card, (row * 13) + index);
-        })}
+        {cards.map((card, index) => this.renderItem(card, (row * 13) + index))}
       </section>
     );
   }
@@ -50,19 +48,17 @@ class Game extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    autoMoveCard(index) {
-      dispatch(autoMoveCard(index));
-    },
-    tryMoveCard(from, to) {
-      dispatch(tryMoveCard(from, to));
-    },
-    showHint(index) {
-      dispatch(showHint(index));
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  autoMoveCard(index) {
+    dispatch(autoMoveCard(index));
+  },
+  tryMoveCard(from, to) {
+    dispatch(tryMoveCard(from, to));
+  },
+  showHint(index) {
+    dispatch(showHint(index));
+  }
+});
 
 const mapStateToProps = (state) => {
   const { deck } = state;

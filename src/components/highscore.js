@@ -71,9 +71,7 @@ class HighScore extends Component {
                 <tr>
                   <td colSpan="3"><FormattedMessage id="highscore.alltime" defaultMessage="All time high" /></td>
                 </tr>
-                {this.props.allTimeHigh.map((item, index) => {
-                  return this.renderRow(index, item);
-                })}
+                {this.props.allTimeHigh.map((item, index) => this.renderRow(index, item))}
               </tbody>
             </table>
           </div>
@@ -89,9 +87,7 @@ class HighScore extends Component {
                     <FormattedMessage id="highscore.month" defaultMessage="Best in {month}" values={{ month }} />
                   </td>
                 </tr>
-                {this.props.highScores.map((item, index) => {
-                  return this.renderRow(index, item);
-                })}
+                {this.props.highScores.map((item, index) => this.renderRow(index, item))}
               </tbody>
             </table>
           </div>
@@ -110,15 +106,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getHighScores: (start, end) => {
-      dispatch(getHighScores(start.toISOString().substring(0, 10), end.toISOString().substring(0, 10)));
-    },
-    getAllTimeHigh: () => {
-      dispatch(getAllTimeHigh());
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  getHighScores: (start, end) => {
+    dispatch(getHighScores(start.toISOString().substring(0, 10), end.toISOString().substring(0, 10)));
+  },
+  getAllTimeHigh: () => {
+    dispatch(getAllTimeHigh());
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(HighScore);

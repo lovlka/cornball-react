@@ -1,4 +1,4 @@
-import { getJson, postJson } from '../utils/network';
+import { getJson, postJson } from '../helpers/network';
 import { networkProgress, resetNetwork, networkFailed } from './network';
 
 export const STATISTICS = 'STATISTICS';
@@ -17,7 +17,16 @@ export function getStatistics() {
     dispatch(networkProgress());
     return getJson('/statistics')
       .then(response => dispatch(updateStatistics(response.data)))
-      .then(response => dispatch(resetNetwork()))
+      .then(() => dispatch(resetNetwork()))
+      .catch(error => dispatch(networkFailed(error)));
+  };
+}
+
+function increaseStatistics(property) {
+  return (dispatch) => {
+    dispatch(networkProgress());
+    return postJson('/statistics', { name: property })
+      .then(() => dispatch(resetNetwork()))
       .catch(error => dispatch(networkFailed(error)));
   };
 }
@@ -37,14 +46,5 @@ export function gameWon(round) {
 export function gameLost() {
   return (dispatch) => {
     dispatch(increaseStatistics('gamesLost'));
-  };
-}
-
-function increaseStatistics(property) {
-  return (dispatch) => {
-    dispatch(networkProgress());
-    return postJson('/statistics', { name: property })
-      .then(result => dispatch(resetNetwork()))
-      .catch(error => dispatch(networkFailed(error)));
   };
 }

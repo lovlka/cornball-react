@@ -1,4 +1,5 @@
 import { gameStarted } from './statistics';
+import { findGap, findCard, getCardScore, isCardPlaced, isCorrectGap, isLockedGap } from '../helpers/game';
 
 export const NEW_GAME = 'NEW_GAME';
 export const NEW_ROUND = 'NEW_ROUND';
@@ -7,6 +8,55 @@ export const UNDO_MOVE = 'UNDO_MOVE';
 export const SHOW_HINT = 'SHOW_HINT';
 export const SET_SCORE = 'SET_SCORE';
 export const SET_ROUND_PLACED = 'SET_ROUND_PLACED';
+
+
+function setRoundPlaced(index, round) {
+  return {
+    type: SET_ROUND_PLACED,
+    index,
+    roundPlaced: round
+  };
+}
+
+function checkAllCards() {
+  return (dispatch, getState) => {
+    const { game, deck } = getState();
+    const { round, rounds, moves } = game.toJS();
+
+    let score = 0;
+    let locked = 0;
+    let placed = 0;
+    let suit = null;
+
+    deck.forEach((card, index) => {
+      const previous = index > 0 ? deck.get(index - 1) : null;
+      const isFirstInRow = index % 13 === 0;
+      const roundPlaced = card.get('roundPlaced');
+
+      suit = isCardPlaced(suit, card, index);
+      if (suit) {
+        if (!roundPlaced) {
+          dispatch(setRoundPlaced(index, round));
+        }
+        score += getCardScore(card.get('value'), roundPlaced || round, rounds);
+        placed += 1;
+      } else if (roundPlaced) {
+        dispatch(setRoundPlaced(index, null));
+      }
+      if (!isFirstInRow && isLockedGap(card, previous)) {
+        locked += 1;
+      }
+    });
+
+    score -= (round - 1) * 100;
+    score -= moves * 5;
+
+    dispatch({
+      type: SET_SCORE,
+      state: { placed, locked, score }
+    });
+  };
+}
 
 export function newGame() {
   return (dispatch) => {
@@ -83,110 +133,4 @@ export function showHint(gapIndex) {
       }, 1000);
     }
   };
-}
-
-function findCard(deck, gapIndex) {
-  let index = -1;
-  deck.forEach((card, cardIndex) => {
-    if (isCorrectGap(deck, gapIndex, card)) {
-      index = cardIndex;
-    }
-  });
-  return index;
-}
-
-function findGap(deck, card) {
-  let index = -1;
-  deck.forEach((gap, gapIndex) => {
-    if (gap.get('value') === 1 && isCorrectGap(deck, gapIndex, card)) {
-      index = gapIndex;
-    }
-  });
-  return index;
-}
-
-function isCorrectGap(deck, gapIndex, card) {
-  const isGapFirstInRow = gapIndex % 13 === 0;
-  const isCardValueTwo = card.get('value') === 2;
-  const previous = gapIndex > 0 ? deck.get(gapIndex - 1) : null;
-  const isSuitMatch = previous !== null && card.get('suit') === previous.get('suit');
-  const isValueMatch = previous !== null && card.get('value') === previous.get('value') + 1;
-
-  return (isGapFirstInRow && isCardValueTwo) || (!isGapFirstInRow && !isCardValueTwo && isSuitMatch && isValueMatch);
-}
-
-function checkAllCards() {
-  return (dispatch, getState) => {
-    const { game, deck } = getState();
-    const { round, rounds, moves } = game.toJS();
-
-    let score = 0;
-    let locked = 0;
-    let placed = 0;
-    let suit = null;
-
-    deck.forEach((card, index) => {
-      const previous = index > 0 ? deck.get(index - 1) : null;
-      const isFirstInRow = index % 13 === 0;
-      const roundPlaced = card.get('roundPlaced');
-
-      suit = isCardPlaced(suit, card, index);
-      if (suit) {
-        if (!roundPlaced) {
-          dispatch(setRoundPlaced(index, round));
-        }
-        score += getCardScore(card.get('value'), roundPlaced || round, rounds);
-        placed += 1;
-      } else if (roundPlaced) {
-        dispatch(setRoundPlaced(index, null));
-      }
-      if (!isFirstInRow && isLockedGap(card, previous)) {
-        locked += 1;
-      }
-    });
-
-    score -= (round - 1) * 100;
-    score -= moves * 5;
-
-    dispatch({
-      type: SET_SCORE,
-      state: { placed, locked, score }
-    });
-  };
-}
-
-function isCardPlaced(suit, card, index) {
-  const isFirstInRow = index % 13 === 0;
-  const isValueTwo = card.get('value') === 2;
-  const isPlaced = card.get('suit') === suit && card.get('value') === ((index % 13) + 2);
-
-  if ((isFirstInRow && isValueTwo) || (!isFirstInRow && !isValueTwo && isPlaced)) {
-    return card.get('suit');
-  }
-  return null;
-}
-
-function setRoundPlaced(index, round) {
-  return {
-    type: SET_ROUND_PLACED,
-    index,
-    roundPlaced: round
-  };
-}
-
-function getCardScore(value, roundPlaced, rounds) {
-  if (roundPlaced > 0) {
-    if (value === 13) {
-      return (rounds - roundPlaced + 1) * 60;
-    }
-    if (value >= 10) {
-      return (rounds - roundPlaced + 1) * 40;
-    }
-    return (rounds - roundPlaced + 1) * 20;
-  }
-  return 0;
-}
-
-function isLockedGap(card, previous) {
-  return card.get('value') === 1 && (previous.get('value') === 1 || previous.get('value') === 13);
 }

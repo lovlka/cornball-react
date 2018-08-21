@@ -56,15 +56,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    gameLost: () => {
-      dispatch(gameLost());
-    },
-    newGame: () => {
-      dispatch(newGame());
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  gameLost: () => {
+    dispatch(gameLost());
+  },
+  newGame: () => {
+    dispatch(newGame());
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameOver);

@@ -6,6 +6,19 @@ import { FormattedMessage } from 'react-intl';
 import { newGame, undoMove } from '../actions/game';
 
 class Nav extends Component {
+  propTypes = {
+    round: PropTypes.number.isRequired,
+    rounds: PropTypes.number.isRequired,
+    score: PropTypes.number.isRequired,
+    moves: PropTypes.number.isRequired,
+    highScore: PropTypes.object,
+    canUndo: PropTypes.bool.isRequired
+  };
+
+  contextTypes = {
+    intl: PropTypes.object.isRequired
+  };
+
   renderMenu() {
     const { newGame, undoMove, canUndo } = this.props;
 
@@ -70,19 +83,6 @@ class Nav extends Component {
   }
 }
 
-Nav.contextTypes = {
-  intl: PropTypes.object.isRequired
-};
-
-Nav.propTypes = {
-  round: PropTypes.number.isRequired,
-  rounds: PropTypes.number.isRequired,
-  score: PropTypes.number.isRequired,
-  moves: PropTypes.number.isRequired,
-  highScore: PropTypes.object,
-  canUndo: PropTypes.bool.isRequired
-};
-
 const mapStateToProps = (state) => {
   const { app, game, undo } = state;
 
@@ -96,17 +96,15 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    newGame: (ev) => {
-      ev.preventDefault();
-      dispatch(newGame());
-    },
-    undoMove: (ev) => {
-      ev.preventDefault();
-      dispatch(undoMove());
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  newGame: (ev) => {
+    ev.preventDefault();
+    dispatch(newGame());
+  },
+  undoMove: (ev) => {
+    ev.preventDefault();
+    dispatch(undoMove());
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);

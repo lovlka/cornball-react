@@ -63,18 +63,16 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    resetNetwork: () => {
-      dispatch(resetNetwork());
-    },
-    getHighScore: () => {
-      dispatch(getHighScore());
-    },
-    newGame: () => {
-      dispatch(newGame());
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  resetNetwork: () => {
+    dispatch(resetNetwork());
+  },
+  getHighScore: () => {
+    dispatch(getHighScore());
+  },
+  newGame: () => {
+    dispatch(newGame());
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

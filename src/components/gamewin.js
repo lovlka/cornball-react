@@ -118,21 +118,19 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getHighScores: (start, end) => {
-      dispatch(getHighScores(start.toISOString().substring(0, 10), end.toISOString().substring(0, 10)));
-    },
-    gameWon: (round) => {
-      dispatch(gameWon(round));
-    },
-    saveHighScore: (name, value) => {
-      dispatch(saveHighScore(name, value));
-    },
-    newGame: () => {
-      dispatch(newGame());
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  getHighScores: (start, end) => {
+    dispatch(getHighScores(start.toISOString().substring(0, 10), end.toISOString().substring(0, 10)));
+  },
+  gameWon: (round) => {
+    dispatch(gameWon(round));
+  },
+  saveHighScore: (name, value) => {
+    dispatch(saveHighScore(name, value));
+  },
+  newGame: () => {
+    dispatch(newGame());
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameWin);

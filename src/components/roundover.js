@@ -51,12 +51,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    newRound: () => {
-      dispatch(newRound());
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  newRound: () => {
+    dispatch(newRound());
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoundOver);

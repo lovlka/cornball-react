@@ -14,15 +14,13 @@ class Statistics extends Component {
     this.props.getStatistics();
   }
 
-  renderRow = (name, value, percent) => {
-    return (
-      <tr key={name}>
-        <td><FormattedMessage id={`statistics.${name}`} defaultMessage={name} /></td>
-        <td><FormattedNumber value={value} /></td>
-        <td>{percent ? <FormattedNumber value={percent} /> : null}</td>
-      </tr>
-    );
-  };
+  renderRow = (name, value, percent) => (
+    <tr key={name}>
+      <td><FormattedMessage id={`statistics.${name}`} defaultMessage={name} /></td>
+      <td><FormattedNumber value={value} /></td>
+      <td>{percent ? <FormattedNumber value={percent} /> : null}</td>
+    </tr>
+  );
 
   render() {
     const title = this.context.intl.formatMessage({ id: 'statistics.title', defaultMessage: 'Statistics' });
@@ -31,9 +29,7 @@ class Statistics extends Component {
       <Modal title={title}>
         <table>
           <tbody>
-            {this.props.statistics.map((item) => {
-              return this.renderRow(item.get('name'), item.get('value'), item.get('percent'));
-            })}
+            {this.props.statistics.map(item => this.renderRow(item.get('name'), item.get('value'), item.get('percent')))}
           </tbody>
         </table>
       </Modal>
@@ -49,12 +45,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getStatistics: () => {
-      dispatch(getStatistics());
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  getStatistics: () => {
+    dispatch(getStatistics());
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Statistics);

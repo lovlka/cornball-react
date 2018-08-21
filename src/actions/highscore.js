@@ -1,4 +1,4 @@
-import { getJson, postJson } from '../utils/network';
+import { getJson, postJson } from '../helpers/network';
 import { networkProgress, resetNetwork, networkFailed } from './network';
 
 export const HIGH_SCORE = 'HIGH_SCORE';
