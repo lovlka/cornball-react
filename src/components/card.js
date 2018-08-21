@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import interact from 'interactjs';
 
 export default class Card extends Component {
-  propTypes = {
+  static propTypes = {
     card: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
     onClick: PropTypes.func.isRequired,

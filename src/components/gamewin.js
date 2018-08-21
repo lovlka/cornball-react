@@ -8,15 +8,11 @@ import { getHighScores, saveHighScore } from '../actions/highscore';
 import Modal from './modal';
 
 class GameWin extends Component {
-  propTypes = {
+  static propTypes = {
     moves: PropTypes.number.isRequired,
     round: PropTypes.number.isRequired,
     rounds: PropTypes.number.isRequired,
     score: PropTypes.number.isRequired
-  };
-
-  contextTypes = {
-    intl: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -105,6 +101,10 @@ class GameWin extends Component {
     );
   }
 }
+
+GameWin.contextTypes = {
+  intl: PropTypes.object.isRequired
+};
 
 const mapStateToProps = (state) => {
   const { app, game } = state;

@@ -10,11 +10,11 @@ export const SET_SCORE = 'SET_SCORE';
 export const SET_ROUND_PLACED = 'SET_ROUND_PLACED';
 
 
-function setRoundPlaced(index, round) {
+function setRoundPlaced(index, roundPlaced) {
   return {
     type: SET_ROUND_PLACED,
     index,
-    roundPlaced: round
+    roundPlaced
   };
 }
 
@@ -60,9 +60,7 @@ function checkAllCards() {
 
 export function newGame() {
   return (dispatch) => {
-    dispatch({
-      type: NEW_GAME
-    });
+    dispatch({ type: NEW_GAME });
     dispatch(gameStarted());
     dispatch(checkAllCards());
   };
@@ -70,9 +68,7 @@ export function newGame() {
 
 export function newRound() {
   return (dispatch) => {
-    dispatch({
-      type: NEW_ROUND
-    });
+    dispatch({ type: NEW_ROUND });
     dispatch(checkAllCards());
   };
 }

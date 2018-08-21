@@ -6,10 +6,6 @@ import { getStatistics } from '../actions/statistics';
 import Modal from './modal';
 
 class Statistics extends Component {
-  contextTypes = {
-    intl: PropTypes.object.isRequired
-  };
-
   componentDidMount() {
     this.props.getStatistics();
   }
@@ -36,6 +32,10 @@ class Statistics extends Component {
     );
   }
 }
+
+Statistics.contextTypes = {
+  intl: PropTypes.object.isRequired
+};
 
 const mapStateToProps = (state) => {
   const { app } = state;

@@ -7,6 +7,13 @@ import { gameLost } from '../actions/statistics';
 import Modal from './modal';
 
 class GameOver extends Component {
+  static propTypes = {
+    moves: PropTypes.number.isRequired,
+    round: PropTypes.number.isRequired,
+    rounds: PropTypes.number.isRequired,
+    score: PropTypes.number.isRequired
+  };
+
   componentDidMount() {
     this.props.gameLost();
   }
@@ -36,13 +43,6 @@ class GameOver extends Component {
 
 GameOver.contextTypes = {
   intl: PropTypes.object.isRequired
-};
-
-GameOver.propTypes = {
-  moves: PropTypes.number.isRequired,
-  round: PropTypes.number.isRequired,
-  rounds: PropTypes.number.isRequired,
-  score: PropTypes.number.isRequired
 };
 
 const mapStateToProps = (state) => {

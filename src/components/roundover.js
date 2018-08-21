@@ -6,6 +6,13 @@ import { newRound } from '../actions/game';
 import Modal from './modal';
 
 class RoundOver extends Component {
+  static propTypes = {
+    moves: PropTypes.number.isRequired,
+    round: PropTypes.number.isRequired,
+    rounds: PropTypes.number.isRequired,
+    score: PropTypes.number.isRequired
+  };
+
   render() {
     const { moves, round, rounds, score } = this.props;
     const title = this.context.intl.formatMessage({ id: 'roundover.title', defaultMessage: 'End of round {round}' }, { round });
@@ -31,13 +38,6 @@ class RoundOver extends Component {
 
 RoundOver.contextTypes = {
   intl: PropTypes.object.isRequired
-};
-
-RoundOver.propTypes = {
-  moves: PropTypes.number.isRequired,
-  round: PropTypes.number.isRequired,
-  rounds: PropTypes.number.isRequired,
-  score: PropTypes.number.isRequired
 };
 
 const mapStateToProps = (state) => {

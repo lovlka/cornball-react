@@ -19,6 +19,7 @@ function swapCards(deck, fromIndex, toIndex) {
   const temp = deck[fromIndex];
   deck[fromIndex] = deck[toIndex];
   deck[toIndex] = temp;
+  return deck;
 }
 
 export function shuffle(deck) {
@@ -26,6 +27,7 @@ export function shuffle(deck) {
     const random = Math.floor((Math.random() * index));
     swapCards(deck, random, index);
   }
+  return deck;
 }
 
 export function reShuffle(deck) {
@@ -40,6 +42,7 @@ export function reShuffle(deck) {
     const random = Math.floor((Math.random() * index));
     swapCards(deck, shuffle[random], shuffle[index]);
   }
+  return deck;
 }
 
 export function swapImmutable(deck, from, to) {

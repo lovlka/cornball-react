@@ -6,7 +6,7 @@ import Card from './card';
 import Gap from './gap';
 
 class Game extends Component {
-  propTypes = {
+  static propTypes = {
     deck: PropTypes.object.isRequired
   };
 

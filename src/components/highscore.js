@@ -6,10 +6,6 @@ import { getHighScores, getAllTimeHigh } from '../actions/highscore';
 import Modal from './modal';
 
 class HighScore extends Component {
-  contextTypes = {
-    intl: PropTypes.object.isRequired
-  };
-
   constructor(props) {
     super(props);
 
@@ -96,6 +92,10 @@ class HighScore extends Component {
     );
   }
 }
+
+HighScore.contextTypes = {
+  intl: PropTypes.object.isRequired
+};
 
 const mapStateToProps = (state) => {
   const { app } = state;

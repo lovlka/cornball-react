@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import interact from 'interactjs';
 
 export default class Gap extends Component {
-  propTypes = {
+  static propTypes = {
     index: PropTypes.number.isRequired,
     onClick: PropTypes.func.isRequired
   };

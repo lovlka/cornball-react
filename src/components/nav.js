@@ -6,17 +6,13 @@ import { FormattedMessage } from 'react-intl';
 import { newGame, undoMove } from '../actions/game';
 
 class Nav extends Component {
-  propTypes = {
+  static propTypes = {
     round: PropTypes.number.isRequired,
     rounds: PropTypes.number.isRequired,
     score: PropTypes.number.isRequired,
     moves: PropTypes.number.isRequired,
     highScore: PropTypes.object,
     canUndo: PropTypes.bool.isRequired
-  };
-
-  contextTypes = {
-    intl: PropTypes.object.isRequired
   };
 
   renderMenu() {
@@ -82,6 +78,10 @@ class Nav extends Component {
     );
   }
 }
+
+Nav.contextTypes = {
+  intl: PropTypes.object.isRequired
+};
 
 const mapStateToProps = (state) => {
   const { app, game, undo } = state;
