@@ -77,17 +77,9 @@ export function showHint(gapIndex) {
     const index = findCard(deck, gapIndex);
 
     if (index !== -1) {
-      dispatch({
-        type: SHOW_HINT,
-        index,
-        showHint: true
-      });
+      dispatch({ type: SHOW_HINT, index, showHint: true });
       setTimeout(() => {
-        dispatch({
-          type: SHOW_HINT,
-          index,
-          showHint: false
-        });
+        dispatch({ type: SHOW_HINT, index, showHint: false });
       }, 1000);
     }
   };
@@ -95,7 +87,7 @@ export function showHint(gapIndex) {
 
 function findCard(deck, gapIndex) {
   let index = -1;
-  deck.map((card, cardIndex) => {
+  deck.forEach((card, cardIndex) => {
     if (isCorrectGap(deck, gapIndex, card)) {
       index = cardIndex;
     }
@@ -105,7 +97,7 @@ function findCard(deck, gapIndex) {
 
 function findGap(deck, card) {
   let index = -1;
-  deck.map((gap, gapIndex) => {
+  deck.forEach((gap, gapIndex) => {
     if (gap.get('value') === 1 && isCorrectGap(deck, gapIndex, card)) {
       index = gapIndex;
     }
@@ -133,7 +125,7 @@ function checkAllCards() {
     let placed = 0;
     let suit = null;
 
-    deck.map((card, index) => {
+    deck.forEach((card, index) => {
       const previous = index > 0 ? deck.get(index - 1) : null;
       const isFirstInRow = index % 13 === 0;
       const roundPlaced = card.get('roundPlaced');
@@ -144,12 +136,12 @@ function checkAllCards() {
           dispatch(setRoundPlaced(index, round));
         }
         score += getCardScore(card.get('value'), roundPlaced || round, rounds);
-        placed++;
+        placed += 1;
       } else if (roundPlaced) {
         dispatch(setRoundPlaced(index, null));
       }
       if (!isFirstInRow && isLockedGap(card, previous)) {
-        locked++;
+        locked += 1;
       }
     });
 
@@ -186,10 +178,10 @@ function getCardScore(value, roundPlaced, rounds) {
   if (roundPlaced > 0) {
     if (value === 13) {
       return (rounds - roundPlaced + 1) * 60;
-    } else if (value >= 10) {
+    }
+    if (value >= 10) {
       return (rounds - roundPlaced + 1) * 40;
     }
-
     return (rounds - roundPlaced + 1) * 20;
   }
   return 0;

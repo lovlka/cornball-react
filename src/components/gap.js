@@ -1,65 +1,56 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import ReactDOM from 'react-dom';
 import interact from 'interactjs';
 
 export default class Gap extends Component {
-   constructor(props) {
-      super(props);
-      this.state = this.makeInitialState();
-   }
+  propTypes = {
+    index: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired
+  };
 
-   makeInitialState() {
-      return {
-         highlight: false
-      };
-   }
+  state = {
+    highlight: false
+  };
 
-   render() {
-      let className = classNames({
-         'gap': true,
-         'highlight': this.state.highlight
-      });
-      return (
-         <div className={className} />
-      );
-   }
+  componentDidMount() {
+    this.interact = interact(this.element);
+    this.interact.index = this.props.index;
+    this.interact.dropzone({
+      overlap: 0.1,
+      ondragenter: this.highlightGap,
+      ondragleave: this.unHighlightGap,
+      ondrop: this.unHighlightGap
+    })
+      .on('tap', this.tap)
+      .styleCursor(false);
+  }
 
-   componentDidMount() {
-      const element = ReactDOM.findDOMNode(this);
-      this.interact = interact(element);
-      this.interact.index = this.props.index;
-      this.interact.dropzone({
-            overlap: 0.1,
-            ondragenter: this.highlightGap,
-            ondragleave: this.unHighlightGap,
-            ondrop: this.unHighlightGap
-         })
-         .on('tap', this.tap)
-         .styleCursor(false);
-   }
+  componentWillUnmount() {
+    if (this.interact) {
+      this.interact.unset();
+    }
+  }
 
-   componentWillUnmount() {
-      if(this.interact){
-         this.interact.unset();
-      }
-   }
+  highlightGap = () => {
+    this.setState({ highlight: true });
+  };
 
-   highlightGap = ev => {
-      this.setState({ highlight: true });
-   };
+  unHighlightGap = () => {
+    this.setState({ highlight: false });
+  };
 
-   unHighlightGap = ev => {
-      this.setState({ highlight: false });
-   };
+  tap = () => {
+    this.props.onClick(this.props.index);
+  };
 
-   tap = ev => {
-      this.props.onClick(this.props.index);
-   };
+  render() {
+    const className = classNames({
+      gap: true,
+      highlight: this.state.highlight
+    });
+    return (
+      <div className={className} ref={(ref) => { this.element = ref; }} />
+    );
+  }
 }
-
-Gap.propTypes = {
-   index: PropTypes.number.isRequired,
-   onClick: PropTypes.func.isRequired
-};

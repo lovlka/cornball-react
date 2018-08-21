@@ -4,11 +4,17 @@ import { Link, withRouter } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 class Modal extends Component {
-  componentDidMount () {
+  propTypes = {
+    title: PropTypes.string.isRequired,
+    children: PropTypes.element.isRequired,
+    onClose: PropTypes.func
+  };
+
+  componentDidMount() {
     document.addEventListener('keydown', this.onKeyDown);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     document.removeEventListener('keydown', this.onKeyDown);
   }
 
@@ -18,26 +24,25 @@ class Modal extends Component {
     }
   };
 
-  onClose = ev => {
+  onClose = (ev) => {
     ev.preventDefault();
 
     if (this.props.onClose) {
       this.props.onClose();
-    }
-    else if (this.props.history) {
+    } else if (this.props.history) {
       this.props.history.replace('/');
     }
   };
 
-  render () {
+  render() {
     return (
       <TransitionGroup>
-        <CSSTransition classNames="modal" appear={true} timeout={500}>
-          <section className="modal-container" onClick={this.close}>
+        <CSSTransition classNames="modal" appear timeout={500}>
+          <section className="modal-container" onClick={this.onClose}>
             <aside className="modal-content" onClick={ev => ev.stopPropagation()}>
-              <Link to="/" replace={true} className="close" onClick={this.onClose}>&times;</Link>
+              <Link to="/" replace className="close" onClick={this.onClose}>&times;</Link>
               <h1>{this.props.title}</h1>
-              <hr/>
+              <hr />
               {this.props.children}
             </aside>
           </section>
@@ -46,11 +51,5 @@ class Modal extends Component {
     );
   }
 }
-
-Modal.propTypes = {
-  title: PropTypes.string.isRequired,
-  children: PropTypes.element.isRequired,
-  onClose: PropTypes.func,
-};
 
 export default withRouter(Modal);

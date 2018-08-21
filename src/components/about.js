@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Modal from './modal';
 import { FormattedMessage } from 'react-intl';
+import Modal from './modal';
 
 export default class About extends Component {
+  contextTypes = {
+    intl: PropTypes.object.isRequired
+  };
+
   render() {
     const title = this.context.intl.formatMessage({ id: 'about.title', defaultMessage: 'About The Cornball' });
 
@@ -18,7 +22,3 @@ export default class About extends Component {
     );
   }
 }
-
-About.contextTypes = {
-  intl: PropTypes.object.isRequired
-};

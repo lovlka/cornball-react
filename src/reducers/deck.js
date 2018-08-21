@@ -27,10 +27,12 @@ export function deck(state = Immutable.List(), action = null) {
 
 function getDeck() {
   const deck = [];
+  const suits = { 1: 'h', 2: 's', 3: 'd', 4: 'c' };
+
   for (let suit = 1; suit <= 4; suit += 1) {
     for (let value = 1; value <= 13; value += 1) {
       deck.push({
-        suit: getSuit(suit),
+        suit: suits[suit],
         value
       });
     }
@@ -61,12 +63,13 @@ function reShuffle(deck) {
   return deck;
 }
 
+/* eslint-disable no-param-reassign */
 function swapCards(deck, fromIndex, toIndex) {
   const temp = deck[fromIndex];
   deck[fromIndex] = deck[toIndex];
   deck[toIndex] = temp;
-  return deck;
 }
+/* eslint-enable no-param-reassign */
 
 function swapImmutable(deck, from, to) {
   const fromCard = deck.get(from);
@@ -76,13 +79,4 @@ function swapImmutable(deck, from, to) {
 
 function updateCard(deck, index, state) {
   return deck.set(index, deck.get(index).merge(state));
-}
-
-function getSuit(suit) {
-  switch (suit) {
-    case 1: return 'h';
-    case 2: return 's';
-    case 3: return 'd';
-    case 4: return 'c';
-  }
 }

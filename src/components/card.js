@@ -1,90 +1,82 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import ReactDOM from 'react-dom';
 import interact from 'interactjs';
 
 export default class Card extends Component {
-   constructor(props) {
-      super(props);
-      this.state = this.makeInitialState();
-   }
+  propTypes = {
+    card: PropTypes.object.isRequired,
+    index: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired,
+    onDrop: PropTypes.func.isRequired
+  };
 
-   makeInitialState() {
-      return {
-         dragging: false,
-         dragX: 0,
-         dragY: 0
-      };
-   }
+  state = {
+    dragging: false,
+    dragX: 0,
+    dragY: 0
+  };
 
-   render() {
-      const {dragging, dragX, dragY} = this.state;
-      const {suit, value, roundPlaced, showHint} = this.props.card.toJS();
+  componentDidMount() {
+    this.interact = interact(this.element);
+    this.interact.draggable({
+      onstart: this.dragStart,
+      onmove: this.dragMove,
+      onend: this.dragEnd
+    })
+      .on('doubletap', this.doubleTap)
+      .styleCursor(false);
+  }
 
-      const deckPath = require.context('../assets/deck');
-      const image = deckPath('./' + suit + value + '.png');
+  componentWillUnmount() {
+    if (this.interact) {
+      this.interact.unset();
+    }
+  }
 
-      const style = {transform: 'translate(' + dragX + 'px, ' + dragY + 'px)'};
-      const className = classNames({
-         'card': true,
-         'dragging': dragging,
-         'placed': roundPlaced,
-         'animated tada': showHint
-      });
+  dragStart = () => {
+    this.setState({ dragging: true });
+  };
 
-      return (
-         <div className={className} style={style}>
-            <img src={image} />
-         </div>
-      );
-   }
+  dragMove = (ev) => {
+    const { dragX, dragY } = this.state;
+    this.setState({
+      dragX: dragX + ev.dx,
+      dragY: dragY + ev.dy
+    });
+  };
 
-   componentDidMount() {
-      const element = ReactDOM.findDOMNode(this);
-      this.interact = interact(element);
-      this.interact.draggable({
-            onstart: this.dragStart,
-            onmove: this.dragMove,
-            onend: this.dragEnd
-         })
-         .on('doubletap', this.doubleTap)
-         .styleCursor(false);
-   }
+  dragEnd = (ev) => {
+    this.setState({ dragging: false, dragX: 0, dragY: 0 });
+    if (ev.dropzone) {
+      this.props.onDrop(this.props.index, ev.dropzone.index);
+    }
+  };
 
-   componentWillUnmount() {
-      if(this.interact){
-         this.interact.unset();
-      }
-   }
+  doubleTap = (ev) => {
+    ev.preventDefault();
+    this.props.onClick(this.props.index);
+  };
 
-   dragStart = ev => {
-      this.setState({ dragging: true });
-   };
+  render() {
+    const { dragging, dragX, dragY } = this.state;
+    const { suit, value, roundPlaced, showHint } = this.props.card.toJS();
 
-   dragMove = ev => {
-      this.setState({
-         dragX: this.state.dragX + ev.dx,
-         dragY: this.state.dragY + ev.dy
-      });
-   };
+    const deckPath = require.context('../assets/deck');
+    const image = deckPath(`./${suit}${value}.png`);
 
-   dragEnd = ev => {
-      this.setState(this.makeInitialState());
-      if(ev.dropzone) {
-         this.props.onDrop(this.props.index, ev.dropzone.index);
-      }
-   };
+    const style = { transform: `translate(${dragX}px, ${dragY}px)` };
+    const className = classNames({
+      card: true,
+      dragging,
+      placed: roundPlaced,
+      'animated tada': showHint
+    });
 
-   doubleTap = ev => {
-      ev.preventDefault();
-      this.props.onClick(this.props.index);
-   };
+    return (
+      <div className={className} style={style} ref={(ref) => { this.element = ref; }}>
+        <img src={image} alt="" />
+      </div>
+    );
+  }
 }
-
-Card.propTypes = {
-   card: PropTypes.object.isRequired,
-   index: PropTypes.number.isRequired,
-   onClick: PropTypes.func.isRequired,
-   onDrop: PropTypes.func.isRequired
-};

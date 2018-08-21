@@ -22,8 +22,10 @@ class GameOver extends Component {
             <FormattedMessage id="gameover.description" defaultMessage="You failed to complete The Cornball!" />
           </p>
           <p>
-            <FormattedMessage id="game.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} /><br />
-            <FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} /><br />
+            <FormattedMessage id="game.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} />
+            <br />
+            <FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} />
+            <br />
             <FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
           </p>
         </article>

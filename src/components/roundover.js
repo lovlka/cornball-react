@@ -17,8 +17,10 @@ class RoundOver extends Component {
             <FormattedMessage id="roundover.description" defaultMessage="No more moves can be done, the cards are being reshuffled..." />
           </p>
           <p>
-            <FormattedMessage id="game.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} /><br />
-            <FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} /><br />
+            <FormattedMessage id="game.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} />
+            <br />
+            <FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} />
+            <br />
             <FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
           </p>
         </article>

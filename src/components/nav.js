@@ -6,16 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import { newGame, undoMove } from '../actions/game';
 
 class Nav extends Component {
-  render() {
-    return (
-      <nav>
-        {this.renderMenu()}
-        {this.renderScore()}
-        {this.renderHighScore()}
-      </nav>
-    );
-  }
-
   renderMenu() {
     const { newGame, undoMove, canUndo } = this.props;
 
@@ -66,6 +56,16 @@ class Nav extends Component {
           values={{ month, name, value }}
         />
       </section>
+    );
+  }
+
+  render() {
+    return (
+      <nav>
+        {this.renderMenu()}
+        {this.renderScore()}
+        {this.renderHighScore()}
+      </nav>
     );
   }
 }

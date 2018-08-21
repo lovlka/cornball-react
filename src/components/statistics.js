@@ -6,9 +6,23 @@ import { getStatistics } from '../actions/statistics';
 import Modal from './modal';
 
 class Statistics extends Component {
+  contextTypes = {
+    intl: PropTypes.object.isRequired
+  };
+
   componentDidMount() {
     this.props.getStatistics();
   }
+
+  renderRow = (name, value, percent) => {
+    return (
+      <tr key={name}>
+        <td><FormattedMessage id={`statistics.${name}`} defaultMessage={name} /></td>
+        <td><FormattedNumber value={value} /></td>
+        <td>{percent ? <FormattedNumber value={percent} /> : null}</td>
+      </tr>
+    );
+  };
 
   render() {
     const title = this.context.intl.formatMessage({ id: 'statistics.title', defaultMessage: 'Statistics' });
@@ -25,21 +39,7 @@ class Statistics extends Component {
       </Modal>
     );
   }
-
-  renderRow = (name, value, percent) => {
-    return (
-      <tr key={name}>
-        <td><FormattedMessage id={`statistics.${name}`} defaultMessage={name} /></td>
-        <td><FormattedNumber value={value} /></td>
-        <td>{percent ? <FormattedNumber value={percent} /> : null}</td>
-      </tr>
-    );
-  };
 }
-
-Statistics.contextTypes = {
-  intl: PropTypes.object.isRequired
-};
 
 const mapStateToProps = (state) => {
   const { app } = state;
