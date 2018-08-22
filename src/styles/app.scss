@@ -3,6 +3,7 @@
 html, body {
   height: 100%;
 }
+
 body {
   background-color: $bg-light;
   background: -webkit-radial-gradient(center, $bg-light, $bg-dark);
@@ -14,6 +15,7 @@ body {
   font-weight: 300;
   font-size: 14px;
 }
+
 .game {
   -webkit-touch-callout: none;
   -webkit-user-select: none;

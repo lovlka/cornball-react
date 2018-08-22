@@ -2,13 +2,14 @@
   font-family: 'FontAwesome';
   src: url('../assets/fonts/fontawesome-webfont.eot?v=4.7.0');
   src: url('../assets/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),
-       url('../assets/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
-       url('../assets/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),
-       url('../assets/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
-       url('../assets/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+  url('../assets/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
+  url('../assets/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),
+  url('../assets/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
+  url('../assets/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
+
 .fa {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
@@ -17,18 +18,23 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .fa-refresh:before {
   content: "\f021";
 }
+
 .fa-reply:before {
   content: "\f112";
 }
+
 .fa-star:before {
   content: "\f005";
 }
+
 .fa-pie-chart:before {
   content: "\f200";
 }
+
 .fa-question:before {
   content: "\f128";
 }

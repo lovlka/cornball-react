@@ -38,8 +38,8 @@ class Modal extends Component {
     return (
       <TransitionGroup>
         <CSSTransition classNames="modal" appear timeout={500}>
-          <section className="modal-container" onClick={this.onClose}>
-            <aside className="modal-content" onClick={ev => ev.stopPropagation()}>
+          <section className="modal-container">
+            <aside className="modal-content">
               <Link to="/" replace className="close" onClick={this.onClose}>&times;</Link>
               <h1>{this.props.title}</h1>
               <hr />
