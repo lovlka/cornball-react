@@ -1,5 +1,4 @@
-$screen-sm: 420px;
-$screen-md: 768px;
+@import 'variables.scss';
 
 main > nav {
   position: fixed;
@@ -38,7 +37,7 @@ main > nav {
   section {
     &.highscore {
       text-align: center;
-      @media(max-width: $screen-sm) {
+      @media(max-width: $screen-md) {
         display: none;
       }
     }

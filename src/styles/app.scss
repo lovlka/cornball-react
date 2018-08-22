@@ -1,17 +1,18 @@
+@import 'variables.scss';
+
 html, body {
   height: 100%;
 }
 body {
-  background-color: #095;
-  background: -webkit-radial-gradient(center, #095, #052);
-  background: -o-radial-gradient(center, #095, #052);
-  background: -moz-radial-gradient(center, #095, #052);
-  background: radial-gradient(center, #095, #052);
+  background-color: $bg-light;
+  background: -webkit-radial-gradient(center, $bg-light, $bg-dark);
+  background: -o-radial-gradient(center, $bg-light, $bg-dark);
+  background: -moz-radial-gradient(center, $bg-light, $bg-dark);
+  background: radial-gradient(center, $bg-light, $bg-dark);
   font-family: "Helvetica Neue", Arial, sans-serif;
   line-height: 20px;
   font-weight: 300;
   font-size: 14px;
-  color: #555;
 }
 .game {
   -webkit-touch-callout: none;

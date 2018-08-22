@@ -1,13 +1,26 @@
+@import 'variables.scss';
+
 #deck {
-  top: 10%;
-  left: 10%;
-  bottom: 10%;
-  right: 10%;
+  top: 50px;
+  bottom: 20px;
+  left: 5%;
+  right: 5%;
   display: flex;
   position: fixed;
   flex-direction: column;
   justify-content: center;
   user-select: none;
+
+  @media(max-width: $screen-lg) {
+    left: 20px;
+    right: 20px;
+  }
+  @media(max-width: $screen-md) {
+    top: 40px;
+    left: 10px;
+    bottom: 10px;
+    right: 10px;
+  }
 
   .row {
     display: flex;
@@ -15,29 +28,37 @@
 
     .card, .gap {
       flex: 1;
-      margin: 0 3px;
+      margin: 4px;
       cursor: pointer;
-      border-radius: 4px;
+      border-radius: 8px;
       transition: transform 0.3s, z-index 0s 0.3s;
       z-index: 1;
 
       img {
         width: 100%;
+        height: 100%;
       }
       &.placed > img {
         filter: brightness(0.7);
       }
       &.dragging {
-        transition: none;
         z-index: 100;
-
-        > img {
-          box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-        }
+        transition: none;
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
       }
       &.highlight {
         background: rgba(0, 0, 0, 0.2);
-        border-radius: 4px;
+        border-radius: 8px;
+      }
+
+      @media(max-width: $screen-lg) {
+        margin: 3px;
+      }
+      @media(max-width: $screen-md) {
+        margin: 2px;
+      }
+      @media(max-width: $screen-sm) {
+        margin: 1px;
       }
     }
   }
