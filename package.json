@@ -10,9 +10,9 @@
     "url": "git@github.com:lovlka/cornball-react.git"
   },
   "scripts": {
-    "start": "webpack-serve --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
-    "lint": "eslint webpack.*.js ./src --fix"
+    "start": "webpack-serve ./webpack.dev.js",
+    "build": "webpack --config ./webpack.prod.js",
+    "lint": "eslint webpack.*.js ./src"
   },
   "pre-commit": {
     "run": [

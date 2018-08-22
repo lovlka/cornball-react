@@ -9,5 +9,9 @@ module.exports = merge(base, {
       include: /src/,
       use: ['style-loader', 'css-loader', 'sass-loader']
     }]
+  },
+  serve: {
+    port: 1234,
+    open: true
   }
 });

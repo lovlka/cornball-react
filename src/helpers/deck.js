@@ -1,5 +1,10 @@
 /* eslint-disable no-param-reassign */
 
+export function getCardImagePath(suit, value) {
+  const deckPath = require.context('../assets/deck');
+  return deckPath(`./${suit}${value}.png`);
+}
+
 export function getDeck() {
   const deck = [];
   const suits = { 1: 'h', 2: 's', 3: 'd', 4: 'c' };

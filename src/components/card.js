@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import interact from 'interactjs';
+import { getCardImagePath } from '../helpers/deck';
 
 export default class Card extends Component {
   static propTypes = {
@@ -62,9 +63,7 @@ export default class Card extends Component {
     const { dragging, dragX, dragY } = this.state;
     const { suit, value, roundPlaced, showHint } = this.props.card.toJS();
 
-    const deckPath = require.context('../assets/deck');
-    const image = deckPath(`./${suit}${value}.png`);
-
+    const image = getCardImagePath(suit, value);
     const style = { transform: `translate(${dragX}px, ${dragY}px)` };
     const className = classNames({
       card: true,
