@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
-import { resetNetwork } from '../actions/network';
 import { newGame } from '../actions/game';
 import { getHighScore } from '../actions/highscore';
 
@@ -34,9 +32,9 @@ class Main extends Component {
       <main>
         <Nav />
         <Game />
-        {isGameWin ? <GameWin /> : null}
-        {isGameOver ? <GameOver /> : null}
-        {isRoundOver ? <RoundOver /> : null}
+        {isGameWin && <GameWin />}
+        {isGameOver && <GameOver />}
+        {isRoundOver && <RoundOver />}
         <Route path="/highscore" component={HighScore} />
         <Route path="/statistics" component={Statistics} />
         <Route path="/about" component={About} />
@@ -45,28 +43,18 @@ class Main extends Component {
   }
 }
 
-Main.propTypes = {
-  networkProgress: PropTypes.bool.isRequired,
-  networkFailed: PropTypes.bool.isRequired
-};
-
 const mapStateToProps = (state) => {
-  const { app, game } = state;
+  const { game } = state;
 
   return {
     round: game.get('round'),
     rounds: game.get('rounds'),
     locked: game.get('locked'),
-    placed: game.get('placed'),
-    networkProgress: app.get('networkProgress'),
-    networkFailed: app.get('networkFailed')
+    placed: game.get('placed')
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  resetNetwork: () => {
-    dispatch(resetNetwork());
-  },
   getHighScore: () => {
     dispatch(getHighScore());
   },

@@ -1,5 +1,4 @@
 import { getJson, postJson } from '../helpers/network';
-import { networkProgress, resetNetwork, networkFailed } from './network';
 
 export const HIGH_SCORE = 'HIGH_SCORE';
 
@@ -31,41 +30,21 @@ function updateAllTimeHigh(data) {
 }
 
 export function getHighScore() {
-  return (dispatch) => {
-    dispatch(networkProgress());
-    return getJson('/highscore')
-      .then(response => dispatch(updateHighScore(response.data)))
-      .then(() => dispatch(resetNetwork()))
-      .catch(error => dispatch(networkFailed(error)));
-  };
+  return dispatch => getJson('/highscore')
+    .then(({ data }) => dispatch(updateHighScore(data)));
 }
 
 export function getHighScores(start, end) {
-  return (dispatch) => {
-    dispatch(networkProgress());
-    return getJson(`/highscores/${start}/${end}`)
-      .then(response => dispatch(updateHighScores(response.data)))
-      .then(() => dispatch(resetNetwork()))
-      .catch(error => dispatch(networkFailed(error)));
-  };
+  return dispatch => getJson(`/highscores/${start}/${end}`)
+    .then(({ data }) => dispatch(updateHighScores(data)));
 }
 
 export function getAllTimeHigh() {
-  return (dispatch) => {
-    dispatch(networkProgress());
-    return getJson('/highscores')
-      .then(response => dispatch(updateAllTimeHigh(response.data)))
-      .then(() => dispatch(resetNetwork()))
-      .catch(error => dispatch(networkFailed(error)));
-  };
+  return dispatch => getJson('/highscores')
+    .then(({ data }) => dispatch(updateAllTimeHigh(data)));
 }
 
 export function saveHighScore(name, value) {
-  return (dispatch) => {
-    dispatch(networkProgress());
-    return postJson('/highscore', { name, value })
-      .then(() => dispatch(resetNetwork()))
-      .then(() => dispatch(getHighScore()))
-      .catch(error => dispatch(networkFailed(error)));
-  };
+  return dispatch => postJson('/highscore', { name, value })
+    .then(() => dispatch(getHighScore()));
 }
