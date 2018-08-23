@@ -74,10 +74,45 @@
       outline: none;
       border: 0;
     }
+    .center {
+      text-align: center;
+    }
+    p {
+      margin: 0 0 1rem 0;
+
+      &.score {
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.6rem;
+        margin: 0 0 0.2rem 0;
+      }
+      &.moves {
+        text-align: center;
+        font-weight: 400;
+        font-size: 1.2rem;
+        margin: 0 0 1.5rem 0;
+      }
+    }
+    .cta {
+      text-align: center;
+      margin-top: 1.5rem;
+
+      button {
+        cursor: pointer;
+        color: $text-color;
+        padding: 1rem 2rem;
+        border: 1px solid $gray-light;
+        border-radius: 2rem;
+        background: transparent;
+        outline: none;
+        font-weight: 700;
+        font-size: 1.2rem;
+      }
+    }
     nav {
       float: right;
       button {
-        color: #555;
+        color: $text-color;
         padding: 0;
         border: 0;
         background: transparent;

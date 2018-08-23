@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { ROWS, CARDS } from '../helpers/deck';
 import { newGame } from '../actions/game';
 import { getHighScore } from '../actions/highscore';
 import { toggleAbout, toggleHighScore, toggleStatistics } from '../actions/app';
@@ -26,8 +27,8 @@ class Main extends Component {
       showAbout, hideHighScore, hideStatistics, hideAbout
     } = this.props;
 
-    const isLocked = locked === 4;
-    const isGameWin = isLocked && placed === 48;
+    const isLocked = locked === ROWS;
+    const isGameWin = isLocked && placed === CARDS;
     const isGameOver = isLocked && !isGameWin && round === rounds;
     const isRoundOver = isLocked && !isGameWin && round < rounds;
 

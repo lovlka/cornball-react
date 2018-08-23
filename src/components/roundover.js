@@ -9,27 +9,30 @@ class RoundOver extends Component {
   static propTypes = {
     moves: PropTypes.number.isRequired,
     round: PropTypes.number.isRequired,
-    rounds: PropTypes.number.isRequired,
     score: PropTypes.number.isRequired
   };
 
   render() {
-    const { moves, round, rounds, score } = this.props;
+    const { moves, round, score } = this.props;
     const title = this.context.intl.formatMessage({ id: 'roundover.title', defaultMessage: 'End of round {round}' }, { round });
 
     return (
       <Modal title={title} onClose={this.props.newRound}>
-        <article>
+        <article className="center">
           <p>
             <FormattedMessage id="roundover.description" defaultMessage="No more moves can be done, the cards are being reshuffled..." />
           </p>
-          <p>
-            <FormattedMessage id="game.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} />
-            <br />
+          <p className="score">
             <FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} />
-            <br />
+          </p>
+          <p className="moves">
             <FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
           </p>
+          <div className="cta">
+            <button type="button" onClick={this.props.newRound}>
+              <FormattedMessage id="roundover.nextround" defaultMessage="Next round" />
+            </button>
+          </div>
         </article>
       </Modal>
     );
@@ -46,7 +49,6 @@ const mapStateToProps = (state) => {
   return {
     moves: game.get('moves'),
     round: game.get('round'),
-    rounds: game.get('rounds'),
     score: game.get('score')
   };
 };

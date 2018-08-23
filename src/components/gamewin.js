@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -10,8 +10,6 @@ import Modal from './modal';
 class GameWin extends Component {
   static propTypes = {
     moves: PropTypes.number.isRequired,
-    round: PropTypes.number.isRequired,
-    rounds: PropTypes.number.isRequired,
     score: PropTypes.number.isRequired
   };
 
@@ -63,39 +61,37 @@ class GameWin extends Component {
   };
 
   render() {
-    const { moves, round, rounds, score } = this.props;
+    const { moves, score } = this.props;
     const title = this.context.intl.formatMessage({ id: 'gamewin.title', defaultMessage: 'Congratulations!' });
     const placeholder = this.context.intl.formatMessage({ id: 'gamewin.placeholder', defaultMessage: 'Enter your name' });
 
     return (
       <Modal title={title} onClose={this.props.newGame}>
-        <article>
+        <article className="center">
           <p>
-            <FormattedMessage id="gamewin.description" defaultMessage="You put all cards on the right place and finished The Cornball!" />
+            <FormattedMessage id="gamewin.description" defaultMessage="You put all cards in the right place and finished The Cornball!" />
           </p>
-          <p>
-            <FormattedMessage id="game.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} />
-            <br />
+          <p className="score">
             <FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} />
-            <br />
+          </p>
+          <p className="moves">
             <FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
           </p>
-          {this.isHighScore()
-            ? (
-              <div>
-                <FormattedMessage id="gamewin.highscore" defaultMessage="You made it to the high score list! Enter your name to send your score." />
-                <form onSubmit={this.submitHighScore}>
-                  <input type="text" placeholder={placeholder} onChange={this.nameChanged} value={this.state.name} />
-                  <button type="submit"><FormattedMessage id="gamewin.submit" defaultMessage="Submit" /></button>
-                </form>
-              </div>
-            )
-            : (
-              <div>
-                <FormattedMessage id="gamewin.nohighscore" defaultMessage="Unfortunately you did not set a high score this time." />
-              </div>
-            )
-               }
+          {this.isHighScore() ? (
+            <Fragment>
+              <FormattedMessage id="gamewin.highscore" defaultMessage="You made it to the high score list! Enter your name to send your score." />
+              <form onSubmit={this.submitHighScore}>
+                <input type="text" placeholder={placeholder} onChange={this.nameChanged} value={this.state.name} />
+                <button type="submit"><FormattedMessage id="gamewin.submit" defaultMessage="Submit" /></button>
+              </form>
+            </Fragment>
+          ) : (
+            <div className="cta">
+              <button type="button" onClick={this.props.newGame}>
+                <FormattedMessage id="game.playagain" defaultMessage="Play again" />
+              </button>
+            </div>
+          )}
         </article>
       </Modal>
     );
@@ -111,8 +107,6 @@ const mapStateToProps = (state) => {
 
   return {
     moves: game.get('moves'),
-    round: game.get('round'),
-    rounds: game.get('rounds'),
     score: game.get('score'),
     highScores: app.get('highScores')
   };
