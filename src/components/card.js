@@ -8,6 +8,7 @@ export default class Card extends PureComponent {
   static propTypes = {
     card: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
+    onLoad: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
     onDrop: PropTypes.func.isRequired
   };
@@ -33,7 +34,22 @@ export default class Card extends PureComponent {
     if (this.interact) {
       this.interact.unset();
     }
+    if (this.image) {
+      this.image.onload = null;
+    }
   }
+
+  imageRef = (ref) => {
+    if (!ref) {
+      return;
+    }
+    this.image = ref;
+    this.image.onload = this.props.onLoad;
+
+    if (this.image.complete) {
+      this.props.onLoad();
+    }
+  };
 
   dragStart = () => {
     this.setState({ dragging: true });
@@ -74,7 +90,7 @@ export default class Card extends PureComponent {
 
     return (
       <div className={className} style={style} ref={(ref) => { this.element = ref; }}>
-        <img src={image} alt="" />
+        <img src={image} alt="" ref={this.imageRef} />
       </div>
     );
   }

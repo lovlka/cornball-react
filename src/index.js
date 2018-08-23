@@ -23,4 +23,5 @@ document.addEventListener('DOMContentLoaded', () => {
     </Provider>,
     document.getElementById('cornball')
   );
+  document.body.removeAttribute('style');
 });

@@ -1,13 +1,30 @@
-import React, { Component } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { GridLoader } from 'halogenium';
+import { COLUMNS, CARDS, ROWS } from '../helpers/deck';
 import { autoMoveCard, tryMoveCard, showHint } from '../actions/game';
 import Card from './card';
 import Gap from './gap';
 
-class Game extends Component {
+class Game extends PureComponent {
   static propTypes = {
     deck: PropTypes.object.isRequired
+  };
+
+  constructor(props) {
+    super(props);
+    this.loaded = 0;
+    this.state = {
+      loading: true
+    };
+  }
+
+  onCardLoaded = () => {
+    this.loaded += 1;
+    if (this.loaded === CARDS) {
+      this.setState({ loading: false });
+    }
   };
 
   onGapClick = (index) => {
@@ -22,28 +39,37 @@ class Game extends Component {
     this.props.tryMoveCard(from, to);
   };
 
-  renderRow(row, cards) {
-    return (
-      <section className="row">
-        {cards.map((card, index) => this.renderItem(card, (row * 13) + index))}
-      </section>
-    );
-  }
+  getRows = () => {
+    const { deck } = this.props;
+    const rows = [];
+    for (let row = 0; row < ROWS; row += 1) {
+      rows.push(deck.skip(COLUMNS * row).take(COLUMNS));
+    }
+    return rows;
+  };
 
-  renderItem(card, index) {
-    return card.get('value') > 1
-      ? <Card key={index} index={index} card={card} onClick={this.onCardClick} onDrop={this.onCardDrop} />
-      : <Gap key={index} index={index} onClick={this.onGapClick} />;
-  }
+  renderRow = (row, cards) => (
+    <section key={row} className="row">
+      {cards.map((card, index) => this.renderItem(card, (row * COLUMNS) + index))}
+    </section>
+  );
+
+  renderItem = (card, index) => (
+    card.get('value') > 1
+      ? <Card key={index} index={index} card={card} onLoad={this.onCardLoaded} onClick={this.onCardClick} onDrop={this.onCardDrop} />
+      : <Gap key={index} index={index} onClick={this.onGapClick} />
+  );
 
   render() {
+    const { loading } = this.state;
+
     return (
-      <section id="deck">
-        {this.renderRow(0, this.props.deck.take(13))}
-        {this.renderRow(1, this.props.deck.skip(13).take(13))}
-        {this.renderRow(2, this.props.deck.skip(26).take(13))}
-        {this.renderRow(3, this.props.deck.skip(39).take(13))}
-      </section>
+      <Fragment>
+        {loading && <GridLoader id="loader" color="#fff" size={12} margin={6} />}
+        <section id="deck" className={loading ? 'loading' : ''}>
+          {this.getRows().map((row, index) => this.renderRow(index, row))}
+        </section>
+      </Fragment>
     );
   }
 }

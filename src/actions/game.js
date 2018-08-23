@@ -1,5 +1,6 @@
 import { gameStarted } from './statistics';
 import { findGap, findCard, getCardScore, isCardPlaced, isCorrectGap, isLockedGap } from '../helpers/game';
+import { COLUMNS } from '../helpers/deck';
 
 export const NEW_GAME = 'NEW_GAME';
 export const NEW_ROUND = 'NEW_ROUND';
@@ -30,7 +31,7 @@ function checkAllCards() {
 
     deck.forEach((card, index) => {
       const previous = index > 0 ? deck.get(index - 1) : null;
-      const isFirstInRow = index % 13 === 0;
+      const isFirstInRow = index % COLUMNS === 0;
       const roundPlaced = card.get('roundPlaced');
 
       suit = isCardPlaced(suit, card, index);

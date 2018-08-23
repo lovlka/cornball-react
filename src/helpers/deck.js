@@ -1,5 +1,14 @@
 /* eslint-disable no-param-reassign */
 
+export const ROWS = 4;
+export const COLUMNS = 13;
+export const CARDS = 48;
+export const ACE = 1;
+export const TWO = 2;
+export const DRESSED = 10;
+export const KING = 13;
+
+
 export function getCardImagePath(suit, value) {
   const deckPath = require.context('../assets/deck');
   return deckPath(`./${suit}${value}.png`);
@@ -9,8 +18,8 @@ export function getDeck() {
   const deck = [];
   const suits = { 1: 'h', 2: 's', 3: 'd', 4: 'c' };
 
-  for (let suit = 1; suit <= 4; suit += 1) {
-    for (let value = 1; value <= 13; value += 1) {
+  for (let suit = 1; suit <= ROWS; suit += 1) {
+    for (let value = 1; value <= COLUMNS; value += 1) {
       deck.push({
         suit: suits[suit],
         value

@@ -6,31 +6,29 @@ main > nav {
   left: 0;
   right: 0;
   color: #fff;
-  text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.7);
 
   ul {
-    margin: 0;
+    margin: 0 0 0 0.4rem;
     padding: 0;
     list-style: none;
     float: left;
+
     li {
       float: left;
-      margin: 10px 15px;
-      @media(max-width: $screen-md) {
-        font-size: 1.5em;
-        margin: 10px 10px 0;
-      }
+      margin: 0.6rem 0.8rem;
+
       button {
         display: block;
+        cursor: pointer;
         padding: 0;
         color: #fff;
-        font-size: 2em;
+        font-size: 2rem;
         background: transparent;
         border: 0;
         outline: none;
         transition: all 0.2s;
-        text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
-
+        text-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.7);
 
         &:hover {
           transform: scale(1.2);
@@ -59,16 +57,9 @@ main > nav {
       float: right;
     }
 
-    margin: 12px 20px;
+    margin: 1rem 1.2rem;
     span {
-      margin-left: 20px;
-    }
-    @media(max-width: $screen-md) {
-      font-size: 0.8em;
-      margin: 10px;
-      span {
-        margin-left: 10px;
-      }
+      margin-left: 1rem;
     }
   }
 }

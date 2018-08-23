@@ -2,25 +2,37 @@
 
 html, body {
   height: 100%;
+  font-size: 14px;
+
+  @media(max-width: $screen-md) {
+    font-size: 12px;
+  }
+  @media(max-width: $screen-sm) {
+    font-size: 10px;
+  }
 }
 
 body {
-  background-color: $bg-light;
+  background-color: $bg-dark;
   background: -webkit-radial-gradient(center, $bg-light, $bg-dark);
   background: -o-radial-gradient(center, $bg-light, $bg-dark);
   background: -moz-radial-gradient(center, $bg-light, $bg-dark);
   background: radial-gradient(center, $bg-light, $bg-dark);
   font-family: "Helvetica Neue", Arial, sans-serif;
-  line-height: 20px;
   font-weight: 300;
-  font-size: 14px;
+  font-size: 1rem;
+  line-height: 1.4rem;
+  overflow: hidden;
 }
 
-.game {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+#loader {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }

@@ -1,8 +1,9 @@
+import { ACE, COLUMNS, DRESSED, KING, TWO } from './deck';
 
 export function isCardPlaced(suit, card, index) {
-  const isFirstInRow = index % 13 === 0;
-  const isValueTwo = card.get('value') === 2;
-  const isPlaced = card.get('suit') === suit && card.get('value') === ((index % 13) + 2);
+  const isFirstInRow = index % COLUMNS === 0;
+  const isValueTwo = card.get('value') === TWO;
+  const isPlaced = card.get('suit') === suit && card.get('value') === ((index % COLUMNS) + 2);
 
   if ((isFirstInRow && isValueTwo) || (!isFirstInRow && !isValueTwo && isPlaced)) {
     return card.get('suit');
@@ -11,8 +12,8 @@ export function isCardPlaced(suit, card, index) {
 }
 
 export function isCorrectGap(deck, gapIndex, card) {
-  const isGapFirstInRow = gapIndex % 13 === 0;
-  const isCardValueTwo = card.get('value') === 2;
+  const isGapFirstInRow = gapIndex % COLUMNS === 0;
+  const isCardValueTwo = card.get('value') === TWO;
   const previous = gapIndex > 0 ? deck.get(gapIndex - 1) : null;
   const isSuitMatch = previous !== null && card.get('suit') === previous.get('suit');
   const isValueMatch = previous !== null && card.get('value') === previous.get('value') + 1;
@@ -21,7 +22,7 @@ export function isCorrectGap(deck, gapIndex, card) {
 }
 
 export function isLockedGap(card, previous) {
-  return card.get('value') === 1 && (previous.get('value') === 1 || previous.get('value') === 13);
+  return card.get('value') === 1 && (previous.get('value') === 1 || previous.get('value') === KING);
 }
 
 
@@ -38,7 +39,7 @@ export function findCard(deck, gapIndex) {
 export function findGap(deck, card) {
   let index = -1;
   deck.forEach((gap, gapIndex) => {
-    if (gap.get('value') === 1 && isCorrectGap(deck, gapIndex, card)) {
+    if (gap.get('value') === ACE && isCorrectGap(deck, gapIndex, card)) {
       index = gapIndex;
     }
   });
@@ -47,10 +48,10 @@ export function findGap(deck, card) {
 
 export function getCardScore(value, roundPlaced, rounds) {
   if (roundPlaced > 0) {
-    if (value === 13) {
+    if (value === KING) {
       return (rounds - roundPlaced + 1) * 60;
     }
-    if (value >= 10) {
+    if (value >= DRESSED) {
       return (rounds - roundPlaced + 1) * 40;
     }
     return (rounds - roundPlaced + 1) * 20;
