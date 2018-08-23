@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import interact from 'interactjs';
 
-export default class Gap extends Component {
+export default class Gap extends PureComponent {
   static propTypes = {
     index: PropTypes.number.isRequired,
     onClick: PropTypes.func.isRequired

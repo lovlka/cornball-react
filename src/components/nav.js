@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import { toggleHighScore, toggleStatistics, toggleAbout } from '../actions/app';
 import { newGame, undoMove } from '../actions/game';
+
 
 class Nav extends Component {
   static propTypes = {
@@ -16,25 +17,25 @@ class Nav extends Component {
   };
 
   renderMenu() {
-    const { newGame, undoMove, canUndo } = this.props;
+    const { newGame, undoMove, canUndo, showHighScore, showStatistics, showAbout } = this.props;
 
     return (
       <ul>
-        <li>{this.renderLink('newgame', 'refresh', 'Start new game', newGame)}</li>
-        <li>{this.renderLink('undomove', 'reply', 'Undo last move', undoMove, !canUndo)}</li>
-        <li>{this.renderLink('highscore', 'star', 'High score')}</li>
-        <li>{this.renderLink('statistics', 'pie-chart', 'Statistics')}</li>
-        <li>{this.renderLink('about', 'question', 'About')}</li>
+        <li>{this.renderButton('newgame', 'refresh', 'Start new game', newGame)}</li>
+        <li>{this.renderButton('undomove', 'reply', 'Undo last move', undoMove, !canUndo)}</li>
+        <li>{this.renderButton('highscore', 'star', 'High score', showHighScore)}</li>
+        <li>{this.renderButton('statistics', 'pie-chart', 'Statistics', showStatistics)}</li>
+        <li>{this.renderButton('about', 'question', 'About', showAbout)}</li>
       </ul>
     );
   }
 
-  renderLink(id, icon, defaultMessage, action, disabled) {
+  renderButton(id, icon, defaultMessage, action, disabled) {
     const iconClass = `fa fa-${icon}`;
     const title = this.context.intl.formatMessage({ id: `nav.${id}`, defaultMessage });
     const className = disabled ? 'disabled' : '';
 
-    return <Link to={`/${id}`} className={className} title={title} replace onClick={action}><i className={iconClass} /></Link>;
+    return <button type="button" className={className} title={title} onClick={action}><i className={iconClass} /></button>;
   }
 
   renderScore() {
@@ -104,6 +105,18 @@ const mapDispatchToProps = dispatch => ({
   undoMove: (ev) => {
     ev.preventDefault();
     dispatch(undoMove());
+  },
+  showHighScore: (ev) => {
+    ev.preventDefault();
+    dispatch(toggleHighScore(true));
+  },
+  showStatistics: (ev) => {
+    ev.preventDefault();
+    dispatch(toggleStatistics(true));
+  },
+  showAbout: (ev) => {
+    ev.preventDefault();
+    dispatch(toggleAbout(true));
   }
 });
 

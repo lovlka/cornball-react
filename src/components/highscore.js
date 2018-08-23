@@ -59,7 +59,7 @@ class HighScore extends Component {
     const month = this.context.intl.formatDate(this.state.startDate, { month: 'long', year: 'numeric' });
 
     return (
-      <Modal title={title}>
+      <Modal title={title} onClose={this.props.onClose}>
         <div className="row">
           <div className="column">
             <table>

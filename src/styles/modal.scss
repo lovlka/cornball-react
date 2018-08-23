@@ -65,7 +65,9 @@
       line-height: 0;
       font-size: 26px;
       font-weight: 400;
-      text-decoration: none;
+      background: transparent;
+      outline: none;
+      border: 0;
     }
     nav {
       float: right;

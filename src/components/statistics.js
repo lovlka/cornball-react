@@ -22,7 +22,7 @@ class Statistics extends Component {
     const title = this.context.intl.formatMessage({ id: 'statistics.title', defaultMessage: 'Statistics' });
 
     return (
-      <Modal title={title}>
+      <Modal title={title} onClose={this.props.onClose}>
         <table>
           <tbody>
             {this.props.statistics.map(item => this.renderRow(item.get('name'), item.get('value'), item.get('percent')))}

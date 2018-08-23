@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
 
 import { newGame } from '../actions/game';
 import { getHighScore } from '../actions/highscore';
+import { toggleAbout, toggleHighScore, toggleStatistics } from '../actions/app';
 
 import Nav from './nav';
 import Game from './game';
@@ -21,7 +21,10 @@ class Main extends Component {
   }
 
   render() {
-    const { round, rounds, locked, placed } = this.props;
+    const {
+      round, rounds, locked, placed, showHighScore, showStatistics,
+      showAbout, hideHighScore, hideStatistics, hideAbout
+    } = this.props;
 
     const isLocked = locked === 4;
     const isGameWin = isLocked && placed === 48;
@@ -35,32 +38,34 @@ class Main extends Component {
         {isGameWin && <GameWin />}
         {isGameOver && <GameOver />}
         {isRoundOver && <RoundOver />}
-        <Route path="/highscore" component={HighScore} />
-        <Route path="/statistics" component={Statistics} />
-        <Route path="/about" component={About} />
+        {showHighScore && <HighScore onClose={hideHighScore} />}
+        {showStatistics && <Statistics onClose={hideStatistics} />}
+        {showAbout && <About onClose={hideAbout} />}
       </main>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const { game } = state;
+  const { app, game } = state;
 
   return {
     round: game.get('round'),
     rounds: game.get('rounds'),
     locked: game.get('locked'),
-    placed: game.get('placed')
+    placed: game.get('placed'),
+    showHighScore: app.get('showHighScore'),
+    showStatistics: app.get('showStatistics'),
+    showAbout: app.get('showAbout')
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  getHighScore: () => {
-    dispatch(getHighScore());
-  },
-  newGame: () => {
-    dispatch(newGame());
-  }
+  getHighScore: () => dispatch(getHighScore()),
+  newGame: () => dispatch(newGame()),
+  hideHighScore: () => dispatch(toggleHighScore(false)),
+  hideStatistics: () => dispatch(toggleStatistics(false)),
+  hideAbout: () => dispatch(toggleAbout(false))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

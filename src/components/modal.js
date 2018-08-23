@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 class Modal extends Component {
-  propTypes = {
+  static propTypes = {
     title: PropTypes.string.isRequired,
     children: PropTypes.element.isRequired,
-    onClose: PropTypes.func
+    onClose: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -26,12 +25,7 @@ class Modal extends Component {
 
   onClose = (ev) => {
     ev.preventDefault();
-
-    if (this.props.onClose) {
-      this.props.onClose();
-    } else if (this.props.history) {
-      this.props.history.replace('/');
-    }
+    this.props.onClose();
   };
 
   render() {
@@ -40,7 +34,7 @@ class Modal extends Component {
         <CSSTransition classNames="modal" appear timeout={500}>
           <section className="modal-container">
             <aside className="modal-content">
-              <Link to="/" replace className="close" onClick={this.onClose}>&times;</Link>
+              <button type="button" className="close" onClick={this.onClose}>&times;</button>
               <h1>{this.props.title}</h1>
               <hr />
               {this.props.children}
@@ -52,4 +46,4 @@ class Modal extends Component {
   }
 }
 
-export default withRouter(Modal);
+export default Modal;

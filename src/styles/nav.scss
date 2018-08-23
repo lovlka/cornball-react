@@ -15,17 +15,22 @@ main > nav {
     float: left;
     li {
       float: left;
-      font-size: 2em;
       margin: 10px 15px;
       @media(max-width: $screen-md) {
         font-size: 1.5em;
         margin: 10px 10px 0;
       }
-      a {
+      button {
         display: block;
         padding: 0;
         color: #fff;
+        font-size: 2em;
+        background: transparent;
+        border: 0;
+        outline: none;
         transition: all 0.2s;
+        text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+
 
         &:hover {
           transform: scale(1.2);

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import interact from 'interactjs';
 import { getCardImagePath } from '../helpers/deck';
 
-export default class Card extends Component {
+export default class Card extends PureComponent {
   static propTypes = {
     card: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
