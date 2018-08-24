@@ -25,11 +25,19 @@ const config = {
         minimize: true
       }
     }, {
-      test: /\.(png|jpe?g|svg|woff2?|ttf|otf|eot)$/,
+      test: /\.(ico|png)$/,
+      exclude: /(node_modules|deck|fonts)/,
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]'
+      }
+    }, {
+      test: /\.(png|svg|woff2?|ttf|otf|eot)$/,
+      include: /(deck|fonts)/,
       exclude: /node_modules/,
       loader: 'file-loader',
       options: {
-        context: './src/',
+        context: './src/assets/',
         name: '[name].[ext]',
         useRelativePath: true
       }

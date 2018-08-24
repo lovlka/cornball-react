@@ -7,6 +7,10 @@ import en from 'react-intl/locale-data/en';
 import sv from 'react-intl/locale-data/sv';
 
 import './styles/index.scss';
+import './assets/favicon.ico';
+import './assets/favicon.png';
+import './assets/apple-touch-icon.png';
+
 import Main from './components/main';
 import svMessages from './locales/sv';
 import configureStore from './configure-store';
