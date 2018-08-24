@@ -1,8 +1,7 @@
 export default function () {
   return {
     'main.title': 'Lantisen',
-    'main.author': 'Victor Stodell',
-    'main.description': 'Lantisen är en farligt beroendeframkallande patiens, där du genom att flytta om korten ska placera dem i ordning från 2 till kung.',
+    'main.description': 'Lantisen är en beroendeframkallande patiens som går ut på att placera korten i ordning från 2 till kung i 4 rader.',
 
     'nav.newgame': 'Starta nytt spel',
     'nav.undomove': 'Ångra senaste drag',
@@ -14,6 +13,8 @@ export default function () {
     'game.round': 'Omgång: {round, number}/{rounds, number}',
     'game.score': 'Poäng: {score, number}',
     'game.moves': 'Drag: {moves, number}',
+    'game.nextround': 'Nästa runda',
+    'game.playagain': 'Spela igen',
 
     'about.title': 'Om Lantisen',
     'about.info': 'Lantisen går ut på att lägga samtliga kort i ordning från 2 till kung med en färg på varje rad. Vilken färg som läggs på respektive rad spelar ingen roll. Tvåor kan endast läggas i en lucka längst till vänster på spelplanen. Övriga kort kan endast läggas i en lucka till höger om det kort i samma färg som kommer före i ordningen. I en lucka efter kung kan inget kort läggas.',

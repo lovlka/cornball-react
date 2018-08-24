@@ -30,7 +30,7 @@ class RoundOver extends Component {
           </p>
           <div className="cta">
             <button type="button" onClick={this.props.newRound}>
-              <FormattedMessage id="roundover.nextround" defaultMessage="Next round" />
+              <FormattedMessage id="game.nextround" defaultMessage="Next round" />
             </button>
           </div>
         </article>

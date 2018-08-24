@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
 import { ROWS, CARDS } from '../helpers/deck';
 import { newGame } from '../actions/game';
@@ -32,8 +34,15 @@ class Main extends Component {
     const isGameOver = isLocked && !isGameWin && round === rounds;
     const isRoundOver = isLocked && !isGameWin && round < rounds;
 
+    const title = this.context.intl.formatMessage({ id: 'main.title', defaultMessage: 'The Cornball' });
+    const description = this.context.intl.formatMessage({ id: 'main.description', defaultMessage: 'The Cornball is an addictive card game where the goal is to place the cards in order from 2 to king in 4 rows.' });
+
     return (
       <main>
+        <Helmet>
+          <title>{title}</title>
+          <meta name="description" content={description} />
+        </Helmet>
         <Nav />
         <Game />
         {isGameWin && <GameWin />}
@@ -46,6 +55,10 @@ class Main extends Component {
     );
   }
 }
+
+Main.contextTypes = {
+  intl: PropTypes.object.isRequired
+};
 
 const mapStateToProps = (state) => {
   const { app, game } = state;

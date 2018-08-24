@@ -34,7 +34,7 @@ class GameOver extends Component {
           </p>
           <div className="cta">
             <button type="button" onClick={this.props.newGame}>
-              <FormattedMessage id="gameover.playagain" defaultMessage="Play again" />
+              <FormattedMessage id="game.playagain" defaultMessage="Play again" />
             </button>
           </div>
         </article>
