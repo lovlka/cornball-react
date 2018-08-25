@@ -28,9 +28,17 @@ export function app(state = Immutable.Map(initialState), action = null) {
     case HIGH_SCORE:
       return state.merge(action.state);
 
-    case STATISTICS:
-      // TODO: Remove gamesStarted, calculate gamesPlayed and percent
-      return state.merge(action.state);
+    case STATISTICS: {
+      let gamesPlayed = 0;
+      const data = action.state.statistics;
+      data.splice(data.findIndex(s => s.name === 'gamesStarted'), 1);
+      data.forEach((s) => { gamesPlayed += s.value; });
+
+      const statistics = [{ name: 'gamesPlayed', value: gamesPlayed }]
+        .concat(data.map(s => ({ ...s, percent: s.value / gamesPlayed })));
+
+      return state.merge({ statistics });
+    }
 
     default:
       return state;

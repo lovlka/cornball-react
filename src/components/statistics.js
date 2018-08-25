@@ -12,9 +12,9 @@ class Statistics extends Component {
 
   renderRow = (name, value, percent) => (
     <tr key={name}>
-      <td><FormattedMessage id={`statistics.${name}`} defaultMessage={name} /></td>
+      <td><FormattedMessage id={`statistics.${name}`} /></td>
       <td><FormattedNumber value={value} /></td>
-      <td>{percent ? <FormattedNumber value={percent} /> : null}</td>
+      <td>{percent > 0 && <FormattedNumber value={percent} style="percent" minimumFractionDigits={2} />}</td>
     </tr>
   );
 

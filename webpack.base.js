@@ -25,15 +25,7 @@ const config = {
         minimize: true
       }
     }, {
-      test: /\.(ico|png)$/,
-      exclude: /(node_modules|deck|fonts)/,
-      loader: 'file-loader',
-      options: {
-        name: '[name].[ext]'
-      }
-    }, {
-      test: /\.(png|svg|woff2?|ttf|otf|eot)$/,
-      include: /(deck|fonts)/,
+      test: /\.(ico|png|svg|woff2?|ttf|otf|eot)$/,
       exclude: /node_modules/,
       loader: 'file-loader',
       options: {
