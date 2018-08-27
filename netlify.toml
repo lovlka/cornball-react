@@ -1,4 +1,4 @@
 [[redirects]]
   from = "/api/*"
-  to = "http://lantisen.stodell.se/api/:splat"
+  to = "https://cornball.azurewebsites.net/api/:splat"
   status = 200
