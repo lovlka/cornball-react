@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://lantisen.stodell.se/api'
+  baseURL: 'https://cornball.se/api'
 });
 
 function getJsonHeaders() {
