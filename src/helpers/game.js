@@ -26,20 +26,20 @@ export function isLockedGap(card, previous) {
 }
 
 
-export function findCard(deck, gapIndex) {
-  let index = -1;
+export function findCards(deck, gapIndex) {
+  const indexes = [];
   deck.forEach((card, cardIndex) => {
     if (isCorrectGap(deck, gapIndex, card)) {
-      index = cardIndex;
+      indexes.push(cardIndex);
     }
   });
-  return index;
+  return indexes;
 }
 
 export function findGap(deck, card) {
   let index = -1;
   deck.forEach((gap, gapIndex) => {
-    if (gap.get('value') === ACE && isCorrectGap(deck, gapIndex, card)) {
+    if (index === -1 && gap.get('value') === ACE && isCorrectGap(deck, gapIndex, card)) {
       index = gapIndex;
     }
   });

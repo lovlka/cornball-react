@@ -1,5 +1,5 @@
 import { gameStarted } from './statistics';
-import { findGap, findCard, getCardScore, isCardPlaced, isCorrectGap, isLockedGap } from '../helpers/game';
+import { findGap, findCards, getCardScore, isCardPlaced, isCorrectGap, isLockedGap } from '../helpers/game';
 import { COLUMNS } from '../helpers/deck';
 
 export const NEW_GAME = 'NEW_GAME';
@@ -7,16 +7,21 @@ export const NEW_ROUND = 'NEW_ROUND';
 export const MOVE_CARD = 'MOVE_CARD';
 export const UNDO_MOVE = 'UNDO_MOVE';
 export const SHOW_HINT = 'SHOW_HINT';
+export const SHOW_ERROR = 'SHOW_ERROR';
 export const SET_SCORE = 'SET_SCORE';
 export const SET_ROUND_PLACED = 'SET_ROUND_PLACED';
 
 
 function setRoundPlaced(index, roundPlaced) {
-  return {
-    type: SET_ROUND_PLACED,
-    index,
-    roundPlaced
-  };
+  return { type: SET_ROUND_PLACED, index, roundPlaced };
+}
+
+function showHint(index, showHint) {
+  return { type: SHOW_HINT, index, showHint };
+}
+
+function showError(index, showError) {
+  return { type: SHOW_ERROR, index, showError };
 }
 
 function checkAllCards() {
@@ -52,10 +57,7 @@ function checkAllCards() {
     score -= (round - 1) * 100;
     score -= moves * 5;
 
-    dispatch({
-      type: SET_SCORE,
-      state: { placed, locked, score }
-    });
+    dispatch({ type: SET_SCORE, state: { placed, locked, score } });
   };
 }
 
@@ -76,10 +78,7 @@ export function newRound() {
 
 export function moveCard(from, to) {
   return (dispatch) => {
-    dispatch({
-      type: MOVE_CARD,
-      move: { from, to }
-    });
+    dispatch({ type: MOVE_CARD, move: { from, to } });
     dispatch(checkAllCards());
   };
 }
@@ -87,11 +86,15 @@ export function moveCard(from, to) {
 export function undoMove() {
   return (dispatch, getState) => {
     const move = getState().undo.get('move');
-    dispatch({
-      type: UNDO_MOVE,
-      move: move ? move.toJS() : null
-    });
+    dispatch({ type: UNDO_MOVE, move: move ? move.toJS() : null });
     dispatch(checkAllCards());
+  };
+}
+
+function timedAction(setAction, resetAction, timeout = 1000) {
+  return (dispatch) => {
+    dispatch(setAction);
+    setTimeout(() => dispatch(resetAction), timeout);
   };
 }
 
@@ -103,6 +106,11 @@ export function autoMoveCard(cardIndex) {
 
     if (index !== -1) {
       dispatch(moveCard(cardIndex, index));
+    } else {
+      dispatch(timedAction(
+        showError(cardIndex, true),
+        showError(cardIndex, false)
+      ));
     }
   };
 }
@@ -118,16 +126,23 @@ export function tryMoveCard(cardIndex, gapIndex) {
   };
 }
 
-export function showHint(gapIndex) {
+export function tryShowHint(gapIndex) {
   return (dispatch, getState) => {
     const { deck } = getState();
-    const index = findCard(deck, gapIndex);
+    const indexes = findCards(deck, gapIndex);
 
-    if (index !== -1) {
-      dispatch({ type: SHOW_HINT, index, showHint: true });
-      setTimeout(() => {
-        dispatch({ type: SHOW_HINT, index, showHint: false });
-      }, 1000);
+    if (indexes.length > 0) {
+      indexes.forEach((index) => {
+        dispatch(timedAction(
+          showHint(index, true),
+          showHint(index, false)
+        ));
+      });
+    } else {
+      dispatch(timedAction(
+        showError(gapIndex, true),
+        showError(gapIndex, false)
+      ));
     }
   };
 }

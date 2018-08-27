@@ -5,6 +5,7 @@ import interact from 'interactjs';
 
 export default class Gap extends PureComponent {
   static propTypes = {
+    card: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
     onClick: PropTypes.func.isRequired
   };
@@ -45,9 +46,11 @@ export default class Gap extends PureComponent {
   };
 
   render() {
+    const { showError } = this.props.card.toJS();
     const className = classNames({
       gap: true,
-      highlight: this.state.highlight
+      highlight: this.state.highlight,
+      error: showError
     });
     return (
       <div className={className} ref={(ref) => { this.element = ref; }} />

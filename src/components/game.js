@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { GridLoader } from 'halogenium';
 import { COLUMNS, CARDS, ROWS } from '../helpers/deck';
-import { autoMoveCard, tryMoveCard, showHint } from '../actions/game';
+import { autoMoveCard, tryMoveCard, tryShowHint } from '../actions/game';
 import Card from './card';
 import Gap from './gap';
 
@@ -28,7 +28,7 @@ class Game extends PureComponent {
   };
 
   onGapClick = (index) => {
-    this.props.showHint(index);
+    this.props.tryShowHint(index);
   };
 
   onCardClick = (index) => {
@@ -57,7 +57,7 @@ class Game extends PureComponent {
   renderItem = (card, index) => (
     card.get('value') > 1
       ? <Card key={index} index={index} card={card} onLoad={this.onCardLoaded} onClick={this.onCardClick} onDrop={this.onCardDrop} />
-      : <Gap key={index} index={index} onClick={this.onGapClick} />
+      : <Gap key={index} index={index} card={card} onClick={this.onGapClick} />
   );
 
   render() {
@@ -81,8 +81,8 @@ const mapDispatchToProps = dispatch => ({
   tryMoveCard(from, to) {
     dispatch(tryMoveCard(from, to));
   },
-  showHint(index) {
-    dispatch(showHint(index));
+  tryShowHint(index) {
+    dispatch(tryShowHint(index));
   }
 });
 

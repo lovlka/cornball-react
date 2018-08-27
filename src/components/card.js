@@ -77,7 +77,7 @@ export default class Card extends PureComponent {
 
   render() {
     const { dragging, dragX, dragY } = this.state;
-    const { suit, value, roundPlaced, showHint } = this.props.card.toJS();
+    const { suit, value, roundPlaced, showHint, showError } = this.props.card.toJS();
 
     const image = getCardImagePath(suit, value);
     const style = { transform: `translate(${dragX}px, ${dragY}px)` };
@@ -85,7 +85,8 @@ export default class Card extends PureComponent {
       card: true,
       dragging,
       placed: roundPlaced,
-      'animated tada': showHint
+      'animated tada': showHint,
+      error: showError
     });
 
     return (
