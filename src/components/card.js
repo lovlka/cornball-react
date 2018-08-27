@@ -85,7 +85,7 @@ export default class Card extends PureComponent {
       card: true,
       dragging,
       placed: roundPlaced,
-      'animated tada': showHint,
+      hint: showHint,
       error: showError
     });
 

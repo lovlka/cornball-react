@@ -1,4 +1,5 @@
 @import 'variables.scss';
+@import 'animate.scss';
 
 #deck {
   top: 4rem;
@@ -73,16 +74,30 @@
           rgba(0,0,0,0.15) 100%
         );
       }
+      &.hint {
+        @extend .animated;
+        @extend .tada;
+      }
       &.dragging {
         z-index: 100;
         transition: none;
         box-shadow: 0.2rem 0.2rem 0.7rem rgba(0, 0, 0, 0.3);
+      }
+      &.error {
+        @extend .animated;
+        @extend .blink;
       }
     }
 
     .gap {
       &.highlight {
         background: rgba(0, 0, 0, 0.2);
+        border-radius: $border-radius;
+      }
+      &.error {
+        @extend .animated;
+        @extend .flash;
+        background: rgba(255, 0, 0, 0.5);
         border-radius: $border-radius;
       }
     }
