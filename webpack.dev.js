@@ -10,7 +10,7 @@ module.exports = merge(base, {
       use: ['style-loader', 'css-loader', 'sass-loader']
     }]
   },
-  serve: {
+  devServer: {
     port: 1234,
     open: true
   }
