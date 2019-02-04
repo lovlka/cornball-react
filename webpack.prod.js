@@ -1,10 +1,12 @@
 const merge = require('webpack-merge');
+const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const base = require('./webpack.base.js');
 
 module.exports = merge(base, {
   mode: 'production',
+  devtool: 'source-map',
   module: {
     rules: [{
       test: /\.s?css$/,
@@ -15,7 +17,15 @@ module.exports = merge(base, {
       ]
     }]
   },
-  devtool: 'source-map',
+  optimization: {
+    minimizer: [new TerserPlugin({
+      terserOptions: {
+        output: {
+          comments: false
+        }
+      }
+    })]
+  },
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'cornball.[hash].css'

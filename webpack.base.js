@@ -18,13 +18,6 @@ const config = {
       include: /src/,
       loader: 'babel-loader'
     }, {
-      test: /\.html$/,
-      include: /src/,
-      loader: 'html-loader',
-      options: {
-        minimize: true
-      }
-    }, {
       test: /\.(ico|png|svg|woff2?|ttf|otf|eot)$/,
       exclude: /node_modules/,
       loader: 'file-loader',
@@ -42,7 +35,11 @@ const config = {
     new ProgressPlugin(),
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      template: './src/assets/index.html'
+      template: './src/assets/index.html',
+      minify: {
+        collapseWhitespace: true,
+        minifyJS: true
+      }
     })
   ]
 };
