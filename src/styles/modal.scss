@@ -123,23 +123,4 @@
       }
     }
   }
-
-  &.modal-appear,
-  &.modal-enter,
-  &.modal-exit.modal-exit-active {
-    opacity: 0;
-
-    .modal-content {
-      transform: scale(0.7);
-    }
-  }
-  &.modal-appear.modal-appear-active,
-  &.modal-enter.modal-enter-active,
-  &.modal-exit {
-    opacity: 1;
-
-    .modal-content {
-      transform: scale(1);
-    }
-  }
 }

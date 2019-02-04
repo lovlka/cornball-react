@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 class Modal extends Component {
   static propTypes = {
@@ -30,18 +29,14 @@ class Modal extends Component {
 
   render() {
     return (
-      <TransitionGroup>
-        <CSSTransition classNames="modal" appear timeout={500}>
-          <section className="modal-container">
-            <aside className="modal-content">
-              <button type="button" className="close" onClick={this.onClose}>&times;</button>
-              <h1>{this.props.title}</h1>
-              <hr />
-              {this.props.children}
-            </aside>
-          </section>
-        </CSSTransition>
-      </TransitionGroup>
+      <section className="modal-container">
+        <aside className="modal-content">
+          <button type="button" className="close" onClick={this.onClose}>&times;</button>
+          <h1>{this.props.title}</h1>
+          <hr />
+          {this.props.children}
+        </aside>
+      </section>
     );
   }
 }
