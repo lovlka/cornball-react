@@ -1,8 +1,10 @@
-# cornball-react
+# The Cornball
 
 A port of [the previous Chaplin based game](https://github.com/lovlka/cornball-js) to a React version.
 
-## The Cornball
+[![Netlify Status](https://api.netlify.com/api/v1/badges/92f819fa-d0e2-446e-a3f6-d24f24b07fd2/deploy-status)](https://app.netlify.com/sites/cornball/deploys)
+
+## About The Cornball
 
 The goal of The Cornball is to put all the cards in order from 2 to king with one color on each line. What color is put on each line does not matter.
 
