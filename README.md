@@ -2,7 +2,7 @@
 
 A port of [the previous Chaplin based game](https://github.com/lovlka/cornball-js) to a React version.
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/92f819fa-d0e2-446e-a3f6-d24f24b07fd2/deploy-status)](https://app.netlify.com/sites/cornball/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/92f819fa-d0e2-446e-a3f6-d24f24b07fd2/deploy-status)](https://app.netlify.com/sites/cornball/deploys) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/41eb0ea5b0c440108d9cb9399717e770)](https://www.codacy.com/app/lovlka/cornball-react?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lovlka/cornball-react&amp;utm_campaign=Badge_Grade)
 
 ## About The Cornball
 
