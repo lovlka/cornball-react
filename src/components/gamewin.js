@@ -6,13 +6,9 @@ import { newGame } from '../actions/game';
 import { gameWon } from '../actions/statistics';
 import { getHighScores, saveHighScore } from '../actions/highscore';
 import Modal from './modal';
+import Summary from './summary';
 
 class GameWin extends Component {
-  static propTypes = {
-    moves: PropTypes.number.isRequired,
-    score: PropTypes.number.isRequired
-  };
-
   constructor(props) {
     super(props);
 
@@ -61,7 +57,6 @@ class GameWin extends Component {
   };
 
   render() {
-    const { moves, score } = this.props;
     const title = this.context.intl.formatMessage({ id: 'gamewin.title', defaultMessage: 'Congratulations!' });
     const placeholder = this.context.intl.formatMessage({ id: 'gamewin.placeholder', defaultMessage: 'Enter your name' });
 
@@ -71,12 +66,7 @@ class GameWin extends Component {
           <p>
             <FormattedMessage id="gamewin.description" defaultMessage="You put all cards in the right place and finished The Cornball!" />
           </p>
-          <p className="score">
-            <FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} />
-          </p>
-          <p className="moves">
-            <FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
-          </p>
+          <Summary />
           {this.isHighScore() ? (
             <Fragment>
               <FormattedMessage id="gamewin.highscore" defaultMessage="You made it to the high score list! Enter your name to send your score." />
@@ -103,11 +93,9 @@ GameWin.contextTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const { app, game } = state;
+  const { app } = state;
 
   return {
-    moves: game.get('moves'),
-    score: game.get('score'),
     highScores: app.get('highScores')
   };
 };

@@ -4,16 +4,11 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { newRound } from '../actions/game';
 import Modal from './modal';
+import Summary from './summary';
 
 class RoundOver extends Component {
-  static propTypes = {
-    moves: PropTypes.number.isRequired,
-    round: PropTypes.number.isRequired,
-    score: PropTypes.number.isRequired
-  };
-
   render() {
-    const { moves, round, score } = this.props;
+    const { round } = this.props;
     const title = this.context.intl.formatMessage({ id: 'roundover.title', defaultMessage: 'End of round {round}' }, { round });
 
     return (
@@ -22,12 +17,7 @@ class RoundOver extends Component {
           <p>
             <FormattedMessage id="roundover.description" defaultMessage="No more moves can be done, the cards are being reshuffled..." />
           </p>
-          <p className="score">
-            <FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} />
-          </p>
-          <p className="moves">
-            <FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
-          </p>
+          <Summary />
           <div className="cta">
             <button type="button" onClick={this.props.newRound}>
               <FormattedMessage id="game.nextround" defaultMessage="Next round" />
@@ -47,9 +37,7 @@ const mapStateToProps = (state) => {
   const { game } = state;
 
   return {
-    moves: game.get('moves'),
-    round: game.get('round'),
-    score: game.get('score')
+    round: game.get('round')
   };
 };
 
