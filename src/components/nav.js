@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { toggleHighScore, toggleStatistics, toggleAbout } from '../actions/app';
 import { newGame, undoMove } from '../actions/game';
-
+import Icon, { paths } from './icon';
 
 class Nav extends Component {
   static propTypes = {
@@ -21,21 +21,20 @@ class Nav extends Component {
 
     return (
       <ul>
-        <li>{this.renderButton('newgame', 'refresh', 'Start new game', newGame)}</li>
-        <li>{this.renderButton('undomove', 'reply', 'Undo last move', undoMove, !canUndo)}</li>
-        <li>{this.renderButton('highscore', 'star', 'High score', showHighScore)}</li>
-        <li>{this.renderButton('statistics', 'pie-chart', 'Statistics', showStatistics)}</li>
-        <li>{this.renderButton('about', 'question', 'About', showAbout)}</li>
+        <li>{this.renderButton('newgame', 'Start new game', newGame)}</li>
+        <li>{this.renderButton('undomove', 'Undo last move', undoMove, !canUndo)}</li>
+        <li>{this.renderButton('highscore', 'High score', showHighScore)}</li>
+        <li>{this.renderButton('statistics', 'Statistics', showStatistics)}</li>
+        <li>{this.renderButton('about', 'About', showAbout)}</li>
       </ul>
     );
   }
 
-  renderButton(id, icon, defaultMessage, action, disabled) {
-    const iconClass = `fa fa-${icon}`;
+  renderButton(id, defaultMessage, action, disabled) {
     const title = this.context.intl.formatMessage({ id: `nav.${id}`, defaultMessage });
     const className = disabled ? 'disabled' : '';
 
-    return <button type="button" className={className} title={title} onClick={action}><i className={iconClass} /></button>;
+    return <button type="button" className={className} title={title} onClick={action}><Icon path={paths[id]} /></button>;
   }
 
   renderScore() {
