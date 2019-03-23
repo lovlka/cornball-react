@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { GridLoader } from 'halogenium';
+import GridLoader from 'halogenium/lib/GridLoader';
 import { COLUMNS, CARDS, ROWS } from '../helpers/deck';
 import { autoMoveCard, tryMoveCard, tryShowHint } from '../actions/game';
 import Card from './card';
