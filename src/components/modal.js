@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Icon, { paths } from './icon';
 
 class Modal extends Component {
   static propTypes = {
@@ -31,7 +32,9 @@ class Modal extends Component {
     return (
       <section className="modal-container">
         <aside className="modal-content">
-          <button type="button" className="close" onClick={this.onClose}>&times;</button>
+          <button type="button" className="close" onClick={this.onClose}>
+            <Icon path={paths.close} />
+          </button>
           <h1>{this.props.title}</h1>
           <hr />
           {this.props.children}

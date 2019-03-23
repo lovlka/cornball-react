@@ -65,7 +65,7 @@
       color: $gray;
       float: right;
       padding: 0;
-      margin: 0;
+      margin: -0.5rem -0.5rem 0 0;
       line-height: 1rem;
       font-size: 2rem;
       font-weight: 400;
@@ -73,6 +73,12 @@
       background: transparent;
       outline: none;
       border: 0;
+
+      svg {
+        fill: currentColor;
+        height: 2rem;
+        width: 2rem;
+      }
     }
     .center {
       text-align: center;
