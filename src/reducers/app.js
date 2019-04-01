@@ -1,4 +1,4 @@
-import Immutable from 'immutable';
+import { Map } from 'immutable';
 
 import { TOGGLE_HIGH_SCORE, TOGGLE_STATISTICS, TOGGLE_ABOUT } from '../actions/app';
 import { HIGH_SCORE } from '../actions/highscore';
@@ -14,7 +14,7 @@ const initialState = {
   statistics: []
 };
 
-export function app(state = Immutable.Map(initialState), action = null) {
+export function app(state = Map(initialState), action = null) {
   switch (action.type) {
     case TOGGLE_HIGH_SCORE:
       return state.merge({ showHighScore: action.show });

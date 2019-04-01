@@ -1,14 +1,14 @@
-import Immutable from 'immutable';
+import { List, fromJS } from 'immutable';
 import { getDeck, reShuffle, shuffle, updateCard } from '../helpers/deck';
 import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE, SET_ROUND_PLACED, SHOW_HINT, SHOW_ERROR } from '../actions/game';
 
-export function deck(state = Immutable.List(), action = null) {
+export function deck(state = List(), action = null) {
   switch (action.type) {
     case NEW_GAME:
-      return Immutable.fromJS(shuffle(getDeck()));
+      return fromJS(shuffle(getDeck()));
 
     case NEW_ROUND:
-      return Immutable.fromJS(reShuffle(state.toJS()));
+      return fromJS(reShuffle(state.toJS()));
 
     case MOVE_CARD:
     case UNDO_MOVE: {

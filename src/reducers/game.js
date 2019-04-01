@@ -1,4 +1,4 @@
-import Immutable from 'immutable';
+import { Map } from 'immutable';
 
 import { NEW_GAME, NEW_ROUND, MOVE_CARD, UNDO_MOVE, SET_SCORE } from '../actions/game';
 
@@ -11,7 +11,7 @@ const initialState = {
   locked: 0
 };
 
-export function game(state = Immutable.Map(initialState), action = null) {
+export function game(state = Map(initialState), action = null) {
   switch (action.type) {
     case NEW_GAME:
       return state.merge(initialState);
