@@ -17,7 +17,7 @@ export function getStatistics() {
 }
 
 function increaseStatistics(property) {
-  return () => postJson('/statistics', { name: property });
+  return () => postJson('/post-stats', { name: property });
 }
 
 export function gameStarted() {
