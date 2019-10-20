@@ -7,17 +7,26 @@ const client = new faunadb.Client({
 });
 
 exports.handler = (event, context, callback) => {
-  const data = JSON.parse(event.body);
-  const ref = query.Ref('indexes/statistics_by_name', data.name);
-  client.query(query.Get(ref))
+  if (event.httpMethod !== 'PUT') {
+    callback(null, { statusCode: 405 });
+    return;
+  }
+  const body = JSON.parse(event.body);
+  const index = query.Index('statistics_by_name');
+  client.query(query.Get(query.Match(index, body.name)))
     .then((statistic) => {
-      console.log('GOT', statistic);
-      const data = { value: statistic.value + 1 };
-      client.query(query.Update(ref, { data }))
-        .then((response) => {
+      const { ref, data } = statistic;
+      const update = { value: data.value + 1 };
+      client.query(query.Update(ref, { data: update }))
+        .then(() => {
           callback(null, {
-            statusCode: 200,
-            body: JSON.stringify(response)
+            statusCode: 204
+          });
+        }).catch((error) => {
+          console.log('ERROR', error);
+          callback(null, {
+            statusCode: 400,
+            body: JSON.stringify(error)
           });
         });
     }).catch((error) => {
