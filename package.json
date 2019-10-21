@@ -12,10 +12,10 @@
   "scripts": {
     "start": "npm-run-all --parallel start:**",
     "start:client": "webpack-dev-server --config ./webpack.dev.js",
-    "start:server": "netlify-lambda serve ./functions -c ./webpack.functions.js",
+    "start:server": "netlify-lambda serve ./functions",
     "build": "npm-run-all --parallel build:**",
     "build:client": "webpack --config ./webpack.prod.js",
-    "build:server": "netlify-lambda build ./functions -c ./webpack.functions.js",
+    "build:server": "netlify-lambda build ./functions",
     "analyze": "webpack --config ./webpack.analyze.js",
     "lint": "eslint webpack.*.js ./src ./functions"
   },
