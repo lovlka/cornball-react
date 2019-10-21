@@ -12,12 +12,12 @@ function updateStatistics(data) {
 }
 
 export function getStatistics() {
-  return dispatch => getJson('/get-statistics')
+  return dispatch => getJson('/statistics')
     .then(({ data }) => dispatch(updateStatistics(data)));
 }
 
 function increaseStatistics(property) {
-  return () => putJson('/put-statistics', { name: property });
+  return () => putJson('/statistics', { name: property });
 }
 
 export function gameStarted() {
