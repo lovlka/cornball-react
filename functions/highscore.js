@@ -1,4 +1,4 @@
-import { client, query, successResponse, errorResponse, mapHighscore } from './faunadb';
+import { client, query, successResponse, errorResponse, mapHighscore } from './helpers/faunadb';
 
 function getHighscore(callback) {
   const index = query.Index('highscore_by_value');

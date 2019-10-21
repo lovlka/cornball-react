@@ -1,4 +1,4 @@
-import { client, query, successResponse, errorResponse } from './faunadb';
+import { client, query, successResponse, errorResponse } from './helpers/faunadb';
 
 function getStatistics(callback) {
   const index = query.Index('all_statistics');
