@@ -1,13 +1,12 @@
 import { client, query, successResponse, errorResponse } from './helpers/faunadb';
 
 function getStatistics(callback) {
-  const index = query.Index('all_statistics');
-  client.query(query.Paginate(query.Match(index)))
-    .then(({ data }) => {
-      client.query(data.map(ref => query.Get(ref)))
-        .then(res => successResponse(res.map(r => r.data), callback))
-        .catch(error => errorResponse(error, callback));
-    })
+  const allStatistics = query.Map(
+    query.Paginate(query.Match(query.Index('all_statistics'))),
+    query.Lambda('document', query.Get(query.Var('document')))
+  );
+  client.query(allStatistics)
+    .then(({ data }) => successResponse(data.map(d => d.data), callback))
     .catch(error => errorResponse(error, callback));
 }
 

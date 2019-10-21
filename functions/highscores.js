@@ -1,13 +1,12 @@
 import { client, query, successResponse, errorResponse, mapHighscore } from './helpers/faunadb';
 
 function getHighscores(callback) {
-  const index = query.Index('all_highscore');
-  client.query(query.Paginate(query.Match(index)))
-    .then(({ data }) => {
-      client.query(data.map(ref => query.Get(ref)))
-        .then(res => successResponse(res.map(mapHighscore), callback))
-        .catch(error => errorResponse(error, callback));
-    })
+  const allHighscore = query.Map(
+    query.Paginate(query.Match(query.Index('all_highscore'))),
+    query.Lambda('document', query.Get(query.Var('document')))
+  );
+  client.query(allHighscore)
+    .then(({ data }) => successResponse(data.map(mapHighscore), callback))
     .catch(error => errorResponse(error, callback));
 }
 
