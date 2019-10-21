@@ -1,9 +1,10 @@
 import { client, query, successResponse, errorResponse, mapHighscore } from './helpers/faunadb';
 
 function getHighscore(callback) {
-  const index = query.Index('highscore_by_value');
-  const select = query.Select('data', query.Paginate(query.Match(index)));
-  client.query(query.Take(1, select))
+  const highScoreByValue = query.Select('data', query.Paginate(
+    query.Match(query.Index('highscore_by_value'))
+  ));
+  client.query(query.Take(1, highScoreByValue))
     .then((res) => {
       const [, ref] = res[0];
       client.query(query.Get(ref))
@@ -14,9 +15,11 @@ function getHighscore(callback) {
 }
 
 function postHighscore(body, callback) {
-  const data = JSON.parse(body);
-  const collection = query.Collection('highscore');
-  client.query(query.Create(collection, data))
+  const createHighscore = query.Create(
+    query.Collection('highscore'),
+    JSON.parse(body)
+  );
+  client.query(createHighscore)
     .then(() => successResponse(null, callback))
     .catch(error => errorResponse(error, callback));
 }

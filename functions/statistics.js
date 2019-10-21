@@ -12,8 +12,10 @@ function getStatistics(callback) {
 
 function putStatistics(body, callback) {
   const { name } = JSON.parse(body);
-  const index = query.Index('statistics_by_name');
-  client.query(query.Get(query.Match(index, name)))
+  const statisticsByName = query.Get(
+    query.Match(query.Index('statistics_by_name'), name)
+  );
+  client.query(statisticsByName)
     .then(({ ref, data }) => {
       const update = { value: data.value + 1 };
       client.query(query.Update(ref, { data: update }))
