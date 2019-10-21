@@ -30,21 +30,21 @@ function updateAllTimeHigh(data) {
 }
 
 export function getHighScore() {
-  return dispatch => getJson('/get-highscore')
+  return dispatch => getJson('/highscore')
     .then(({ data }) => dispatch(updateHighScore(data)));
 }
 
 export function getHighScores(start, end) {
-  return dispatch => getJson(`/get-highscores/${start}/${end}`)
+  return dispatch => getJson(`/highscores/${start}/${end}`)
     .then(({ data }) => dispatch(updateHighScores(data)));
 }
 
 export function getAllTimeHigh() {
-  return dispatch => getJson('/get-highscores')
+  return dispatch => getJson('/highscores')
     .then(({ data }) => dispatch(updateAllTimeHigh(data)));
 }
 
 export function saveHighScore(name, value) {
-  return dispatch => postJson('/post-highscore', { name, value })
+  return dispatch => postJson('/highscore', { name, value })
     .then(() => dispatch(getHighScore()));
 }

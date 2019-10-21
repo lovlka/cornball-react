@@ -1,4 +1,4 @@
-
+/* eslint-disable no-console */
 import 'dotenv/config';
 import faunadb from 'faunadb';
 
@@ -10,16 +10,21 @@ export const client = new faunadb.Client({
 export function successResponse(response, callback) {
   callback(null, {
     statusCode: response ? 200 : 204,
-    body: response
-      ? JSON.stringify(response.map(r => r.data))
-      : null
+    body: response && JSON.stringify(response)
   });
 }
 
 export function errorResponse(error, callback, statusCode = 400) {
-  console.log('ERROR', error);
+  console.log(`ERROR: ${statusCode}`, error);
   callback(null, {
     statusCode,
-    body: JSON.stringify(error)
+    body: error && JSON.stringify(error)
   });
+}
+
+export function mapHighscore({ ts, data }) {
+  return {
+    date: new Date(ts / 1000),
+    ...data
+  };
 }
