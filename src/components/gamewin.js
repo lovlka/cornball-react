@@ -12,24 +12,19 @@ class GameWin extends Component {
   constructor(props) {
     super(props);
 
-    this.state = this.getDateState(new Date());
+    const period = new Date();
+    period.setDate(1);
+
+    this.state = {
+      name: '',
+      period
+    };
   }
 
   componentDidMount() {
     this.props.gameWon(this.props.round);
-    this.props.getHighScores(this.state.startDate, this.state.endDate);
+    this.props.getHighScores(this.state.period);
   }
-
-  getDateState = (date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-
-    return {
-      name: '',
-      startDate: new Date(year, month, 1),
-      endDate: new Date(year, month + 1, 0)
-    };
-  };
 
   isHighScore = () => {
     const { score, highScores } = this.props;
@@ -101,14 +96,14 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getHighScores: (start, end) => {
-    dispatch(getHighScores(start.toISOString().substring(0, 10), end.toISOString().substring(0, 10)));
+  getHighScores: (period) => {
+    dispatch(getHighScores(period));
   },
   gameWon: (round) => {
     dispatch(gameWon(round));
   },
-  saveHighScore: (name, value) => {
-    dispatch(saveHighScore(name, value));
+  saveHighScore: (name, score) => {
+    dispatch(saveHighScore(name, score));
   },
   newGame: () => {
     dispatch(newGame());

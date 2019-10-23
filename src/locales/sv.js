@@ -9,7 +9,7 @@ export default function () {
     'nav.statistics': 'Visa statistik',
     'nav.about': 'Om Lantisen',
 
-    'game.highscore': 'Högst poäng i {month}: {name} ({value, number})',
+    'game.highscore': 'Högst poäng i {month}: {name} ({score, number})',
     'game.round': 'Omgång: {round, number}/{rounds, number}',
     'game.score': 'Poäng: {score, number}',
     'game.moves': 'Drag: {moves, number}',

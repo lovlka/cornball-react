@@ -9,54 +9,49 @@ class HighScore extends Component {
   constructor(props) {
     super(props);
 
-    this.state = this.getDateState(new Date());
+    const period = new Date();
+    period.setDate(1);
+
+    this.state = {
+      period
+    };
   }
 
   componentDidMount() {
-    this.props.getHighScores(this.state.startDate, this.state.endDate);
+    this.props.getHighScores(this.state.period);
     this.props.getAllTimeHigh();
   }
 
-  getDateState = (date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-
-    return {
-      startDate: new Date(year, month, 1),
-      endDate: new Date(year, month + 1, 0)
-    };
-  };
-
    previousMonth = (ev) => {
      ev.preventDefault();
-     const date = new Date(this.state.startDate);
+     const date = new Date(this.state.period);
      date.setMonth(date.getMonth() - 1);
-     const newState = this.getDateState(date);
-     this.setState(newState, () => this.props.getHighScores(newState.startDate, newState.endDate));
+     const newState = { period: date };
+     this.setState(newState, () => this.props.getHighScores(newState.period));
    };
 
    nextMonth = (ev) => {
      ev.preventDefault();
-     const date = new Date(this.state.startDate);
+     const date = new Date(this.state.period);
      date.setMonth(date.getMonth() + 1);
-     const newState = this.getDateState(date);
-     this.setState(newState, () => this.props.getHighScores(newState.startDate, newState.endDate));
+     const newState = { period: date };
+     this.setState(newState, () => this.props.getHighScores(newState.period));
    };
 
   renderRow = (index, item) => {
-    const { name, date, value } = item.toJS();
+    const { name, date, score } = item.toJS();
     return (
       <tr key={index}>
         <td>{name}</td>
         <td><FormattedDate value={date} /></td>
-        <td><FormattedNumber value={value} /></td>
+        <td><FormattedNumber value={score} /></td>
       </tr>
     );
   };
 
   render() {
     const title = this.context.intl.formatMessage({ id: 'highscore.title', defaultMessage: 'Highscore' });
-    const month = this.context.intl.formatDate(this.state.startDate, { month: 'long', year: 'numeric' });
+    const month = this.context.intl.formatDate(this.state.period, { month: 'long', year: 'numeric' });
 
     return (
       <Modal title={title} onClose={this.props.onClose}>
@@ -107,8 +102,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getHighScores: (start, end) => {
-    dispatch(getHighScores(start.toISOString().substring(0, 10), end.toISOString().substring(0, 10)));
+  getHighScores: (period) => {
+    dispatch(getHighScores(period));
   },
   getAllTimeHigh: () => {
     dispatch(getAllTimeHigh());
