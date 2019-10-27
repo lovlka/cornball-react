@@ -37,3 +37,14 @@ body {
   right: 0;
   bottom: 0;
 }
+
+#modal-loader {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal;
+  top: 1.5rem;
+  left: 0;
+  right: 0;
+}

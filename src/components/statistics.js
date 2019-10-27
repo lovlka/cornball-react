@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { ClipLoader } from 'halogenium';
 import { FormattedMessage, FormattedNumber } from 'react-intl';
 import { getStatistics } from '../actions/statistics';
 import Modal from './modal';
 
 class Statistics extends Component {
+  state = {
+    loading: true
+  };
+
   componentDidMount() {
-    this.props.getStatistics();
+    this.props.getStatistics()
+      .then(() => this.setState({ loading: false }));
   }
 
   renderRow = (name, value, percent) => (
@@ -19,10 +25,14 @@ class Statistics extends Component {
   );
 
   render() {
-    const title = this.context.intl.formatMessage({ id: 'statistics.title', defaultMessage: 'Statistics' });
+    const { intl } = this.context;
+    const { loading } = this.state;
+
+    const title = intl.formatMessage({ id: 'statistics.title', defaultMessage: 'Statistics' });
 
     return (
       <Modal title={title} onClose={this.props.onClose}>
+        {loading && <ClipLoader id="modal-loader" color="#ddd" size={20} />}
         <table>
           <tbody>
             {this.props.statistics.map(item => this.renderRow(item.get('name'), item.get('value'), item.get('percent')))}

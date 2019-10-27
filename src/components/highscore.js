@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { ClipLoader } from 'halogenium';
 import { FormattedMessage, FormattedDate, FormattedNumber } from 'react-intl';
 import { getHighScores, getAllTimeHigh } from '../actions/highscore';
 import Modal from './modal';
@@ -13,30 +14,39 @@ class HighScore extends Component {
     period.setDate(1);
 
     this.state = {
-      period
+      period,
+      loading: true
     };
   }
 
   componentDidMount() {
-    this.props.getHighScores(this.state.period);
-    this.props.getAllTimeHigh();
+    Promise.all([
+      this.props.getHighScores(this.state.period),
+      this.props.getAllTimeHigh()
+    ]).then(() => this.setState({ loading: false }));
   }
 
-   previousMonth = (ev) => {
-     ev.preventDefault();
-     const date = new Date(this.state.period);
-     date.setMonth(date.getMonth() - 1);
-     const newState = { period: date };
-     this.setState(newState, () => this.props.getHighScores(newState.period));
-   };
+  getHighScores(period) {
+    this.setState({ loading: true });
+    this.props.getHighScores(period)
+      .then(() => this.setState({ loading: false }));
+  }
 
-   nextMonth = (ev) => {
-     ev.preventDefault();
-     const date = new Date(this.state.period);
-     date.setMonth(date.getMonth() + 1);
-     const newState = { period: date };
-     this.setState(newState, () => this.props.getHighScores(newState.period));
-   };
+  previousMonth = (ev) => {
+    ev.preventDefault();
+    const date = new Date(this.state.period);
+    date.setMonth(date.getMonth() - 1);
+    const newState = { period: date };
+    this.setState(newState, () => this.getHighScores(newState.period));
+  };
+
+  nextMonth = (ev) => {
+    ev.preventDefault();
+    const date = new Date(this.state.period);
+    date.setMonth(date.getMonth() + 1);
+    const newState = { period: date };
+    this.setState(newState, () => this.getHighScores(newState.period));
+  };
 
   renderRow = (index, item) => {
     const { name, date, score } = item.toJS();
@@ -50,11 +60,15 @@ class HighScore extends Component {
   };
 
   render() {
-    const title = this.context.intl.formatMessage({ id: 'highscore.title', defaultMessage: 'Highscore' });
-    const month = this.context.intl.formatDate(this.state.period, { month: 'long', year: 'numeric' });
+    const { intl } = this.context;
+    const { period, loading } = this.state;
+
+    const title = intl.formatMessage({ id: 'highscore.title', defaultMessage: 'Highscore' });
+    const month = intl.formatDate(period, { month: 'long', year: 'numeric' });
 
     return (
       <Modal title={title} onClose={this.props.onClose}>
+        {loading && <ClipLoader id="modal-loader" color="#ddd" size={20} />}
         <div className="row">
           <div className="column">
             <table>
