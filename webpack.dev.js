@@ -12,6 +12,12 @@ module.exports = merge(base, {
   },
   devServer: {
     port: 1234,
-    open: true
+    open: true,
+    proxy: {
+      '/.netlify': {
+        target: 'http://localhost:9000',
+        pathRewrite: { '^/.netlify/functions': '' }
+      }
+    }
   }
 });

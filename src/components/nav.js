@@ -54,15 +54,15 @@ class Nav extends Component {
       return null;
     }
 
-    const { name, value, date } = this.props.highScore.toJS();
+    const { name, score, date } = this.props.highScore.toJS();
     const month = this.context.intl.formatDate(new Date(date), { month: 'long' });
 
     return (
       <section className="highscore">
         <FormattedMessage
           id="game.highscore"
-          defaultMessage="High score in {month}: {name} ({value, number})"
-          values={{ month, name, value }}
+          defaultMessage="High score in {month}: {name} ({score, number})"
+          values={{ month, name, score }}
         />
       </section>
     );

@@ -29,13 +29,20 @@ function updateAllTimeHigh(data) {
   };
 }
 
-export function getHighScore() {
-  return dispatch => getJson('/highscore')
-    .then(({ data }) => dispatch(updateHighScore(data)));
+function getPeriod(date) {
+  return date.toISOString().substr(0, 7);
 }
 
-export function getHighScores(start, end) {
-  return dispatch => getJson(`/highscores/${start}/${end}`)
+export function getHighScore() {
+  const period = getPeriod(new Date());
+  return dispatch => getJson(`/highscores/${period}`)
+    .then(({ data }) => {
+      dispatch(updateHighScore(data && data.length > 0 ? data[0] : null));
+    });
+}
+
+export function getHighScores(date) {
+  return dispatch => getJson(`/highscores/${getPeriod(date)}`)
     .then(({ data }) => dispatch(updateHighScores(data)));
 }
 
@@ -44,7 +51,8 @@ export function getAllTimeHigh() {
     .then(({ data }) => dispatch(updateAllTimeHigh(data)));
 }
 
-export function saveHighScore(name, value) {
-  return dispatch => postJson('/highscore', { name, value })
+export function saveHighScore(name, score) {
+  const period = getPeriod(new Date());
+  return dispatch => postJson('/highscores', { name, score, period })
     .then(() => dispatch(getHighScore()));
 }

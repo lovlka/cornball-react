@@ -1,4 +1,4 @@
-import { getJson, postJson } from '../helpers/network';
+import { getJson, putJson } from '../helpers/network';
 
 export const STATISTICS = 'STATISTICS';
 
@@ -17,7 +17,7 @@ export function getStatistics() {
 }
 
 function increaseStatistics(property) {
-  return () => postJson('/statistics', { name: property });
+  return () => putJson('/statistics', { name: property });
 }
 
 export function gameStarted() {
