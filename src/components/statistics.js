@@ -46,9 +46,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getStatistics: () => {
-    dispatch(getStatistics());
-  }
+  getStatistics: () => dispatch(getStatistics())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Statistics);

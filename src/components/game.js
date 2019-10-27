@@ -75,15 +75,9 @@ class Game extends PureComponent {
 }
 
 const mapDispatchToProps = dispatch => ({
-  autoMoveCard(index) {
-    dispatch(autoMoveCard(index));
-  },
-  tryMoveCard(from, to) {
-    dispatch(tryMoveCard(from, to));
-  },
-  tryShowHint(index) {
-    dispatch(tryShowHint(index));
-  }
+  autoMoveCard: index => dispatch(autoMoveCard(index)),
+  tryMoveCard: (from, to) => dispatch(tryMoveCard(from, to)),
+  tryShowHint: index => dispatch(tryShowHint(index))
 });
 
 const mapStateToProps = (state) => {

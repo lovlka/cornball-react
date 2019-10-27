@@ -38,12 +38,8 @@ GameOver.contextTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  gameLost: () => {
-    dispatch(gameLost());
-  },
-  newGame: () => {
-    dispatch(newGame());
-  }
+  gameLost: () => dispatch(gameLost()),
+  newGame: () => dispatch(newGame())
 });
 
 export default connect(null, mapDispatchToProps)(GameOver);

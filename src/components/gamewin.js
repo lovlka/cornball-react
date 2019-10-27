@@ -96,18 +96,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getHighScores: (period) => {
-    dispatch(getHighScores(period));
-  },
-  gameWon: (round) => {
-    dispatch(gameWon(round));
-  },
-  saveHighScore: (name, score) => {
-    dispatch(saveHighScore(name, score));
-  },
-  newGame: () => {
-    dispatch(newGame());
-  }
+  getHighScores: period => dispatch(getHighScores(period)),
+  gameWon: round => dispatch(gameWon(round)),
+  saveHighScore: (name, score) => dispatch(saveHighScore(name, score)),
+  newGame: () => dispatch(newGame())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameWin);

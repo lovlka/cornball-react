@@ -29,7 +29,6 @@
     "react/no-unused-prop-types": 0,
     "react/style-prop-object": 0,
     "react/jsx-no-target-blank": 0,
-    "react/prefer-stateless-function": 0,
     "react/jsx-filename-extension": [2, {"extensions": [".js", ".jsx"]}]
   }
 }

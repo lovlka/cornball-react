@@ -97,26 +97,11 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  newGame: (ev) => {
-    ev.preventDefault();
-    dispatch(newGame());
-  },
-  undoMove: (ev) => {
-    ev.preventDefault();
-    dispatch(undoMove());
-  },
-  showHighScore: (ev) => {
-    ev.preventDefault();
-    dispatch(toggleHighScore(true));
-  },
-  showStatistics: (ev) => {
-    ev.preventDefault();
-    dispatch(toggleStatistics(true));
-  },
-  showAbout: (ev) => {
-    ev.preventDefault();
-    dispatch(toggleAbout(true));
-  }
+  newGame: () => dispatch(newGame()),
+  undoMove: () => dispatch(undoMove()),
+  showHighScore: () => dispatch(toggleHighScore(true)),
+  showStatistics: () => dispatch(toggleStatistics(true)),
+  showAbout: () => dispatch(toggleAbout(true))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);

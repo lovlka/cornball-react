@@ -102,12 +102,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getHighScores: (period) => {
-    dispatch(getHighScores(period));
-  },
-  getAllTimeHigh: () => {
-    dispatch(getAllTimeHigh());
-  }
+  getHighScores: period => dispatch(getHighScores(period)),
+  getAllTimeHigh: () => dispatch(getAllTimeHigh())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HighScore);
