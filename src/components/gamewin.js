@@ -88,10 +88,11 @@ GameWin.contextTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const { app } = state;
+  const { app, game } = state;
 
   return {
-    highScores: app.get('highScores')
+    highScores: app.get('highScores'),
+    score: game.get('score')
   };
 };
 
