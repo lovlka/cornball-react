@@ -88,7 +88,8 @@ const mapStateToProps = (state) => {
 
   return {
     highScores: app.get('highScores'),
-    score: game.get('score')
+    score: game.get('score'),
+    round: game.get('round')
   };
 };
 
