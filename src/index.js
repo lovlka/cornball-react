@@ -2,9 +2,7 @@ import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { IntlProvider, addLocaleData } from 'react-intl';
-import en from 'react-intl/locale-data/en';
-import sv from 'react-intl/locale-data/sv';
+import { IntlProvider } from 'react-intl';
 
 import './styles/index.scss';
 import './assets/favicon.ico';
@@ -15,8 +13,9 @@ import Main from './components/main';
 import svMessages from './locales/sv';
 import configureStore from './configure-store';
 
-addLocaleData([...en, ...sv]);
-const messages = { sv: svMessages() };
+const messages = {
+  sv: svMessages()
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(

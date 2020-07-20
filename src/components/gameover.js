@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { newGame } from '../actions/game';
 import { gameLost } from '../actions/statistics';
 import Modal from './modal';
@@ -13,7 +12,8 @@ class GameOver extends Component {
   }
 
   render() {
-    const title = this.context.intl.formatMessage({ id: 'gameover.title', defaultMessage: 'Game over' });
+    const { intl } = this.props;
+    const title = intl.formatMessage({ id: 'gameover.title', defaultMessage: 'Game over' });
 
     return (
       <Modal title={title} onClose={this.props.newGame}>
@@ -33,13 +33,9 @@ class GameOver extends Component {
   }
 }
 
-GameOver.contextTypes = {
-  intl: PropTypes.object.isRequired
-};
-
 const mapDispatchToProps = dispatch => ({
   gameLost: () => dispatch(gameLost()),
   newGame: () => dispatch(newGame())
 });
 
-export default connect(null, mapDispatchToProps)(GameOver);
+export default injectIntl(connect(null, mapDispatchToProps)(GameOver));

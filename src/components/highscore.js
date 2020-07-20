@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ClipLoader } from 'halogenium';
-import { FormattedMessage, FormattedDate, FormattedNumber } from 'react-intl';
+import { injectIntl, FormattedMessage, FormattedDate, FormattedNumber } from 'react-intl';
 import { getHighScores, getAllTimeHigh } from '../actions/highscore';
 import Modal from './modal';
 
@@ -60,7 +59,7 @@ class HighScore extends Component {
   };
 
   render() {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const { period, loading } = this.state;
 
     const title = intl.formatMessage({ id: 'highscore.title', defaultMessage: 'Highscore' });
@@ -102,10 +101,6 @@ class HighScore extends Component {
   }
 }
 
-HighScore.contextTypes = {
-  intl: PropTypes.object.isRequired
-};
-
 const mapStateToProps = (state) => {
   const { app } = state;
 
@@ -120,4 +115,4 @@ const mapDispatchToProps = dispatch => ({
   getAllTimeHigh: () => dispatch(getAllTimeHigh())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HighScore);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(HighScore));

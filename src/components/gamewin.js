@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { newGame } from '../actions/game';
 import { gameWon } from '../actions/statistics';
 import { getHighScores, saveHighScore } from '../actions/highscore';
@@ -52,8 +51,9 @@ class GameWin extends Component {
   };
 
   render() {
-    const title = this.context.intl.formatMessage({ id: 'gamewin.title', defaultMessage: 'Congratulations!' });
-    const placeholder = this.context.intl.formatMessage({ id: 'gamewin.placeholder', defaultMessage: 'Enter your name' });
+    const { intl } = this.props;
+    const title = intl.formatMessage({ id: 'gamewin.title', defaultMessage: 'Congratulations!' });
+    const placeholder = intl.formatMessage({ id: 'gamewin.placeholder', defaultMessage: 'Enter your name' });
 
     return (
       <Modal title={title} onClose={this.props.newGame}>
@@ -83,10 +83,6 @@ class GameWin extends Component {
   }
 }
 
-GameWin.contextTypes = {
-  intl: PropTypes.object.isRequired
-};
-
 const mapStateToProps = (state) => {
   const { app, game } = state;
 
@@ -103,4 +99,4 @@ const mapDispatchToProps = dispatch => ({
   newGame: () => dispatch(newGame())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GameWin);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(GameWin));

@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { injectIntl } from 'react-intl';
 
 import { ROWS, CARDS } from '../helpers/deck';
 import { newGame } from '../actions/game';
@@ -26,7 +26,7 @@ class Main extends Component {
   render() {
     const {
       round, rounds, locked, placed, showHighScore, showStatistics,
-      showAbout, hideHighScore, hideStatistics, hideAbout
+      showAbout, hideHighScore, hideStatistics, hideAbout, intl
     } = this.props;
 
     const isLocked = locked === ROWS;
@@ -34,8 +34,8 @@ class Main extends Component {
     const isGameOver = isLocked && !isGameWin && round === rounds;
     const isRoundOver = isLocked && !isGameWin && round < rounds;
 
-    const title = this.context.intl.formatMessage({ id: 'main.title', defaultMessage: 'The Cornball' });
-    const description = this.context.intl.formatMessage({ id: 'main.description', defaultMessage: 'The Cornball is an addictive card game where the goal is to place the cards in order from 2 to king in 4 rows.' });
+    const title = intl.formatMessage({ id: 'main.title', defaultMessage: 'The Cornball' });
+    const description = intl.formatMessage({ id: 'main.description', defaultMessage: 'The Cornball is an addictive card game where the goal is to place the cards in order from 2 to king in 4 rows.' });
 
     return (
       <main>
@@ -55,10 +55,6 @@ class Main extends Component {
     );
   }
 }
-
-Main.contextTypes = {
-  intl: PropTypes.object.isRequired
-};
 
 const mapStateToProps = (state) => {
   const { app, game } = state;
@@ -82,4 +78,4 @@ const mapDispatchToProps = dispatch => ({
   hideAbout: () => dispatch(toggleAbout(false))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Main));

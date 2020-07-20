@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { toggleHighScore, toggleStatistics, toggleAbout } from '../actions/app';
 import { newGame, undoMove } from '../actions/game';
 import Icon, { paths } from './icon';
@@ -31,7 +31,8 @@ class Nav extends Component {
   }
 
   renderButton(id, defaultMessage, action, disabled) {
-    const title = this.context.intl.formatMessage({ id: `nav.${id}`, defaultMessage });
+    const { intl } = this.props;
+    const title = intl.formatMessage({ id: `nav.${id}`, defaultMessage });
     const className = disabled ? 'disabled' : '';
 
     return <button type="button" className={className} title={title} onClick={action}><Icon path={paths[id]} /></button>;
@@ -42,9 +43,9 @@ class Nav extends Component {
 
     return (
       <section className="score">
-        <FormattedMessage id="game.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} />
-        <FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} />
-        <FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
+        <span><FormattedMessage id="game.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} /></span>
+        <span><FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} /></span>
+        <span><FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} /></span>
       </section>
     );
   }
@@ -54,8 +55,9 @@ class Nav extends Component {
       return null;
     }
 
+    const { intl } = this.props;
     const { name, score, date } = this.props.highScore.toJS();
-    const month = this.context.intl.formatDate(new Date(date), { month: 'long' });
+    const month = intl.formatDate(new Date(date), { month: 'long' });
 
     return (
       <section className="highscore">
@@ -79,10 +81,6 @@ class Nav extends Component {
   }
 }
 
-Nav.contextTypes = {
-  intl: PropTypes.object.isRequired
-};
-
 const mapStateToProps = (state) => {
   const { app, game, undo } = state;
 
@@ -104,4 +102,4 @@ const mapDispatchToProps = dispatch => ({
   showAbout: () => dispatch(toggleAbout(true))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Nav);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Nav));

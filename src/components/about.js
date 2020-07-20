@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import Modal from './modal';
 
-const About = ({ onClose }, { intl }) => {
+const About = ({ onClose }) => {
+  const intl = useIntl();
   const title = intl.formatMessage({ id: 'about.title', defaultMessage: 'About The Cornball' });
 
   return (
@@ -15,10 +15,6 @@ const About = ({ onClose }, { intl }) => {
       </article>
     </Modal>
   );
-};
-
-About.contextTypes = {
-  intl: PropTypes.object.isRequired
 };
 
 export default About;

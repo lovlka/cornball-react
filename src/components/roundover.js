@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { newRound } from '../actions/game';
 import Modal from './modal';
 import Summary from './summary';
 
-const RoundOver = ({ round, newRound }, { intl }) => {
+const RoundOver = ({ round, newRound }) => {
+  const intl = useIntl();
   const title = intl.formatMessage({ id: 'roundover.title', defaultMessage: 'End of round {round}' }, { round });
 
   return (
@@ -24,10 +24,6 @@ const RoundOver = ({ round, newRound }, { intl }) => {
       </article>
     </Modal>
   );
-};
-
-RoundOver.contextTypes = {
-  intl: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => {

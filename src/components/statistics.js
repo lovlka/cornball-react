@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ClipLoader } from 'halogenium';
-import { FormattedMessage, FormattedNumber } from 'react-intl';
+import { injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
 import { getStatistics } from '../actions/statistics';
 import Modal from './modal';
 
@@ -25,7 +24,7 @@ class Statistics extends Component {
   );
 
   render() {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const { loading } = this.state;
 
     const title = intl.formatMessage({ id: 'statistics.title', defaultMessage: 'Statistics' });
@@ -43,10 +42,6 @@ class Statistics extends Component {
   }
 }
 
-Statistics.contextTypes = {
-  intl: PropTypes.object.isRequired
-};
-
 const mapStateToProps = (state) => {
   const { app } = state;
 
@@ -59,4 +54,4 @@ const mapDispatchToProps = dispatch => ({
   getStatistics: () => dispatch(getStatistics())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Statistics);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Statistics));
