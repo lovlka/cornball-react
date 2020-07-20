@@ -1,4 +1,5 @@
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 const { ProgressPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -32,6 +33,7 @@ const config = {
     hints: false
   },
   plugins: [
+    new Dotenv({ systemvars: true }),
     new ProgressPlugin(),
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
