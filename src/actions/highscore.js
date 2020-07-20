@@ -1,4 +1,4 @@
-import { db } from '../helpers/firestore';
+import { db } from '../helpers/firebase';
 
 export const HIGH_SCORE = 'HIGH_SCORE';
 

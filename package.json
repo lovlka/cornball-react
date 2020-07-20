@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.10.4",
-    "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "firebase": "^7.16.1",
     "halogenium": "^2.3.0",

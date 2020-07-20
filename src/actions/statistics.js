@@ -1,4 +1,4 @@
-import { db, increment } from '../helpers/firestore';
+import { db, increment } from '../helpers/firebase';
 
 export const STATISTICS = 'STATISTICS';
 
