@@ -1,4 +1,5 @@
 const merge = require('webpack-merge');
+const Dotenv = require('dotenv-webpack');
 const base = require('./webpack.base.js');
 
 module.exports = merge(base, {
@@ -10,14 +11,11 @@ module.exports = merge(base, {
       use: ['style-loader', 'css-loader', 'sass-loader']
     }]
   },
+  plugins: [
+    new Dotenv()
+  ],
   devServer: {
     port: 1234,
-    open: true,
-    proxy: {
-      '/.netlify': {
-        target: 'http://localhost:9000',
-        pathRewrite: { '^/.netlify/functions': '' }
-      }
-    }
+    open: true
   }
 });

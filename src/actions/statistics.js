@@ -1,23 +1,31 @@
-import { getJson, putJson } from '../helpers/network';
+import { db, increment } from '../helpers/firestore';
 
 export const STATISTICS = 'STATISTICS';
 
-function updateStatistics(data) {
+function updateStatistics(statistics) {
   return {
     type: STATISTICS,
     state: {
-      statistics: data
+      statistics
     }
   };
 }
 
 export function getStatistics() {
-  return dispatch => getJson('/statistics')
-    .then(({ data }) => dispatch(updateStatistics(data)));
+  return dispatch => db.collection('statistics').get()
+    .then((query) => {
+      const statistics = [];
+      query.forEach(item => statistics.push({
+        name: item.id,
+        ...item.data()
+      }));
+      dispatch(updateStatistics(statistics));
+    });
 }
 
 function increaseStatistics(property) {
-  return () => putJson('/statistics', { name: property });
+  return () => db.collection('statistics').doc(property)
+    .update({ value: increment(1) });
 }
 
 export function gameStarted() {

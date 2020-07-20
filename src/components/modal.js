@@ -5,7 +5,6 @@ import Icon, { paths } from './icon';
 class Modal extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    children: PropTypes.element.isRequired,
     onClose: PropTypes.func.isRequired
   };
 
