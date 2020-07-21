@@ -1,33 +1,39 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import React, { Fragment, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { newGame } from '../actions/game';
 import { gameWon } from '../actions/statistics';
-import { getHighScores, saveHighScore } from '../actions/highscore';
+import { fetchHighScores, saveHighScore } from '../actions/highscore';
+import { getGameState, getHighScores } from '../helpers/selectors';
 import Modal from './modal';
 import Summary from './summary';
 
-class GameWin extends Component {
-  constructor(props) {
-    super(props);
+const GameWin = () => {
+  const intl = useIntl();
+  const dispatch = useDispatch();
 
+  const { score, round } = useSelector(getGameState);
+  const highScores = useSelector(getHighScores);
+  const [name, setName] = useState('');
+
+  useEffect(() => {
     const period = new Date();
     period.setDate(1);
 
-    this.state = {
-      name: '',
-      period
-    };
-  }
+    dispatch(gameWon(round));
+    dispatch(fetchHighScores(period));
+  }, []);
 
-  componentDidMount() {
-    this.props.gameWon(this.props.round);
-    this.props.getHighScores(this.state.period);
-  }
+  const onNewGame = () => dispatch(newGame());
+  const onNameChange = ev => setName(ev.target.value);
 
-  isHighScore = () => {
-    const { score, highScores } = this.props;
+  const submitHighScore = (ev) => {
+    ev.preventDefault();
+    dispatch(saveHighScore(name, score));
+    dispatch(newGame());
+  };
 
+  const isHighScore = () => {
     if (highScores.size < 10) {
       return true;
     }
@@ -40,64 +46,34 @@ class GameWin extends Component {
     return highScore;
   };
 
-  nameChanged = (ev) => {
-    this.setState({ name: ev.target.value });
-  };
+  const title = intl.formatMessage({ id: 'gamewin.title', defaultMessage: 'Congratulations!' });
+  const placeholder = intl.formatMessage({ id: 'gamewin.placeholder', defaultMessage: 'Enter your name' });
 
-  submitHighScore = (ev) => {
-    ev.preventDefault();
-    this.props.saveHighScore(this.state.name, this.props.score);
-    this.props.newGame();
-  };
-
-  render() {
-    const { intl } = this.props;
-    const title = intl.formatMessage({ id: 'gamewin.title', defaultMessage: 'Congratulations!' });
-    const placeholder = intl.formatMessage({ id: 'gamewin.placeholder', defaultMessage: 'Enter your name' });
-
-    return (
-      <Modal title={title} onClose={this.props.newGame}>
-        <article className="center">
-          <p>
-            <FormattedMessage id="gamewin.description" defaultMessage="You put all cards in the right place and finished The Cornball!" />
-          </p>
-          <Summary />
-          {this.isHighScore() ? (
-            <Fragment>
-              <FormattedMessage id="gamewin.highscore" defaultMessage="You made it to the high score list! Enter your name to send your score." />
-              <form onSubmit={this.submitHighScore}>
-                <input type="text" placeholder={placeholder} onChange={this.nameChanged} value={this.state.name} />
-                <button type="submit"><FormattedMessage id="gamewin.submit" defaultMessage="Submit" /></button>
-              </form>
-            </Fragment>
-          ) : (
-            <div className="cta">
-              <button type="button" onClick={this.props.newGame}>
-                <FormattedMessage id="game.playagain" defaultMessage="Play again" />
-              </button>
-            </div>
-          )}
-        </article>
-      </Modal>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  const { app, game } = state;
-
-  return {
-    highScores: app.get('highScores'),
-    score: game.get('score'),
-    round: game.get('round')
-  };
+  return (
+    <Modal title={title} onClose={onNewGame}>
+      <article className="center">
+        <p>
+          <FormattedMessage id="gamewin.description" defaultMessage="You put all cards in the right place and finished The Cornball!" />
+        </p>
+        <Summary />
+        {isHighScore() ? (
+          <Fragment>
+            <FormattedMessage id="gamewin.highscore" defaultMessage="You made it to the high score list! Enter your name to send your score." />
+            <form onSubmit={submitHighScore}>
+              <input type="text" placeholder={placeholder} onChange={onNameChange} value={name} />
+              <button type="submit"><FormattedMessage id="gamewin.submit" defaultMessage="Submit" /></button>
+            </form>
+          </Fragment>
+        ) : (
+          <div className="cta">
+            <button type="button" onClick={onNewGame}>
+              <FormattedMessage id="game.playagain" defaultMessage="Play again" />
+            </button>
+          </div>
+        )}
+      </article>
+    </Modal>
+  );
 };
 
-const mapDispatchToProps = dispatch => ({
-  getHighScores: period => dispatch(getHighScores(period)),
-  gameWon: round => dispatch(gameWon(round)),
-  saveHighScore: (name, score) => dispatch(saveHighScore(name, score)),
-  newGame: () => dispatch(newGame())
-});
-
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(GameWin));
+export default GameWin;

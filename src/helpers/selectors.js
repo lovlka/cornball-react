@@ -18,6 +18,11 @@ export const getHighScore = createSelector(
   }
 );
 
+export const getHighScores = createSelector(
+  state => state.app,
+  app => app.get('highScores')
+);
+
 export const canUndo = createSelector(
   state => state.undo,
   undo => undo.get('move') !== null

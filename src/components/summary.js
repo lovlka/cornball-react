@@ -1,25 +1,21 @@
 import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { getGameState } from '../helpers/selectors';
 
-const Summary = ({ moves, score }) => (
-  <Fragment>
-    <p className="score">
-      <FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} />
-    </p>
-    <p className="moves">
-      <FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
-    </p>
-  </Fragment>
-);
+const Summary = () => {
+  const { score, moves } = useSelector(getGameState);
 
-const mapStateToProps = (state) => {
-  const { game } = state;
-
-  return {
-    moves: game.get('moves'),
-    score: game.get('score')
-  };
+  return (
+    <Fragment>
+      <p className="score">
+        <FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} />
+      </p>
+      <p className="moves">
+        <FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} />
+      </p>
+    </Fragment>
+  );
 };
 
-export default connect(mapStateToProps)(Summary);
+export default Summary;
