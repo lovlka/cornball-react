@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ClipLoader } from 'halogenium';
 import { injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
-import { getStatistics } from '../actions/statistics';
+import { fetchStatistics } from '../actions/statistics';
 import Modal from './modal';
 
 class Statistics extends Component {
@@ -11,7 +11,7 @@ class Statistics extends Component {
   };
 
   componentDidMount() {
-    this.props.getStatistics()
+    this.props.fetchStatistics()
       .then(() => this.setState({ loading: false }));
   }
 
@@ -51,7 +51,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getStatistics: () => dispatch(getStatistics())
+  fetchStatistics: () => dispatch(fetchStatistics())
 });
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Statistics));

@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl';
 
 import { ROWS, CARDS } from '../helpers/deck';
 import { newGame } from '../actions/game';
-import { getHighScore } from '../actions/highscore';
+import { fetchHighScore } from '../actions/highscore';
 import { toggleAbout, toggleHighScore, toggleStatistics } from '../actions/app';
 
 import Nav from './nav';
@@ -19,7 +19,7 @@ import About from './about';
 
 class Main extends Component {
   componentDidMount() {
-    this.props.getHighScore();
+    this.props.fetchHighScore();
     this.props.newGame();
   }
 
@@ -71,7 +71,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getHighScore: () => dispatch(getHighScore()),
+  fetchHighScore: () => dispatch(fetchHighScore()),
   newGame: () => dispatch(newGame()),
   hideHighScore: () => dispatch(toggleHighScore(false)),
   hideStatistics: () => dispatch(toggleStatistics(false)),

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ClipLoader } from 'halogenium';
 import { injectIntl, FormattedMessage, FormattedDate, FormattedNumber } from 'react-intl';
-import { getHighScores, getAllTimeHigh } from '../actions/highscore';
+import { fetchHighScores, fetchAllTimeHigh } from '../actions/highscore';
 import Modal from './modal';
 
 class HighScore extends Component {
@@ -20,15 +20,9 @@ class HighScore extends Component {
 
   componentDidMount() {
     Promise.all([
-      this.props.getHighScores(this.state.period),
-      this.props.getAllTimeHigh()
+      this.props.fetchHighScores(this.state.period),
+      this.props.fetchAllTimeHigh()
     ]).then(() => this.setState({ loading: false }));
-  }
-
-  getHighScores(period) {
-    this.setState({ loading: true });
-    this.props.getHighScores(period)
-      .then(() => this.setState({ loading: false }));
   }
 
   previousMonth = (ev) => {
@@ -36,7 +30,7 @@ class HighScore extends Component {
     const date = new Date(this.state.period);
     date.setMonth(date.getMonth() - 1);
     const newState = { period: date };
-    this.setState(newState, () => this.getHighScores(newState.period));
+    this.setState(newState, () => this.fetchHighScores(newState.period));
   };
 
   nextMonth = (ev) => {
@@ -44,8 +38,14 @@ class HighScore extends Component {
     const date = new Date(this.state.period);
     date.setMonth(date.getMonth() + 1);
     const newState = { period: date };
-    this.setState(newState, () => this.getHighScores(newState.period));
+    this.setState(newState, () => this.fetchHighScores(newState.period));
   };
+
+  fetchHighScores(period) {
+    this.setState({ loading: true });
+    this.props.fetchHighScores(period)
+      .then(() => this.setState({ loading: false }));
+  }
 
   renderRow = (index, item) => {
     const { name, date, score } = item.toJS();
@@ -111,8 +111,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getHighScores: period => dispatch(getHighScores(period)),
-  getAllTimeHigh: () => dispatch(getAllTimeHigh())
+  fetchHighScores: period => dispatch(fetchHighScores(period)),
+  fetchAllTimeHigh: () => dispatch(fetchAllTimeHigh())
 });
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(HighScore));

@@ -37,7 +37,7 @@ function getDate(date) {
   return date.toISOString().substr(0, 10);
 }
 
-export function getHighScore() {
+export function fetchHighScore() {
   const period = getPeriod(new Date());
   return dispatch => db.collection('highscore')
     .where('period', '==', period)
@@ -47,7 +47,7 @@ export function getHighScore() {
     }));
 }
 
-export function getHighScores(date) {
+export function fetchHighScores(date) {
   return dispatch => db.collection('highscore')
     .where('period', '==', getPeriod(date))
     .orderBy('score', 'desc').limit(10).get()
@@ -58,7 +58,7 @@ export function getHighScores(date) {
     });
 }
 
-export function getAllTimeHigh() {
+export function fetchAllTimeHigh() {
   return dispatch => db.collection('highscore')
     .orderBy('score', 'desc').limit(10).get()
     .then((query) => {
@@ -73,5 +73,5 @@ export function saveHighScore(name, score) {
   const period = getPeriod(new Date());
   return dispatch => db.collection('highscore')
     .add({ name, score, period, date })
-    .then(() => dispatch(getHighScore()));
+    .then(() => dispatch(fetchHighScore()));
 }

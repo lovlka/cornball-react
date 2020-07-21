@@ -11,7 +11,7 @@ function updateStatistics(statistics) {
   };
 }
 
-export function getStatistics() {
+export function fetchStatistics() {
   return dispatch => db.collection('statistics').get()
     .then((query) => {
       const statistics = [];
