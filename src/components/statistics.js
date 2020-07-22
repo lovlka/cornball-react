@@ -7,7 +7,7 @@ import { getStatistics } from '../helpers/selectors';
 import Modal from './modal';
 
 const StatisticsRow = ({ name, value, percent }) => (
-  <tr key={name}>
+  <tr>
     <td><FormattedMessage id={`statistics.${name}`} /></td>
     <td><FormattedNumber value={value} /></td>
     <td>{percent > 0 && <FormattedNumber value={percent} style="percent" minimumFractionDigits={2} />}</td>

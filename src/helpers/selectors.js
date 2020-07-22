@@ -23,6 +23,11 @@ export const getHighScores = createSelector(
   app => app.get('highScores').toJS()
 );
 
+export const getAllTimeHigh = createSelector(
+  state => state.app,
+  app => app.get('allTimeHigh').toJS()
+);
+
 export const getStatistics = createSelector(
   state => state.app,
   app => app.get('statistics').toJS()
