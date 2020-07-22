@@ -14,13 +14,18 @@ export const getHighScore = createSelector(
   state => state.app,
   (app) => {
     const highScore = app.get('highScore');
-    return highScore ? highScore.toObject() : null;
+    return highScore ? highScore.toJS() : null;
   }
 );
 
 export const getHighScores = createSelector(
   state => state.app,
-  app => app.get('highScores')
+  app => app.get('highScores').toJS()
+);
+
+export const getStatistics = createSelector(
+  state => state.app,
+  app => app.get('statistics').toJS()
 );
 
 export const canUndo = createSelector(
