@@ -6,7 +6,9 @@ export const getGameState = createSelector(
     round: game.get('round'),
     rounds: game.get('rounds'),
     score: game.get('score'),
-    moves: game.get('moves')
+    moves: game.get('moves'),
+    locked: game.get('locked'),
+    placed: game.get('placed')
   })
 );
 
