@@ -12,9 +12,9 @@ const Card = ({ card, index, onLoad, onClick, onDrop }) => {
   const [dragX, setDragX] = useState(0);
   const [dragY, setDragY] = useState(0);
 
-  const onDragMove = (ev) => {
-    setDragX(dragX + ev.dx);
-    setDragY(dragY + ev.dy);
+  const onDragMove = ({ dx, dy }) => {
+    setDragX(prevX => prevX + dx);
+    setDragY(prevY => prevY + dy);
   };
 
   const onDragEnd = (ev) => {
