@@ -1,98 +1,81 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import interact from 'interactjs';
 import { getCardImagePath } from '../helpers/deck';
 
-export default class Card extends PureComponent {
-  static propTypes = {
-    card: PropTypes.object.isRequired,
-    index: PropTypes.number.isRequired,
-    onLoad: PropTypes.func.isRequired,
-    onClick: PropTypes.func.isRequired,
-    onDrop: PropTypes.func.isRequired
+const Card = ({ card, index, onLoad, onClick, onDrop }) => {
+  let imageEl = null;
+  let element = null;
+  let draggable = null;
+
+  const [dragging, setDragging] = useState(false);
+  const [dragX, setDragX] = useState(0);
+  const [dragY, setDragY] = useState(0);
+
+  const onDragMove = (ev) => {
+    setDragX(dragX + ev.dx);
+    setDragY(dragY + ev.dy);
   };
 
-  state = {
-    dragging: false,
-    dragX: 0,
-    dragY: 0
+  const onDragEnd = (ev) => {
+    setDragging(false);
+    setDragX(0);
+    setDragY(0);
+
+    if (ev.dropzone) {
+      onDrop(index, ev.dropzone.index);
+    }
   };
 
-  componentDidMount() {
-    this.interact = interact(this.element);
-    this.interact.draggable({
-      onstart: this.dragStart,
-      onmove: this.dragMove,
-      onend: this.dragEnd
+  useEffect(() => {
+    draggable = interact(element);
+    draggable.draggable({
+      onstart: () => setDragging(true),
+      onmove: onDragMove,
+      onend: onDragEnd
     })
-      .on('doubletap', this.doubleTap)
+      .on('doubletap', () => onClick(index))
       .styleCursor(false);
-  }
 
-  componentWillUnmount() {
-    if (this.interact) {
-      this.interact.unset();
-    }
-    if (this.image) {
-      this.image.onload = null;
-    }
-  }
+    return () => {
+      if (draggable) {
+        draggable.unset();
+      }
+      if (imageEl) {
+        imageEl.onload = null;
+      }
+    };
+  }, []);
 
-  imageRef = (ref) => {
+  const imageRef = (ref) => {
     if (!ref) {
       return;
     }
-    this.image = ref;
-    this.image.onload = this.props.onLoad;
+    imageEl = ref;
+    imageEl.onload = onLoad;
 
-    if (this.image.complete) {
-      this.props.onLoad();
+    if (imageEl.complete) {
+      onLoad();
     }
   };
 
-  dragStart = () => {
-    this.setState({ dragging: true });
-  };
+  const { suit, value, roundPlaced, showHint, showError } = card.toJS();
 
-  dragMove = (ev) => {
-    const { dragX, dragY } = this.state;
-    this.setState({
-      dragX: dragX + ev.dx,
-      dragY: dragY + ev.dy
-    });
-  };
+  const image = getCardImagePath(suit, value);
+  const style = { transform: `translate(${dragX}px, ${dragY}px)` };
+  const className = classNames({
+    card: true,
+    dragging,
+    placed: roundPlaced,
+    hint: showHint,
+    error: showError
+  });
 
-  dragEnd = (ev) => {
-    this.setState({ dragging: false, dragX: 0, dragY: 0 });
-    if (ev.dropzone) {
-      this.props.onDrop(this.props.index, ev.dropzone.index);
-    }
-  };
+  return (
+    <div className={className} style={style} ref={(ref) => { element = ref; }}>
+      <img src={image} alt="" ref={imageRef} />
+    </div>
+  );
+};
 
-  doubleTap = (ev) => {
-    ev.preventDefault();
-    this.props.onClick(this.props.index);
-  };
-
-  render() {
-    const { dragging, dragX, dragY } = this.state;
-    const { suit, value, roundPlaced, showHint, showError } = this.props.card.toJS();
-
-    const image = getCardImagePath(suit, value);
-    const style = { transform: `translate(${dragX}px, ${dragY}px)` };
-    const className = classNames({
-      card: true,
-      dragging,
-      placed: roundPlaced,
-      hint: showHint,
-      error: showError
-    });
-
-    return (
-      <div className={className} style={style} ref={(ref) => { this.element = ref; }}>
-        <img src={image} alt="" ref={this.imageRef} />
-      </div>
-    );
-  }
-}
+export default Card;

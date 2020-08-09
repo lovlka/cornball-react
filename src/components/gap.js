@@ -1,59 +1,41 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import interact from 'interactjs';
 
-export default class Gap extends PureComponent {
-  static propTypes = {
-    card: PropTypes.object.isRequired,
-    index: PropTypes.number.isRequired,
-    onClick: PropTypes.func.isRequired
-  };
+const Gap = ({ card, index, onClick }) => {
+  let element = null;
+  let dropzone = null;
 
-  state = {
-    highlight: false
-  };
+  const [highlight, setHighlight] = useState(false);
 
-  componentDidMount() {
-    this.interact = interact(this.element);
-    this.interact.index = this.props.index;
-    this.interact.dropzone({
+  useEffect(() => {
+    dropzone = interact(element);
+    dropzone.index = index;
+    dropzone.dropzone({
       overlap: 0.1,
-      ondragenter: this.highlightGap,
-      ondragleave: this.unHighlightGap,
-      ondrop: this.unHighlightGap
+      ondragenter: () => setHighlight(true),
+      ondragleave: () => setHighlight(false),
+      ondrop: () => setHighlight(false)
     })
-      .on('tap', this.tap)
+      .on('tap', () => onClick(index))
       .styleCursor(false);
-  }
 
-  componentWillUnmount() {
-    if (this.interact) {
-      this.interact.unset();
-    }
-  }
+    return () => {
+      if (dropzone) {
+        dropzone.unset();
+      }
+    };
+  }, []);
 
-  highlightGap = () => {
-    this.setState({ highlight: true });
-  };
+  const className = classNames({
+    gap: true,
+    highlight,
+    error: card.get('showError')
+  });
 
-  unHighlightGap = () => {
-    this.setState({ highlight: false });
-  };
+  return (
+    <div className={className} ref={(ref) => { element = ref; }} />
+  );
+};
 
-  tap = () => {
-    this.props.onClick(this.props.index);
-  };
-
-  render() {
-    const { showError } = this.props.card.toJS();
-    const className = classNames({
-      gap: true,
-      highlight: this.state.highlight,
-      error: showError
-    });
-    return (
-      <div className={className} ref={(ref) => { this.element = ref; }} />
-    );
-  }
-}
+export default Gap;

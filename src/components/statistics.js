@@ -1,57 +1,43 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ClipLoader } from 'halogenium';
-import { injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
-import { getStatistics } from '../actions/statistics';
+import { useIntl, FormattedMessage, FormattedNumber } from 'react-intl';
+import { fetchStatistics } from '../actions/statistics';
+import { getStatistics } from '../helpers/selectors';
 import Modal from './modal';
 
-class Statistics extends Component {
-  state = {
-    loading: true
-  };
+const StatisticsRow = ({ name, value, percent }) => (
+  <tr>
+    <td><FormattedMessage id={`statistics.${name}`} /></td>
+    <td><FormattedNumber value={value} /></td>
+    <td>{percent > 0 && <FormattedNumber value={percent} style="percent" minimumFractionDigits={2} />}</td>
+  </tr>
+);
 
-  componentDidMount() {
-    this.props.getStatistics()
-      .then(() => this.setState({ loading: false }));
-  }
+const Statistics = ({ onClose }) => {
+  const intl = useIntl();
+  const dispatch = useDispatch();
 
-  renderRow = (name, value, percent) => (
-    <tr key={name}>
-      <td><FormattedMessage id={`statistics.${name}`} /></td>
-      <td><FormattedNumber value={value} /></td>
-      <td>{percent > 0 && <FormattedNumber value={percent} style="percent" minimumFractionDigits={2} />}</td>
-    </tr>
+  const [loading, setLoading] = useState(true);
+  const statistics = useSelector(getStatistics);
+
+  useEffect(() => {
+    dispatch(fetchStatistics())
+      .then(() => setLoading(false));
+  }, []);
+
+  const title = intl.formatMessage({ id: 'statistics.title', defaultMessage: 'Statistics' });
+
+  return (
+    <Modal title={title} onClose={onClose}>
+      {loading && <ClipLoader id="modal-loader" color="#ddd" size={20} />}
+      <table>
+        <tbody>
+          {statistics.map(item => <StatisticsRow key={item.name} {...item} />)}
+        </tbody>
+      </table>
+    </Modal>
   );
-
-  render() {
-    const { intl } = this.props;
-    const { loading } = this.state;
-
-    const title = intl.formatMessage({ id: 'statistics.title', defaultMessage: 'Statistics' });
-
-    return (
-      <Modal title={title} onClose={this.props.onClose}>
-        {loading && <ClipLoader id="modal-loader" color="#ddd" size={20} />}
-        <table>
-          <tbody>
-            {this.props.statistics.map(item => this.renderRow(item.get('name'), item.get('value'), item.get('percent')))}
-          </tbody>
-        </table>
-      </Modal>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  const { app } = state;
-
-  return {
-    statistics: app.get('statistics')
-  };
 };
 
-const mapDispatchToProps = dispatch => ({
-  getStatistics: () => dispatch(getStatistics())
-});
-
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Statistics));
+export default Statistics;

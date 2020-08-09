@@ -1,105 +1,79 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useIntl, FormattedMessage } from 'react-intl';
+import { getGameState, canUndo, getHighScore } from '../helpers/selectors';
 import { toggleHighScore, toggleStatistics, toggleAbout } from '../actions/app';
 import { newGame, undoMove } from '../actions/game';
 import Icon, { paths } from './icon';
 
-class Nav extends Component {
-  static propTypes = {
-    round: PropTypes.number.isRequired,
-    rounds: PropTypes.number.isRequired,
-    score: PropTypes.number.isRequired,
-    moves: PropTypes.number.isRequired,
-    highScore: PropTypes.object,
-    canUndo: PropTypes.bool.isRequired
-  };
+const NavItem = ({ id, defaultMessage, action, disabled }) => {
+  const intl = useIntl();
+  const title = intl.formatMessage({ id: `nav.${id}`, defaultMessage });
 
-  renderMenu() {
-    const { newGame, undoMove, canUndo, showHighScore, showStatistics, showAbout } = this.props;
-
-    return (
-      <ul>
-        <li>{this.renderButton('newgame', 'Start new game', newGame)}</li>
-        <li>{this.renderButton('undomove', 'Undo last move', undoMove, !canUndo)}</li>
-        <li>{this.renderButton('highscore', 'High score', showHighScore)}</li>
-        <li>{this.renderButton('statistics', 'Statistics', showStatistics)}</li>
-        <li>{this.renderButton('about', 'About', showAbout)}</li>
-      </ul>
-    );
-  }
-
-  renderButton(id, defaultMessage, action, disabled) {
-    const { intl } = this.props;
-    const title = intl.formatMessage({ id: `nav.${id}`, defaultMessage });
-    const className = disabled ? 'disabled' : '';
-
-    return <button type="button" className={className} title={title} onClick={action}><Icon path={paths[id]} /></button>;
-  }
-
-  renderScore() {
-    const { round, rounds, score, moves } = this.props;
-
-    return (
-      <section className="score">
-        <span><FormattedMessage id="game.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} /></span>
-        <span><FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} /></span>
-        <span><FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} /></span>
-      </section>
-    );
-  }
-
-  renderHighScore() {
-    if (!this.props.highScore) {
-      return null;
-    }
-
-    const { intl } = this.props;
-    const { name, score, date } = this.props.highScore.toJS();
-    const month = intl.formatDate(new Date(date), { month: 'long' });
-
-    return (
-      <section className="highscore">
-        <FormattedMessage
-          id="game.highscore"
-          defaultMessage="High score in {month}: {name} ({score, number})"
-          values={{ month, name, score }}
-        />
-      </section>
-    );
-  }
-
-  render() {
-    return (
-      <nav>
-        {this.renderMenu()}
-        {this.renderScore()}
-        {this.renderHighScore()}
-      </nav>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  const { app, game, undo } = state;
-
-  return {
-    round: game.get('round'),
-    rounds: game.get('rounds'),
-    score: game.get('score'),
-    moves: game.get('moves'),
-    highScore: app.get('highScore'),
-    canUndo: undo.get('move') !== null
-  };
+  return (
+    <li>
+      <button type="button" className={disabled ? 'disabled' : ''} title={title} onClick={action}>
+        <Icon path={paths[id]} />
+      </button>
+    </li>
+  );
 };
 
-const mapDispatchToProps = dispatch => ({
-  newGame: () => dispatch(newGame()),
-  undoMove: () => dispatch(undoMove()),
-  showHighScore: () => dispatch(toggleHighScore(true)),
-  showStatistics: () => dispatch(toggleStatistics(true)),
-  showAbout: () => dispatch(toggleAbout(true))
-});
+const NavItems = () => {
+  const dispatch = useDispatch();
+  const undoDisabled = !useSelector(canUndo);
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Nav));
+  return (
+    <ul>
+      <NavItem id="newgame" defaultMessage="Start new game" action={() => dispatch(newGame())} />
+      <NavItem id="undomove" defaultMessage="Undo last move" action={() => dispatch(undoMove())} disabled={undoDisabled} />
+      <NavItem id="highscore" defaultMessage="High score" action={() => dispatch(toggleHighScore(true))} />
+      <NavItem id="statistics" defaultMessage="Statistics" action={() => dispatch(toggleStatistics(true))} />
+      <NavItem id="about" defaultMessage="About" action={() => dispatch(toggleAbout(true))} />
+    </ul>
+  );
+};
+
+const GameState = () => {
+  const { moves, round, rounds, score } = useSelector(getGameState);
+
+  return (
+    <section className="score">
+      <span><FormattedMessage id="game.round" defaultMessage="Round: {round, number}/{rounds, number}" values={{ round, rounds }} /></span>
+      <span><FormattedMessage id="game.score" defaultMessage="Score: {score, number}" values={{ score }} /></span>
+      <span><FormattedMessage id="game.moves" defaultMessage="Moves: {moves, number}" values={{ moves }} /></span>
+    </section>
+  );
+};
+
+const HighScore = () => {
+  const intl = useIntl();
+  const highScore = useSelector(getHighScore);
+
+  if (!highScore) {
+    return null;
+  }
+
+  const { name, score, date } = highScore;
+  const month = intl.formatDate(new Date(date), { month: 'long' });
+
+  return (
+    <section className="highscore">
+      <FormattedMessage
+        id="game.highscore"
+        defaultMessage="High score in {month}: {name} ({score, number})"
+        values={{ month, name, score }}
+      />
+    </section>
+  );
+};
+
+const Nav = () => (
+  <nav>
+    <NavItems />
+    <GameState />
+    <HighScore />
+  </nav>
+);
+
+export default Nav;

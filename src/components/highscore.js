@@ -1,118 +1,94 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ClipLoader } from 'halogenium';
-import { injectIntl, FormattedMessage, FormattedDate, FormattedNumber } from 'react-intl';
-import { getHighScores, getAllTimeHigh } from '../actions/highscore';
+import { useIntl, FormattedMessage, FormattedDate, FormattedNumber } from 'react-intl';
+import { fetchHighScores, fetchAllTimeHigh } from '../actions/highscore';
+import { getHighScores, getAllTimeHigh } from '../helpers/selectors';
 import Modal from './modal';
 
-class HighScore extends Component {
-  constructor(props) {
-    super(props);
+const HighScoreRow = ({ name, date, score }) => (
+  <tr>
+    <td>{name}</td>
+    <td><FormattedDate value={date} /></td>
+    <td><FormattedNumber value={score} /></td>
+  </tr>
+);
 
-    const period = new Date();
-    period.setDate(1);
+const HighScore = ({ onClose }) => {
+  const intl = useIntl();
+  const dispatch = useDispatch();
 
-    this.state = {
-      period,
-      loading: true
-    };
-  }
+  const initialDate = new Date();
+  initialDate.setDate(1);
 
-  componentDidMount() {
+  const [period, setPeriod] = useState(initialDate);
+  const [loading, setLoading] = useState(true);
+  const highScores = useSelector(getHighScores);
+  const allTimeHigh = useSelector(getAllTimeHigh);
+
+  useEffect(() => {
     Promise.all([
-      this.props.getHighScores(this.state.period),
-      this.props.getAllTimeHigh()
-    ]).then(() => this.setState({ loading: false }));
-  }
+      dispatch(fetchHighScores(period)),
+      dispatch(fetchAllTimeHigh())
+    ]).then(() => setLoading(false));
+  }, []);
 
-  getHighScores(period) {
-    this.setState({ loading: true });
-    this.props.getHighScores(period)
-      .then(() => this.setState({ loading: false }));
-  }
-
-  previousMonth = (ev) => {
+  const previousMonth = (ev) => {
     ev.preventDefault();
-    const date = new Date(this.state.period);
+    const date = new Date(period);
     date.setMonth(date.getMonth() - 1);
-    const newState = { period: date };
-    this.setState(newState, () => this.getHighScores(newState.period));
+    setPeriod(date);
+    setLoading(true);
+    dispatch(fetchHighScores(date))
+      .then(() => setLoading(false));
   };
 
-  nextMonth = (ev) => {
+  const nextMonth = (ev) => {
     ev.preventDefault();
-    const date = new Date(this.state.period);
+    const date = new Date(period);
     date.setMonth(date.getMonth() + 1);
-    const newState = { period: date };
-    this.setState(newState, () => this.getHighScores(newState.period));
+    setPeriod(date);
+    setLoading(true);
+    dispatch(fetchHighScores(date))
+      .then(() => setLoading(false));
   };
 
-  renderRow = (index, item) => {
-    const { name, date, score } = item.toJS();
-    return (
-      <tr key={index}>
-        <td>{name}</td>
-        <td><FormattedDate value={date} /></td>
-        <td><FormattedNumber value={score} /></td>
-      </tr>
-    );
-  };
+  const title = intl.formatMessage({ id: 'highscore.title', defaultMessage: 'Highscore' });
+  const month = intl.formatDate(period, { month: 'long', year: 'numeric' });
 
-  render() {
-    const { intl } = this.props;
-    const { period, loading } = this.state;
-
-    const title = intl.formatMessage({ id: 'highscore.title', defaultMessage: 'Highscore' });
-    const month = intl.formatDate(period, { month: 'long', year: 'numeric' });
-
-    return (
-      <Modal title={title} onClose={this.props.onClose}>
-        {loading && <ClipLoader id="modal-loader" color="#ddd" size={20} />}
-        <div className="row">
-          <div className="column">
-            <table>
-              <tbody>
-                <tr>
-                  <td colSpan="3"><FormattedMessage id="highscore.alltime" defaultMessage="All time high" /></td>
-                </tr>
-                {this.props.allTimeHigh.map((item, index) => this.renderRow(index, item))}
-              </tbody>
-            </table>
-          </div>
-          <div className="column">
-            <table>
-              <tbody>
-                <tr>
-                  <td colSpan="3">
-                    <nav>
-                      <button type="button" onClick={this.previousMonth}>&laquo;</button>
-                      <button type="button" onClick={this.nextMonth}>&raquo;</button>
-                    </nav>
-                    <FormattedMessage id="highscore.month" defaultMessage="Best in {month}" values={{ month }} />
-                  </td>
-                </tr>
-                {this.props.highScores.map((item, index) => this.renderRow(index, item))}
-              </tbody>
-            </table>
-          </div>
+  return (
+    <Modal title={title} onClose={onClose}>
+      {loading && <ClipLoader id="modal-loader" color="#ddd" size={20} />}
+      <div className="row">
+        <div className="column">
+          <table>
+            <tbody>
+              <tr>
+                <td colSpan="3"><FormattedMessage id="highscore.alltime" defaultMessage="All time high" /></td>
+              </tr>
+              {allTimeHigh.map((item, index) => <HighScoreRow key={index} {...item} />)}
+            </tbody>
+          </table>
         </div>
-      </Modal>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  const { app } = state;
-
-  return {
-    highScores: app.get('highScores'),
-    allTimeHigh: app.get('allTimeHigh')
-  };
+        <div className="column">
+          <table>
+            <tbody>
+              <tr>
+                <td colSpan="3">
+                  <nav>
+                    <button type="button" onClick={previousMonth}>&laquo;</button>
+                    <button type="button" onClick={nextMonth}>&raquo;</button>
+                  </nav>
+                  <FormattedMessage id="highscore.month" defaultMessage="Best in {month}" values={{ month }} />
+                </td>
+              </tr>
+              {highScores.map((item, index) => <HighScoreRow key={index} {...item} />)}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </Modal>
+  );
 };
 
-const mapDispatchToProps = dispatch => ({
-  getHighScores: period => dispatch(getHighScores(period)),
-  getAllTimeHigh: () => dispatch(getAllTimeHigh())
-});
-
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(HighScore));
+export default HighScore;

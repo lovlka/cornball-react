@@ -1,41 +1,35 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { newGame } from '../actions/game';
 import { gameLost } from '../actions/statistics';
 import Modal from './modal';
 import Summary from './summary';
 
-class GameOver extends Component {
-  componentDidMount() {
-    this.props.gameLost();
-  }
+const GameOver = () => {
+  const dispatch = useDispatch();
+  const onNewGame = () => dispatch(newGame());
 
-  render() {
-    const { intl } = this.props;
-    const title = intl.formatMessage({ id: 'gameover.title', defaultMessage: 'Game over' });
+  useEffect(() => dispatch(gameLost()), []);
 
-    return (
-      <Modal title={title} onClose={this.props.newGame}>
-        <article className="center">
-          <p>
-            <FormattedMessage id="gameover.description" defaultMessage="You failed to complete The Cornball!" />
-          </p>
-          <Summary />
-          <div className="cta">
-            <button type="button" onClick={this.props.newGame}>
-              <FormattedMessage id="game.playagain" defaultMessage="Play again" />
-            </button>
-          </div>
-        </article>
-      </Modal>
-    );
-  }
-}
+  const intl = useIntl();
+  const title = intl.formatMessage({ id: 'gameover.title', defaultMessage: 'Game over' });
 
-const mapDispatchToProps = dispatch => ({
-  gameLost: () => dispatch(gameLost()),
-  newGame: () => dispatch(newGame())
-});
+  return (
+    <Modal title={title} onClose={onNewGame}>
+      <article className="center">
+        <p>
+          <FormattedMessage id="gameover.description" defaultMessage="You failed to complete The Cornball!" />
+        </p>
+        <Summary />
+        <div className="cta">
+          <button type="button" onClick={onNewGame}>
+            <FormattedMessage id="game.playagain" defaultMessage="Play again" />
+          </button>
+        </div>
+      </article>
+    </Modal>
+  );
+};
 
-export default injectIntl(connect(null, mapDispatchToProps)(GameOver));
+export default GameOver;

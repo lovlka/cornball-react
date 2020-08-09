@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import { ROWS, CARDS } from '../helpers/deck';
 import { newGame } from '../actions/game';
-import { getHighScore } from '../actions/highscore';
+import { fetchHighScore } from '../actions/highscore';
 import { toggleAbout, toggleHighScore, toggleStatistics } from '../actions/app';
+import { getGameState } from '../helpers/selectors';
 
 import Nav from './nav';
 import Game from './game';
@@ -17,65 +18,48 @@ import HighScore from './highscore';
 import Statistics from './statistics';
 import About from './about';
 
-class Main extends Component {
-  componentDidMount() {
-    this.props.getHighScore();
-    this.props.newGame();
-  }
+const Main = () => {
+  const intl = useIntl();
+  const dispatch = useDispatch();
 
-  render() {
-    const {
-      round, rounds, locked, placed, showHighScore, showStatistics,
-      showAbout, hideHighScore, hideStatistics, hideAbout, intl
-    } = this.props;
+  const { round, rounds, locked, placed } = useSelector(getGameState);
+  const showHighScore = useSelector(({ app }) => app.get('showHighScore'));
+  const showStatistics = useSelector(({ app }) => app.get('showStatistics'));
+  const showAbout = useSelector(({ app }) => app.get('showAbout'));
 
-    const isLocked = locked === ROWS;
-    const isGameWin = isLocked && placed === CARDS;
-    const isGameOver = isLocked && !isGameWin && round === rounds;
-    const isRoundOver = isLocked && !isGameWin && round < rounds;
+  useEffect(() => {
+    dispatch(fetchHighScore());
+    dispatch(newGame());
+  }, []);
 
-    const title = intl.formatMessage({ id: 'main.title', defaultMessage: 'The Cornball' });
-    const description = intl.formatMessage({ id: 'main.description', defaultMessage: 'The Cornball is an addictive card game where the goal is to place the cards in order from 2 to king in 4 rows.' });
+  const onHideHighScore = () => dispatch(toggleHighScore(false));
+  const onHideStatistics = () => dispatch(toggleStatistics(false));
+  const onHideAbout = () => dispatch(toggleAbout(false));
 
-    return (
-      <main>
-        <Helmet>
-          <title>{title}</title>
-          <meta name="description" content={description} />
-        </Helmet>
-        <Nav />
-        <Game />
-        {isGameWin && <GameWin />}
-        {isGameOver && <GameOver />}
-        {isRoundOver && <RoundOver />}
-        {showHighScore && <HighScore onClose={hideHighScore} />}
-        {showStatistics && <Statistics onClose={hideStatistics} />}
-        {showAbout && <About onClose={hideAbout} />}
-      </main>
-    );
-  }
-}
+  const isLocked = locked === ROWS;
+  const isGameWin = isLocked && placed === CARDS;
+  const isGameOver = isLocked && !isGameWin && round === rounds;
+  const isRoundOver = isLocked && !isGameWin && round < rounds;
 
-const mapStateToProps = (state) => {
-  const { app, game } = state;
+  const title = intl.formatMessage({ id: 'main.title', defaultMessage: 'The Cornball' });
+  const description = intl.formatMessage({ id: 'main.description', defaultMessage: 'The Cornball is an addictive card game where the goal is to place the cards in order from 2 to king in 4 rows.' });
 
-  return {
-    round: game.get('round'),
-    rounds: game.get('rounds'),
-    locked: game.get('locked'),
-    placed: game.get('placed'),
-    showHighScore: app.get('showHighScore'),
-    showStatistics: app.get('showStatistics'),
-    showAbout: app.get('showAbout')
-  };
+  return (
+    <main>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+      </Helmet>
+      <Nav />
+      <Game />
+      {isGameWin && <GameWin />}
+      {isGameOver && <GameOver />}
+      {isRoundOver && <RoundOver />}
+      {showHighScore && <HighScore onClose={onHideHighScore} />}
+      {showStatistics && <Statistics onClose={onHideStatistics} />}
+      {showAbout && <About onClose={onHideAbout} />}
+    </main>
+  );
 };
 
-const mapDispatchToProps = dispatch => ({
-  getHighScore: () => dispatch(getHighScore()),
-  newGame: () => dispatch(newGame()),
-  hideHighScore: () => dispatch(toggleHighScore(false)),
-  hideStatistics: () => dispatch(toggleStatistics(false)),
-  hideAbout: () => dispatch(toggleAbout(false))
-});
-
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Main));
+export default Main;
