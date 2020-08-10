@@ -10,7 +10,9 @@ const GameOver = () => {
   const dispatch = useDispatch();
   const onNewGame = () => dispatch(newGame());
 
-  useEffect(() => dispatch(gameLost()), []);
+  useEffect(() => {
+    dispatch(gameLost());
+  }, []);
 
   const intl = useIntl();
   const title = intl.formatMessage({ id: 'gameover.title', defaultMessage: 'Game over' });
