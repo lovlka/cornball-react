@@ -1,15 +1,11 @@
 @import 'variables.scss';
 
 main > nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   color: #fff;
   text-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.7);
 
   ul {
-    margin: 0 0 0 0.7rem;
+    margin: 0 0 0 0.5rem;
     padding: 0;
     list-style: none;
     float: left;

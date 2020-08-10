@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GridLoader from 'halogenium/lib/GridLoader';
-import { COLUMNS, CARDS, ROWS } from '../helpers/deck';
+import { CARDS } from '../helpers/deck';
 import { autoMoveCard, tryMoveCard, tryShowHint } from '../actions/game';
 import Card from './card';
 import Gap from './gap';
@@ -32,33 +32,17 @@ const Game = () => {
     dispatch(tryMoveCard(from, to));
   };
 
-  const getRows = () => {
-    const rows = [];
-    for (let row = 0; row < ROWS; row += 1) {
-      rows.push(deck.skip(COLUMNS * row).take(COLUMNS));
-    }
-    return rows;
-  };
-
-  const renderItem = (card, index) => (
-    card.get('value') > 1
-      ? <Card key={index} index={index} card={card} onLoad={onCardLoaded} onClick={onCardClick} onDrop={onCardDrop} />
-      : <Gap key={index} index={index} card={card} onClick={onGapClick} />
-  );
-
-  const renderRow = (row, cards) => (
-    <section key={row} className="row">
-      {cards.map((card, index) => renderItem(card, (row * COLUMNS) + index))}
-    </section>
-  );
-
   return (
-    <Fragment>
+    <div id="game">
       {loading && <GridLoader id="loader" color="#fff" size={12} margin={6} />}
       <section id="deck" className={loading ? 'loading' : ''}>
-        {getRows().map((row, index) => renderRow(index, row))}
+        {deck.map((card, index) => (
+          card.get('value') > 1
+            ? <Card key={index} index={index} card={card} onLoad={onCardLoaded} onClick={onCardClick} onDrop={onCardDrop} />
+            : <Gap key={index} index={index} card={card} onClick={onGapClick} />
+        ))}
       </section>
-    </Fragment>
+    </div>
   );
 };
 
