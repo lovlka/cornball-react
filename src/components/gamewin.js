@@ -34,12 +34,12 @@ const GameWin = () => {
   };
 
   const isHighScore = () => {
-    if (highScores.size < 10) {
+    if (highScores.length < 10) {
       return true;
     }
     let highScore = false;
     highScores.forEach((item) => {
-      if (score > item.get('value')) {
+      if (score > item.value) {
         highScore = true;
       }
     });
