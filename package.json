@@ -13,7 +13,9 @@
     "start": "webpack-dev-server --config ./webpack.dev.js",
     "build": "webpack --config ./webpack.prod.js",
     "analyze": "webpack --config ./webpack.analyze.js",
-    "lint": "eslint ./src"
+    "lint:js": "eslint ./src",
+    "lint:css": "stylelint ./src/styles",
+    "lint": "npm run lint:js && npm run lint:css"
   },
   "pre-commit": {
     "run": [
@@ -63,6 +65,8 @@
     "pre-commit": "^1.2.2",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.23.1",
+    "stylelint": "^13.6.1",
+    "stylelint-config-sass-guidelines": "^7.0.0",
     "terser-webpack-plugin": "^1.4.4",
     "webpack": "^4.44.1",
     "webpack-bundle-analyzer": "^3.8.0",

@@ -1,4 +1,4 @@
-.animated {
+.animated, %animated {
   animation-duration: 0.8s;
   animation-fill-mode: both;
 }
@@ -8,7 +8,7 @@
     transform: scale3d(1, 1, 1);
   }
   10%, 20% {
-    transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+    transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
   }
   30%, 50%, 70%, 90% {
     transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
@@ -21,7 +21,7 @@
   }
 }
 
-.tada {
+.tada, %tada {
   animation-name: tada;
   animation-timing-function: ease-in-out;
 }
@@ -34,14 +34,14 @@
     opacity: 0.4;
   }
   50% {
-    opacity: 1
+    opacity: 1;
   }
   to {
     opacity: 1;
   }
 }
 
-.blink {
+.blink, %blink {
   animation-name: blink;
   animation-duration: 0.4s;
   animation-timing-function: ease-out;
@@ -59,7 +59,7 @@
   }
 }
 
-.flash {
+.flash, %flash {
   animation-name: flash;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;

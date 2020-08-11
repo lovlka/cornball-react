@@ -17,11 +17,8 @@ html, body {
 body {
   color: $text-color;
   background-color: $bg-dark;
-  background: -webkit-radial-gradient(center, $bg-light, $bg-dark);
-  background: -o-radial-gradient(center, $bg-light, $bg-dark);
-  background: -moz-radial-gradient(center, $bg-light, $bg-dark);
-  background: radial-gradient(center, $bg-light, $bg-dark);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  background: radial-gradient($bg-light, $bg-dark);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
   font-size: 1rem;
   line-height: 1.8rem;
