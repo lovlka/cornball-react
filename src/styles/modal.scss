@@ -11,6 +11,8 @@
   justify-content: center;
   align-items: flex-start;
   background-color: rgba(0, 0, 0, 0.4);
+  background: radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+  backdrop-filter: blur(5px);
   transition: all 0.4s;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
@@ -20,12 +22,11 @@
     position: relative;
     background-color: #fff;
     padding: 2rem;
-    margin: 4rem 2rem 2rem 2rem;
-    width: 600px;
+    margin: 5rem 2rem 2rem 2rem;
+    width: 40rem;
     min-height: 15rem;
     border-radius: 0.5rem;
-    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.5);
-    transition: all 0.4s;
+    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
 
     @media (max-width: $screen-md) {
       width: 100%;
@@ -54,7 +55,7 @@
     h1 {
       margin: 0;
       font-size: 1.4rem;
-      font-weight: 300;
+      font-weight: 400;
     }
     hr {
       border: 0;
@@ -102,18 +103,27 @@
     }
     .cta {
       text-align: center;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
 
       button {
         cursor: pointer;
         color: $text-color;
         padding: 1rem 2rem;
-        border: 1px solid $gray-light;
+        border: 0;
         border-radius: 2rem;
-        background: transparent;
+        background-color: $cta-light;
+        background: linear-gradient(to bottom, $cta-light, $cta-dark);
+        color: #fff;
         outline: none;
         font-weight: 700;
         font-size: 1.2rem;
+
+        &:hover, &:focus {
+          background: linear-gradient(to bottom, darken($cta-light, 10%), darken($cta-dark, 10%));
+        }
+        &:active {
+          background: $cta-dark;
+        }
       }
     }
     nav {
