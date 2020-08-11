@@ -11,7 +11,6 @@ export const SHOW_ERROR = 'SHOW_ERROR';
 export const SET_SCORE = 'SET_SCORE';
 export const SET_ROUND_PLACED = 'SET_ROUND_PLACED';
 
-
 function setRoundPlaced(index, roundPlaced) {
   return { type: SET_ROUND_PLACED, index, roundPlaced };
 }

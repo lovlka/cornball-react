@@ -8,7 +8,6 @@ export const TWO = 2;
 export const DRESSED = 10;
 export const KING = 13;
 
-
 export function getCardImagePath(suit, value) {
   const deckPath = require.context('../assets/deck');
   return deckPath(`./${suit}${value}.png`);

@@ -2,7 +2,6 @@ export const TOGGLE_HIGH_SCORE = 'TOGGLE_HIGH_SCORE';
 export const TOGGLE_STATISTICS = 'TOGGLE_STATISTICS';
 export const TOGGLE_ABOUT = 'TOGGLE_ABOUT';
 
-
 export function toggleHighScore(show) {
   return {
     type: TOGGLE_HIGH_SCORE,

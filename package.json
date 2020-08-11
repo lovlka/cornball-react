@@ -2,7 +2,7 @@
   "author": "Victor Stodell",
   "name": "cornball-react",
   "description": "Cornball",
-  "version": "1.2.0",
+  "version": "1.5.0",
   "private": true,
   "homepage": "https://cornball.se",
   "repository": {
@@ -13,7 +13,7 @@
     "start": "webpack-dev-server --config ./webpack.dev.js",
     "build": "webpack --config ./webpack.prod.js",
     "analyze": "webpack --config ./webpack.analyze.js",
-    "lint": "eslint webpack.*.js ./src"
+    "lint": "eslint ./src"
   },
   "pre-commit": {
     "run": [
@@ -27,7 +27,6 @@
     "halogenium": "^2.3.0",
     "immutable": "^3.8.2",
     "interactjs": "1.6.3",
-    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^5.2.1",
@@ -50,11 +49,12 @@
     "css-loader": "^2.1.1",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^2.0.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.1",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-react-hooks": "^4.0.8",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.5",

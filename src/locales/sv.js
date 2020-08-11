@@ -1,4 +1,4 @@
-export default function () {
+export default function sv() {
   return {
     'main.title': 'Lantisen',
     'main.description': 'Lantisen är en beroendeframkallande patiens som går ut på att placera korten i ordning från 2 till kung i 4 rader.',

@@ -25,7 +25,6 @@ export function isLockedGap(card, previous) {
   return card.get('value') === 1 && (previous.get('value') === 1 || previous.get('value') === KING);
 }
 
-
 export function findCards(deck, gapIndex) {
   const indexes = [];
   deck.forEach((card, cardIndex) => {
