@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ClipLoader } from 'halogenium';
 import { useIntl, FormattedMessage, FormattedNumber } from 'react-intl';
 import { fetchStatistics } from '../actions/statistics';
 import { getStatistics } from '../helpers/selectors';
 import Modal from './modal';
+import Loader from './loader';
 
 const StatisticsRow = ({ name, value, percent }) => (
   <tr>
@@ -30,7 +30,7 @@ const Statistics = ({ onClose }) => {
 
   return (
     <Modal title={title} onClose={onClose}>
-      {loading && <ClipLoader id="modal-loader" color="#ddd" size={20} />}
+      {loading && <Loader />}
       <table>
         <tbody>
           {statistics.map(item => <StatisticsRow key={item.name} {...item} />)}

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ClipLoader } from 'halogenium';
 import { useIntl, FormattedMessage, FormattedDate, FormattedNumber } from 'react-intl';
 import { fetchHighScores, fetchAllTimeHigh } from '../actions/highscore';
 import { getHighScores, getAllTimeHigh } from '../helpers/selectors';
 import Modal from './modal';
+import Loader from './loader';
 
 const HighScoreRow = ({ name, date, score }) => (
   <tr>
@@ -58,7 +58,7 @@ const HighScore = ({ onClose }) => {
 
   return (
     <Modal title={title} onClose={onClose}>
-      {loading && <ClipLoader id="modal-loader" color="#ddd" size={20} />}
+      {loading && <Loader />}
       <div className="row">
         <div className="column">
           <table>
