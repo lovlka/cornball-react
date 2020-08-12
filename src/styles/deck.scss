@@ -18,12 +18,10 @@
   @media(max-width: $screen-lg) {
     grid-column-gap: 6px;
     grid-row-gap: 6px;
-    margin: auto 2rem;
   }
   @media(max-width: $screen-md) {
     grid-column-gap: 4px;
     grid-row-gap: 4px;
-    margin: auto 1rem;
   }
   @media(max-width: $screen-sm) {
     grid-column-gap: 2px;
