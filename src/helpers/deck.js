@@ -10,7 +10,7 @@ export const KING = 13;
 
 export function getCardImagePath(suit, value) {
   const deckPath = require.context('../assets/deck');
-  return deckPath(`./${suit}${value}.png`);
+  return deckPath(`./${suit}${value}.png`).default;
 }
 
 export function getDeck() {
