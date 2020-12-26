@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import interact from 'interactjs';
 import { getCardImagePath } from '../helpers/deck';
@@ -61,7 +61,7 @@ const Card = ({ card, index, onLoad, onClick, onDrop }) => {
 
   const { suit, value, roundPlaced, showHint, showError } = card.toJS();
 
-  const image = getCardImagePath(suit, value);
+  const image = useMemo(() => getCardImagePath(suit, value), []);
   const style = { transform: `translate(${dragX}px, ${dragY}px)` };
   const className = classNames({
     card: true,
