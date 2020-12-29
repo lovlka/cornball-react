@@ -7,6 +7,7 @@ import { fetchHighScores, saveHighScore } from '../actions/highscore';
 import { getGameState, getHighScores } from '../helpers/selectors';
 import Modal from './modal';
 import Summary from './summary';
+import Loader from './loader';
 
 const GameWin = () => {
   const intl = useIntl();
@@ -15,13 +16,15 @@ const GameWin = () => {
   const { score, round } = useSelector(getGameState);
   const highScores = useSelector(getHighScores);
   const [name, setName] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const period = new Date();
     period.setDate(1);
 
     dispatch(gameWon(round));
-    dispatch(fetchHighScores(period));
+    dispatch(fetchHighScores(period))
+      .then(() => setLoading(false));
   }, []);
 
   const onNewGame = () => dispatch(newGame());
@@ -33,18 +36,16 @@ const GameWin = () => {
     dispatch(newGame());
   };
 
-  const isHighScore = () => {
-    if (highScores.length < 10) {
-      return true;
-    }
-    let highScore = false;
+  let highScore = false;
+  if (highScores.length < 10) {
+    highScore = true;
+  } else {
     highScores.forEach((item) => {
-      if (score > item.value) {
+      if (score > item.score) {
         highScore = true;
       }
     });
-    return highScore;
-  };
+  }
 
   const title = intl.formatMessage({ id: 'gamewin.title', defaultMessage: 'Congratulations!' });
   const placeholder = intl.formatMessage({ id: 'gamewin.placeholder', defaultMessage: 'Enter your name' });
@@ -56,7 +57,8 @@ const GameWin = () => {
           <FormattedMessage id="gamewin.description" defaultMessage="You put all cards in the right place and finished The Cornball!" />
         </p>
         <Summary />
-        {isHighScore() ? (
+        {loading && <Loader />}
+        {!loading && highScore && (
           <Fragment>
             <FormattedMessage id="gamewin.highscore" defaultMessage="You made it to the high score list! Enter your name to send your score." />
             <form onSubmit={submitHighScore}>
@@ -64,8 +66,12 @@ const GameWin = () => {
               <button type="submit"><FormattedMessage id="gamewin.submit" defaultMessage="Submit" /></button>
             </form>
           </Fragment>
-        ) : (
+        )}
+        {!loading && !highScore && (
           <div className="cta">
+            <p>
+              <FormattedMessage id="gamewin.nohighscore" defaultMessage="Unfortunately you did not get a high score this time." />
+            </p>
             <button type="button" onClick={onNewGame}>
               <FormattedMessage id="game.playagain" defaultMessage="Play again" />
             </button>
