@@ -61,7 +61,7 @@ const Card = ({ card, index, onLoad, onClick, onDrop }) => {
 
   const { suit, value, roundPlaced, showHint, showError } = card.toJS();
 
-  const image = useMemo(() => getCardImagePath(suit, value), []);
+  const image = useMemo(() => getCardImagePath(suit, value), [suit, value]);
   const style = { transform: `translate(${dragX}px, ${dragY}px)` };
   const className = classNames({
     card: true,
