@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import GridLoader from 'halogenium/lib/GridLoader';
+import GridLoader from 'react-spinners/GridLoader';
 import { CARDS } from '../helpers/deck';
 import { autoMoveCard, tryMoveCard, tryShowHint } from '../actions/game';
 import Card from './card';
@@ -34,7 +34,11 @@ const Game = () => {
 
   return (
     <div id="game">
-      {loading && <GridLoader id="loader" color="#fff" size={12} margin={6} />}
+      {loading && (
+        <div id="loader">
+          <GridLoader color="#fff" size={12} margin={6} />
+        </div>
+      )}
       <section id="deck" className={loading ? 'loading' : ''}>
         {deck.map((card, index) => (
           card.get('value') > 1

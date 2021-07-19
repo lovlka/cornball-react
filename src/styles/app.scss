@@ -44,6 +44,10 @@ main {
 
 #loader {
   line-height: normal;
+
+  span {
+    display: inline-block;
+  }
 }
 
 #modal-loader {
