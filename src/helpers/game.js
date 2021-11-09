@@ -28,7 +28,7 @@ export function isLockedGap(card, previous) {
 export function findCards(deck, gapIndex) {
   const indexes = [];
   deck.forEach((card, cardIndex) => {
-    if (isCorrectGap(deck, gapIndex, card)) {
+    if (isCorrectGap(deck, gapIndex, card) && !isCardPlaced(card.get('suit'), card, cardIndex)) {
       indexes.push(cardIndex);
     }
   });

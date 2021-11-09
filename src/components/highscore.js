@@ -55,6 +55,8 @@ const HighScore = ({ onClose }) => {
 
   const title = intl.formatMessage({ id: 'highscore.title', defaultMessage: 'Highscore' });
   const month = intl.formatDate(period, { month: 'long', year: 'numeric' });
+  const isInitialDate = period.getFullYear() === initialDate.getFullYear()
+    && period.getMonth() === initialDate.getMonth();
 
   return (
     <Modal title={title} onClose={onClose}>
@@ -77,7 +79,7 @@ const HighScore = ({ onClose }) => {
                 <td colSpan="3">
                   <nav>
                     <button type="button" onClick={previousMonth}>&laquo;</button>
-                    <button type="button" onClick={nextMonth}>&raquo;</button>
+                    <button type="button" onClick={nextMonth} disabled={isInitialDate}>&raquo;</button>
                   </nav>
                   <FormattedMessage id="highscore.month" defaultMessage="Best in {month}" values={{ month }} />
                 </td>

@@ -134,10 +134,17 @@
         padding: 0;
         border: 0;
         background: transparent;
+        cursor: pointer;
         outline: none;
         font-weight: 700;
         font-size: 1.2rem;
         margin-left: 1rem;
+
+        &:disabled {
+          cursor: default;
+          pointer-events: none;
+          opacity: 0.3;
+        }
       }
     }
   }

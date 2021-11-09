@@ -15,10 +15,6 @@ const config = {
   },
   module: {
     rules: [{
-      test: /\.jsx?$/,
-      include: /src/,
-      loader: 'babel-loader'
-    }, {
       test: /\.(ico|png|svg|woff2?|ttf|otf|eot)$/,
       exclude: /node_modules/,
       loader: 'file-loader',

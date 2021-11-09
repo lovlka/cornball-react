@@ -13,26 +13,23 @@ export const getGameState = createSelector(
 );
 
 export const getHighScore = createSelector(
-  state => state.app,
-  (app) => {
-    const highScore = app.get('highScore');
-    return highScore ? highScore.toJS() : null;
-  }
+  state => state.app.get('highScore'),
+  highScore => highScore
 );
 
 export const getHighScores = createSelector(
-  state => state.app,
-  app => app.get('highScores').toJS()
+  state => state.app.get('highScores'),
+  highScores => highScores
 );
 
 export const getAllTimeHigh = createSelector(
-  state => state.app,
-  app => app.get('allTimeHigh').toJS()
+  state => state.app.get('allTimeHigh'),
+  allTimeHigh => allTimeHigh
 );
 
 export const getStatistics = createSelector(
-  state => state.app,
-  app => app.get('statistics').toJS()
+  state => state.app.get('statistics'),
+  statistics => statistics
 );
 
 export const canUndo = createSelector(

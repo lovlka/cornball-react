@@ -9,6 +9,10 @@ module.exports = merge(base, {
   devtool: 'source-map',
   module: {
     rules: [{
+      test: /\.jsx?$/,
+      include: /src/,
+      loader: 'babel-loader'
+    }, {
       test: /\.s?css$/,
       use: [
         MiniCssExtractPlugin.loader,
