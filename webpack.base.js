@@ -15,7 +15,7 @@ const config = {
   },
   module: {
     rules: [{
-      test: /\.(ico|png|svg|woff2?|ttf|otf|eot)$/,
+      test: /\.(ico|png|svg|woff2?|ttf|otf|eot|webmanifest)$/,
       exclude: /node_modules/,
       loader: 'file-loader',
       options: {

@@ -1,0 +1,16 @@
+{
+  "short_name": "The Cornball",
+  "name": "The Cornball",
+  "description": "The Cornball is an addictive card game where the goal is to place the cards in order from 2 to king in 4 rows.",
+  "icons": [
+    {
+      "src": "./apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    }
+  ],
+  "scope": "./",
+  "start_url": "./",
+  "display": "fullscreen",
+  "background_color": "#005630"
+}

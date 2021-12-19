@@ -10,6 +10,7 @@ import './assets/favicon.ico';
 import './assets/favicon.png';
 import './assets/apple-touch-icon.png';
 import './assets/share.png';
+import './assets/app.webmanifest';
 
 import Main from './components/main';
 import svMessages from './locales/sv';
