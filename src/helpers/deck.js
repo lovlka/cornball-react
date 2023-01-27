@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { fromJS } from 'immutable';
 
 export const ROWS = 4;
 export const COLUMNS = 13;
@@ -65,5 +66,5 @@ export function swapImmutable(deck, from, to) {
 }
 
 export function updateCard(deck, index, state) {
-  return deck.set(index, deck.get(index).merge(state));
+  return deck.set(index, deck.get(index).merge(fromJS(state)));
 }
