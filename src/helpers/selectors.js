@@ -14,22 +14,22 @@ export const getGameState = createSelector(
 
 export const getHighScore = createSelector(
   state => state.app.get('highScore'),
-  highScore => highScore
+  highScore => (highScore ? highScore.toJS() : null)
 );
 
 export const getHighScores = createSelector(
   state => state.app.get('highScores'),
-  highScores => highScores
+  highScores => (highScores ? highScores.toJS() : null)
 );
 
 export const getAllTimeHigh = createSelector(
   state => state.app.get('allTimeHigh'),
-  allTimeHigh => allTimeHigh
+  allTimeHigh => (allTimeHigh ? allTimeHigh.toJS() : null)
 );
 
 export const getStatistics = createSelector(
   state => state.app.get('statistics'),
-  statistics => statistics
+  statistics => (statistics ? statistics.toJS() : null)
 );
 
 export const canUndo = createSelector(
