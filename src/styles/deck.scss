@@ -30,6 +30,7 @@
 
   .card, .gap {
     cursor: pointer;
+    touch-action: none;
     line-height: 0;
     border-radius: $border-radius;
     transition: transform 0.3s, z-index 0s 0.3s;
