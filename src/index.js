@@ -1,7 +1,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 
@@ -21,13 +21,14 @@ const messages = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
+  const container = document.getElementById('cornball');
+  const root = createRoot(container);
+  root.render(
     <Provider store={configureStore()}>
       <IntlProvider locale={navigator.language} messages={messages[navigator.language]}>
         <Main />
       </IntlProvider>
-    </Provider>,
-    document.getElementById('cornball')
+    </Provider>
   );
   document.body.removeAttribute('style');
 });

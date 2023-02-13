@@ -17,16 +17,16 @@ const initialState = {
 export function app(state = fromJS(initialState), action = null) {
   switch (action.type) {
     case TOGGLE_HIGH_SCORE:
-      return state.merge({ showHighScore: action.show });
+      return state.merge(fromJS({ showHighScore: action.show }));
 
     case TOGGLE_STATISTICS:
-      return state.merge({ showStatistics: action.show });
+      return state.merge(fromJS({ showStatistics: action.show }));
 
     case TOGGLE_ABOUT:
-      return state.merge({ showAbout: action.show });
+      return state.merge(fromJS({ showAbout: action.show }));
 
     case HIGH_SCORE:
-      return state.merge(action.state);
+      return state.merge(fromJS(action.state));
 
     case STATISTICS: {
       let gamesPlayed = 0;
@@ -37,7 +37,7 @@ export function app(state = fromJS(initialState), action = null) {
       const statistics = [{ name: 'gamesPlayed', value: gamesPlayed }]
         .concat(data.map(s => ({ ...s, percent: s.value / gamesPlayed })));
 
-      return state.merge({ statistics });
+      return state.merge(fromJS({ statistics }));
     }
 
     default:
