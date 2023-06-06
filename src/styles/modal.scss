@@ -1,3 +1,4 @@
+@use "sass:color";
 @import 'variables.scss';
 
 .modal-container {
@@ -120,7 +121,9 @@
         font-size: 1.2rem;
 
         &:hover, &:focus {
-          background: linear-gradient(to bottom, darken($cta-light, 10%), darken($cta-dark, 10%));
+          background: linear-gradient(to bottom,
+            color.adjust($cta-light, $lightness: -10%),
+            color.adjust($cta-dark, $lightness: -10%));
         }
         &:active {
           background: $cta-dark;

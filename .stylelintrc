@@ -8,7 +8,6 @@
     "selector-max-compound-selectors": 6,
     "selector-list-comma-newline-after": null,
     "shorthand-property-no-redundant-values": null,
-    "order/properties-alphabetical-order": null,
     "scss/at-import-partial-extension-blacklist": null
   }
 }
