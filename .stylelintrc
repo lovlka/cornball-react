@@ -6,7 +6,6 @@
     "selector-max-id": 1,
     "selector-no-qualifying-type": null,
     "selector-max-compound-selectors": 6,
-    "selector-list-comma-newline-after": null,
     "shorthand-property-no-redundant-values": null,
     "scss/at-import-partial-extension-blacklist": null
   }
